@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">TimPhongTro</string>
+    <string name="bottom_home">Trang chủ</string>
+    <string name="bottom_service">Dịch vụ</string>
+    <string name="bottom_upload">Đăng bài</string>
+    <string name="bottom_msg">Tin nhắn</string>
+    <string name="bottom_profile">Cá nhân</string>
 </resources>
