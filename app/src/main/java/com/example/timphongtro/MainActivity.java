@@ -7,7 +7,12 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
+import com.denzcoskun.imageslider.ImageSlider;
+import com.denzcoskun.imageslider.constants.ScaleTypes;
+import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.timphongtro.databinding.ActivityMainBinding;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
-
     }
 
     private void replaceFragment(Fragment fragment) {
