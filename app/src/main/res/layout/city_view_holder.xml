@@ -8,17 +8,17 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/border"
-            android:src="@tools:sample/avatars"
+            android:src="@drawable/image1"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp">
         </ImageView>
 
         <TextView
             android:id="@+id/textviewholder"
-            android:layout_gravity="bottom|center"
+            android:textColor="@color/black"
+            android:layout_gravity="center|bottom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Đây là text">
+            android:text="District">
         </TextView>
 </androidx.cardview.widget.CardView>
