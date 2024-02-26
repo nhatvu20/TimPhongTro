@@ -3,76 +3,94 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/darkerwhite">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="wrap_content">
 
             <RelativeLayout
-                android:background="@color/orange"
-                android:id="@+id/cardView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <com.denzcoskun.imageslider.ImageSlider
-                    android:id="@+id/ImageSlider"
-                    android:layout_width="match_parent"
-                    android:layout_height="180dp"
-                    app:iss_auto_cycle="true"
-                    app:iss_delay="1000"
-                    app:iss_period="1000"
-                    app:iss_title_background="@drawable/default_gradient">
-
-                </com.denzcoskun.imageslider.ImageSlider>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/searchbox"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_below="@+id/cardView"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="-50dp"
-                android:layout_marginEnd="40dp"
-                android:background="@drawable/search_bg">
-
-                <SearchView
-                    android:id="@+id/searchbar"
+                <RelativeLayout
+                    android:id="@+id/cardView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="20dp"
-                    android:background="@drawable/border"
-                    android:closeIcon="@drawable/ic_clear"
-                    android:focusable="false"
-                    android:iconifiedByDefault="false"
-                    android:queryHint="Tìm kiếm..."
-                    android:searchHintIcon="@null"
-                    android:searchIcon="@drawable/ic_search" />
+                    android:background="@color/orange">
+
+                    <com.denzcoskun.imageslider.ImageSlider
+                        android:id="@+id/ImageSlider"
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        app:iss_auto_cycle="true"
+                        app:iss_delay="1000"
+                        app:iss_period="1000"
+                        app:iss_title_background="@drawable/default_gradient">
+
+                    </com.denzcoskun.imageslider.ImageSlider>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/searchbox"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_below="@+id/cardView"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="-50dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="@drawable/search_bg">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp">
+
+                        <Spinner
+                            android:paddingStart="5dp"
+                            android:background="@drawable/spinner_border"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2">
+
+                        </Spinner>
+
+                        <SearchView
+                            android:id="@+id/searchbar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/search_border"
+                            android:closeIcon="@drawable/ic_clear"
+                            android:focusable="false"
+                            android:iconifiedByDefault="false"
+                            android:queryHint="Tìm kiếm..."
+                            android:searchHintIcon="@null"
+                            android:searchIcon="@null"/>
+                    </LinearLayout>
+                </RelativeLayout>
             </RelativeLayout>
-        </RelativeLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
             android:id="@+id/Explore"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
             android:layout_weight="1"
             android:text="@string/Explore"
             android:textColor="@color/black"
@@ -81,7 +99,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="250dp">
+            android:layout_height="150dp">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/LocationExplore"
@@ -97,10 +115,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp"
             android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp">
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/Recent"
@@ -116,9 +134,9 @@
                 android:id="@+id/textView6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
                 android:text="@string/Showmore"
-                android:textColor="@color/red"/>
+                android:textColor="@color/red"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,6 +1,6 @@
 package com.example.timphongtro;
 
-public class Location {
+public class DataClass {
     String name;
 
     public String getName() {

@@ -1,6 +1,5 @@
 package com.example.timphongtro;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -29,7 +28,7 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerView;
     DatabaseReference database;
     MyAdapter myAdapter;
-    ArrayList<Location> list;
+    ArrayList<DataClass> list;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -43,7 +42,7 @@ public class HomeFragment extends Fragment {
         recyclerView = view.findViewById(R.id.LocationExplore);
         database = FirebaseDatabase.getInstance().getReference("district");
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         list = new ArrayList<>();
         myAdapter = new MyAdapter(getContext(),list);
         recyclerView.setAdapter(myAdapter);
@@ -52,8 +51,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    Location location = dataSnapshot.getValue(Location.class);
-                    list.add(location);
+                    DataClass dataClass = dataSnapshot.getValue(DataClass.class);
+                    list.add(dataClass);
                 }
                 myAdapter.notifyDataSetChanged();
             }
