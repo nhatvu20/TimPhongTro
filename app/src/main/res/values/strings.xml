@@ -4,10 +4,12 @@
     <string name="bottom_service">Dịch vụ</string>
     <string name="bottom_notification">Thông báo</string>
     <string name="bottom_profile">Cá nhân</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="postdashboard">Quản lý bài đăng</string>
     <string name="findaplace">Tìm phòng trọ</string>
     <string name="findpeople">Tìm người ở chung</string>
     <string name="forrent">Cho thuê phòng</string>
+    <string name="Recently">Mới đăng gần đây</string>
+    <string name="Showmore">Xem thêm</string>
+    <string name="Explore">Khám phá</string>
 </resources>
