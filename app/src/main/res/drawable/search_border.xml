@@ -8,4 +8,8 @@
         android:bottomRightRadius="10dp" />
     <solid
         android:color="@color/darkerwhite"/>
+
+    <stroke
+        android:width="5dp"
+        android:color="@color/darkerwhite"/>
 </shape>

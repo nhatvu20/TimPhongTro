@@ -1,4 +1,4 @@
-package com.example.timphongtro;
+package com.example.timphongtro.Database;
 
 public class DataClass {
     String name;

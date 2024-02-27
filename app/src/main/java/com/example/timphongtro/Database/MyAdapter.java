@@ -1,4 +1,4 @@
-package com.example.timphongtro;
+package com.example.timphongtro.Database;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,8 +7,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.timphongtro.R;
 
 import java.util.ArrayList;
 
