@@ -104,7 +104,7 @@ public class HomeFragment extends Fragment {
                     spinnerlist.add(spinnername);
                 }
                 spinneradapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item,spinnerlist);
-                spinneradapter.setDropDownViewResource(R.layout.spinner_category); //simple_spinner_dropdown
+                spinneradapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner.setAdapter(spinneradapter);
 
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
