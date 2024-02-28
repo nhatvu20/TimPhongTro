@@ -37,6 +37,8 @@
                     android:layout_weight="1"
                     android:text="Chi tiết phòng"
                     android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:textSize="20sp" />
 
                 <ImageView
@@ -56,7 +58,7 @@
                 <com.denzcoskun.imageslider.ImageSlider
                     android:id="@+id/ImageRoomPrd"
                     android:layout_width="match_parent"
-                    android:layout_height="180dp"
+                    android:layout_height="280dp"
                     app:iss_auto_cycle="true"
                     app:iss_delay="1000"
                     app:iss_period="1000"
