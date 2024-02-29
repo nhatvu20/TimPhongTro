@@ -19,7 +19,7 @@ import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.timphongtro.Database.DataClass;
-import com.example.timphongtro.Database.MyAdapter;
+import com.example.timphongtro.Database.DistrictAdapter;
 import com.example.timphongtro.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,7 +34,7 @@ public class HomeFragment extends Fragment {
     String path = "/HaNoi";
     RecyclerView recyclerView;
     DatabaseReference recyclerviewdatabase, spinnerdatabase;
-    MyAdapter myAdapter;
+    DistrictAdapter districtAdapter;
     ArrayList<DataClass> list;
     Spinner spinner;
     List<String> spinnerlist;
@@ -61,8 +61,8 @@ public class HomeFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         list = new ArrayList<>();
-        myAdapter = new MyAdapter(getContext(),list);
-        recyclerView.setAdapter(myAdapter);
+        districtAdapter = new DistrictAdapter(getContext(),list);
+        recyclerView.setAdapter(districtAdapter);
         fetchrecyclerviewdatabase();
 
         //Auto Image Slider
@@ -85,7 +85,7 @@ public class HomeFragment extends Fragment {
                     DataClass dataClass = dataSnapshot.getValue(DataClass.class);
                     list.add(dataClass);
                 }
-                myAdapter.notifyDataSetChanged();
+                districtAdapter.notifyDataSetChanged();
             }
 
             @Override
