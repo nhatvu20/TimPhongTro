@@ -1,4 +1,4 @@
-package com.example.timphongtro;
+package com.example.timphongtro.HomePage;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -14,6 +14,8 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.example.timphongtro.R;
 import com.example.timphongtro.databinding.ActivityMainBinding;
 
 
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        //Sử dụng ViewBinding để tối ưu về lượng code cho thanh bottom nav chuyển tab
         replaceFragment(new HomeFragment());
         binding.bottomNavigationView.setBackground(null);
 
@@ -53,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
+    //Hiển thị khay dưới khi bấm dấu cộng
     private void showBottomDialog() {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -60,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
         LinearLayout house = dialog.findViewById(R.id.house);
         LinearLayout groupusers = dialog.findViewById(R.id.groupusers);
+        LinearLayout contract = dialog.findViewById(R.id.contract);
         ImageView cancelButton = dialog.findViewById(R.id.cancelButton);
 
         house.setOnClickListener(v -> {
@@ -70,6 +75,11 @@ public class MainActivity extends AppCompatActivity {
         groupusers.setOnClickListener(v -> {
             dialog.dismiss();
             Toast.makeText(MainActivity.this, "Find people", Toast.LENGTH_SHORT).show();
+        });
+
+        contract.setOnClickListener(v -> {
+            dialog.dismiss();
+            Toast.makeText(MainActivity.this, "For Rent", Toast.LENGTH_SHORT).show();
         });
 
         cancelButton.setOnClickListener(v -> dialog.dismiss());

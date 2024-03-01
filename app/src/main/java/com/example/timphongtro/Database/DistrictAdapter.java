@@ -1,4 +1,4 @@
-package com.example.timphongtro;
+package com.example.timphongtro.Database;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,18 +7,19 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.timphongtro.R;
 
 import java.util.ArrayList;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+public class DistrictAdapter extends RecyclerView.Adapter<DistrictAdapter.MyViewHolder> {
 
     Context context;
 
     ArrayList<DataClass> list;
 
-    public MyAdapter(Context context, ArrayList<DataClass> list) {
+    public DistrictAdapter(Context context, ArrayList<DataClass> list) {
         this.context = context;
         this.list = list;
     }
@@ -26,7 +27,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(context).inflate(R.layout.city_view_holder,parent,false);
+        View v = LayoutInflater.from(context).inflate(R.layout.district_view_holder,parent,false);
         return new MyViewHolder(v);
     }
 

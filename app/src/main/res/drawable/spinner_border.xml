@@ -9,6 +9,5 @@
         android:color="@color/brighterorange"/>
 
     <corners
-            android:bottomLeftRadius="10dp"
-            android:topLeftRadius="10dp"/>
+            android:radius="10dp"/>
 </shape>
