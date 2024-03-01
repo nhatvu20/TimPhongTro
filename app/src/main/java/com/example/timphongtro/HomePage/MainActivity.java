@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
         LinearLayout house = dialog.findViewById(R.id.house);
         LinearLayout groupusers = dialog.findViewById(R.id.groupusers);
+        LinearLayout contract = dialog.findViewById(R.id.contract);
         ImageView cancelButton = dialog.findViewById(R.id.cancelButton);
 
         house.setOnClickListener(v -> {
@@ -74,6 +75,11 @@ public class MainActivity extends AppCompatActivity {
         groupusers.setOnClickListener(v -> {
             dialog.dismiss();
             Toast.makeText(MainActivity.this, "Find people", Toast.LENGTH_SHORT).show();
+        });
+
+        contract.setOnClickListener(v -> {
+            dialog.dismiss();
+            Toast.makeText(MainActivity.this, "For Rent", Toast.LENGTH_SHORT).show();
         });
 
         cancelButton.setOnClickListener(v -> dialog.dismiss());

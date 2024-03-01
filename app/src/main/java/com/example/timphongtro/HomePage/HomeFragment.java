@@ -32,8 +32,8 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
     String path = "/HaNoi";
-    RecyclerView recyclerView;
-    DatabaseReference recyclerviewdatabase, spinnerdatabase;
+    RecyclerView districtrecyclerView;
+    DatabaseReference districtdatabase, spinnerdatabase;
     DistrictAdapter districtAdapter;
     ArrayList<DataClass> list;
     Spinner spinner;
@@ -56,13 +56,13 @@ public class HomeFragment extends Fragment {
         fetchspinnerdatabase();
 
         //Lấy dữ liệu từ database truyền vào recyclerview
-        recyclerView = view.findViewById(R.id.LocationExplore);
-        recyclerviewdatabase = FirebaseDatabase.getInstance().getReference("city" + path + "/district");
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        districtrecyclerView = view.findViewById(R.id.LocationExplore);
+        districtdatabase = FirebaseDatabase.getInstance().getReference("city" + path + "/district");
+        districtrecyclerView.setHasFixedSize(true);
+        districtrecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         list = new ArrayList<>();
         districtAdapter = new DistrictAdapter(getContext(),list);
-        recyclerView.setAdapter(districtAdapter);
+        districtrecyclerView.setAdapter(districtAdapter);
         fetchrecyclerviewdatabase();
 
         //Auto Image Slider
@@ -78,7 +78,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void fetchrecyclerviewdatabase() {
-        recyclerviewdatabase.addValueEventListener(new ValueEventListener() {
+        districtdatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
