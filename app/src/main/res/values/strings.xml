@@ -12,4 +12,8 @@
     <string name="Recently">Mới đăng gần đây</string>
     <string name="Showmore">Xem thêm</string>
     <string name="Explore">Khám phá</string>
+    <string name="hoten">Họ và tên</string>
+    <string name="sdt">Số điện thoại</string>
+    <string name="dangky">Đăng ký</string>
+    <string name="dangnhap">Đăng nhập</string>
 </resources>

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "965393109018",
+    "project_id": "login-4820e",
+    "storage_bucket": "login-4820e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:965393109018:android:0e1cfa6979aa350ce541a3",
+        "android_client_info": {
+          "package_name": "com.example.timphongtro"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcFP6OFvzdQr81sVMUbBADXF1O85Ew7dA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
