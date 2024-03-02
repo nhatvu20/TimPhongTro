@@ -42,6 +42,7 @@
         android:src="@drawable/ic_add"
         app:layout_anchor="@id/bottomAppBar"
         app:maxImageSize="40dp"
-        app:tint ="@color/orange"/>
+        app:tint ="@color/orange"
+        android:contentDescription="TODO" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

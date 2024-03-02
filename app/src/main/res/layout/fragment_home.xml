@@ -57,34 +57,45 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/cardView">
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:layout_margin="10dp"
-                        android:orientation="horizontal">
+                        android:layout_margin="10dp">
 
-                        <EditText
-                            android:layout_width="wrap_content"
+                        <View
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@drawable/search_border"
-                            android:hint="Tìm kiếm tiêu đề...."
-                            android:padding="10dp">
+                            android:background="@drawable/search_border">
 
-                        </EditText>
+                        </View>
+                        <TextView
+                            android:id="@+id/searchEditText"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/search_border"
+                            android:gravity="center_vertical"
+                            android:hint="Tìm kiếm tiêu đề...."
+                            android:padding="10dp"
+                            app:layout_constraintEnd_toStartOf="@+id/cityspinner"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                        </TextView>
 
                         <Spinner
                             android:id="@+id/cityspinner"
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_marginStart="-100dp"
-                            android:layout_weight="1"
                             android:background="@drawable/spinner_border"
-                            android:paddingStart="5dp">
+                            android:paddingStart="5dp"
+                            android:elevation="2dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/searchEditText"
+                            app:layout_constraintTop_toTopOf="parent">
 
                         </Spinner>
 
-                    </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </RelativeLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 

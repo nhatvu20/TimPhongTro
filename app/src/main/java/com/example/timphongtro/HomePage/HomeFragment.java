@@ -13,7 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.content.Intent;
+import android.widget.TextView;
 
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
@@ -57,7 +60,6 @@ public class HomeFragment extends Fragment {
 
         //Lấy dữ liệu từ database truyền vào recyclerview
         districtrecyclerView = view.findViewById(R.id.LocationExplore);
-        districtdatabase = FirebaseDatabase.getInstance().getReference("city" + path + "/district");
         districtrecyclerView.setHasFixedSize(true);
         districtrecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         list = new ArrayList<>();
@@ -75,12 +77,23 @@ public class HomeFragment extends Fragment {
         slideModels.add(new SlideModel(R.drawable.image4, ScaleTypes.FIT));
 
         imageSlider.setImageList(slideModels, ScaleTypes.FIT);
+
+        TextView searchTextView = view.findViewById(R.id.searchEditText);
+        searchTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), SearchActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void fetchrecyclerviewdatabase() {
+        districtdatabase = FirebaseDatabase.getInstance().getReference("city" + path + "/district");
         districtdatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                list.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     DataClass dataClass = dataSnapshot.getValue(DataClass.class);
                     list.add(dataClass);
@@ -115,8 +128,6 @@ public class HomeFragment extends Fragment {
                             path = "/HaNoi";
                         } else if (selectedspinner.equals("Hồ Chí Minh")) {
                             path = "/HoChiMinh";
-                        } else if (selectedspinner.equals("Đà Nẵng")) {
-                            path = "DaNang";
                         }
                         fetchrecyclerviewdatabase();
                     }
