@@ -1,4 +1,4 @@
-package com.example.timphongtro;
+package com.example.timphongtro.HomePage;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

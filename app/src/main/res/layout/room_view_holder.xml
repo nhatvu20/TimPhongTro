@@ -56,56 +56,68 @@
                 app:layout_constraintTop_toTopOf="@+id/cardView2" />
 
             <TextView
-                android:textStyle="bold"
-                android:textColor="@color/red"
                 android:id="@+id/RoomCost"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="5.700.000đ/tháng"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:textColor="@color/red"
+                android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/cardView2"
                 app:layout_constraintTop_toBottomOf="@+id/PostTitle" />
 
             <TextView
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:id="@+id/BigAddress"
+                android:id="@+id/CityAddress"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="Xuân Đỉnh, Bắc Từ Liêm, Hà Nội"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Thành Phố: "
                 app:layout_constraintStart_toEndOf="@+id/cardView2"
                 app:layout_constraintTop_toBottomOf="@+id/RoomCost" />
+
+            <TextView
+                android:id="@+id/CityName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Hà Nội"
+                app:layout_constraintStart_toEndOf="@+id/CityAddress"
+                app:layout_constraintTop_toBottomOf="@+id/RoomCost" />
+
+            <TextView
+                android:id="@+id/DistrictAddress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Quận: "
+                app:layout_constraintStart_toEndOf="@+id/cardView2"
+                app:layout_constraintTop_toBottomOf="@+id/CityAddress" />
 
             <TextView
                 android:id="@+id/DistrictName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="Bắc Từ Liêm"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/cardView2"
-                app:layout_constraintTop_toBottomOf="@+id/BigAddress" />
+                android:text="Nam Từ Liêm"
+                app:layout_constraintStart_toEndOf="@+id/DistrictAddress"
+                app:layout_constraintTop_toBottomOf="@+id/CityAddress" />
 
             <TextView
-                android:id="@+id/NumberTitle"
+                android:id="@+id/DetailAddress"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="Số/tên phòng: "
                 app:layout_constraintStart_toEndOf="@+id/cardView2"
-                app:layout_constraintTop_toBottomOf="@+id/DistrictName" />
+                app:layout_constraintTop_toBottomOf="@+id/DistrictAddress" />
 
             <TextView
-                android:id="@+id/SmallAddress"
+                android:id="@+id/DetailName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="256 Xuân Đỉnh"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/NumberTitle"
-                app:layout_constraintTop_toBottomOf="@+id/DistrictName" />
+                app:layout_constraintStart_toEndOf="@+id/DetailAddress"
+                app:layout_constraintTop_toBottomOf="@+id/DistrictAddress" />
 
             <TextView
                 android:id="@+id/DienTichTitle"
@@ -114,7 +126,7 @@
                 android:layout_marginStart="8dp"
                 android:text="Diện tích: "
                 app:layout_constraintStart_toEndOf="@+id/cardView2"
-                app:layout_constraintTop_toBottomOf="@+id/NumberTitle" />
+                app:layout_constraintTop_toBottomOf="@+id/DetailAddress" />
 
             <TextView
                 android:id="@+id/DienTich"
@@ -122,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:text="40m2"
                 app:layout_constraintStart_toEndOf="@+id/DienTichTitle"
-                app:layout_constraintTop_toBottomOf="@+id/SmallAddress" />
+                app:layout_constraintTop_toBottomOf="@+id/DetailName" />
 
             <TextView
                 android:id="@+id/SizeTitle"
@@ -131,16 +143,15 @@
                 android:layout_marginStart="8dp"
                 android:text="Số người: "
                 app:layout_constraintStart_toEndOf="@+id/DienTich"
-                app:layout_constraintTop_toBottomOf="@+id/SmallAddress" />
+                app:layout_constraintTop_toBottomOf="@+id/DetailName" />
 
             <TextView
                 android:id="@+id/Size"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="4"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/SizeTitle"
-                app:layout_constraintTop_toBottomOf="@+id/SmallAddress" />
+                app:layout_constraintTop_toBottomOf="@+id/DetailName" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
