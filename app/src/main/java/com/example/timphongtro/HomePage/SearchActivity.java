@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.timphongtro.R;
-import com.example.timphongtro.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 

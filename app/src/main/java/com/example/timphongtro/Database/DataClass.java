@@ -1,7 +1,12 @@
 package com.example.timphongtro.Database;
 
 public class DataClass {
-    String name, people_room, price_room,dientich, address, detailaddress, district, posttitle;
+    String name, people_room, price_room, area_room, title_room;
+    Addresse addresse;
+
+    public Addresse getAddresse() {
+        return addresse;
+    }
 
     public String getName() {
         return name;
@@ -15,23 +20,12 @@ public class DataClass {
         return price_room;
     }
 
-    public String getDientich() {
-        return dientich;
+    public String getArea_room() {
+        return area_room;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public String getDetailaddress() {
-        return detailaddress;
-    }
-
-    public String getDistrict() {
-        return district;
-    }
-
-    public String getPosttitle() {
-        return posttitle;
+    public String getTitle_room() {
+        return title_room;
     }
 }
+
