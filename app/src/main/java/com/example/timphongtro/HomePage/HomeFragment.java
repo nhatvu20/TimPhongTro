@@ -21,7 +21,8 @@ import android.widget.Toast;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
-import com.example.timphongtro.Database.DataClass;
+import com.example.timphongtro.Database.DistrictData;
+import com.example.timphongtro.Database.RoomViewHolderData;
 import com.example.timphongtro.Database.DistrictAdapter;
 import com.example.timphongtro.Database.RoomAdapter;
 import com.example.timphongtro.R;
@@ -40,7 +41,8 @@ public class HomeFragment extends Fragment {
     DatabaseReference districtdatabase, roomdatabase, spinnerdatabase;
     DistrictAdapter districtAdapter;
     RoomAdapter roomAdapter;
-    ArrayList<DataClass> districtlist, roomlist;
+    ArrayList<RoomViewHolderData> roomlist;
+    ArrayList<DistrictData> districtlist;
     Spinner spinner;
     List<String> spinnerlist;
     ArrayAdapter<String> spinneradapter;
@@ -106,8 +108,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    DataClass dataClass = dataSnapshot.getValue(DataClass.class);
-                    roomlist.add(dataClass);
+                    RoomViewHolderData roomViewHolderData = dataSnapshot.getValue(RoomViewHolderData.class);
+                    roomlist.add(roomViewHolderData);
                 }
                 roomAdapter.notifyDataSetChanged();
             }
@@ -126,8 +128,8 @@ public class HomeFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 districtlist.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    DataClass dataClass = dataSnapshot.getValue(DataClass.class);
-                    districtlist.add(dataClass);
+                    DistrictData districtData = dataSnapshot.getValue(DistrictData.class);
+                    districtlist.add(districtData);
                 }
                 districtAdapter.notifyDataSetChanged();
             }

@@ -1,15 +1,11 @@
 package com.example.timphongtro.Database;
 
-public class DataClass {
-    String name, people_room, price_room, area_room, title_room;
+public class RoomViewHolderData {
+    String people_room, price_room, area_room, title_room;
     Addresse addresse;
 
     public Addresse getAddresse() {
         return addresse;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public String getPeople_room() {
