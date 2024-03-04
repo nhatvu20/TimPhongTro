@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/darkerwhite"
     tools:context=".HomePage.MainActivity">
 
     <FrameLayout
@@ -24,7 +23,7 @@
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/bottomNavigationView"
             app:labelVisibilityMode="labeled"
             android:background="@android:color/transparent"
