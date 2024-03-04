@@ -5,8 +5,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.timphongtro.ChungCuActivity.ChungCuFragment;
-import com.example.timphongtro.SearchPage.TroFragment;
+import com.example.timphongtro.Database.RoomViewHolderData;
+
+import java.util.ArrayList;
 
 public class ViewPagerAdapter extends FragmentStateAdapter {
 
@@ -26,7 +27,6 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
                 return new TroFragment();
         }
     }
-
     @Override
     public int getItemCount() {
         return 2;

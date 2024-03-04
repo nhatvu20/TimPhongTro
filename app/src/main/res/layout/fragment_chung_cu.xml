@@ -5,10 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChungCuActivity.ChungCuFragment">
+    tools:context=".SearchPage.ChungCuFragment">
 
     <SearchView
-        android:id="@+id/searchbar"
+        android:id="@+id/search_chung_cu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -32,7 +32,7 @@
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchbar">
+        app:layout_constraintTop_toBottomOf="@+id/search_chung_cu">
 
         <LinearLayout
             android:layout_width="match_parent"

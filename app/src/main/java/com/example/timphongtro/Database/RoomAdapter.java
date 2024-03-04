@@ -52,6 +52,10 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
         return Math.min(list.size(), maxitemcount);
     }
 
+    public void searchDataList(ArrayList<RoomViewHolderData> searchList){
+        list = searchList;
+        notifyDataSetChanged();
+    }
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView people_room, price_room, area_room, city, district, detail, title_room;

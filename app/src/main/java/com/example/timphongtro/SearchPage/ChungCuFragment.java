@@ -24,25 +24,26 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class TroFragment extends Fragment {
+public class ChungCuFragment extends Fragment {
 
-    RecyclerView trorecyclerView;
-    DatabaseReference trodatabase;
-    RoomAdapter troAdapter;
-    ArrayList<RoomViewHolderData> trolist;
+    RecyclerView chungcurecyclerView;
+    DatabaseReference chungcudatabase;
+    RoomAdapter chungcuAdapter;
+    ArrayList<RoomViewHolderData> chungculist;
     SearchView searchView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tro, container, false);
+        return inflater.inflate(R.layout.fragment_chung_cu, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        searchView = view.findViewById(R.id.search_tro);
+        searchView = view.findViewById(R.id.search_chung_cu);
         searchView.clearFocus();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -57,25 +58,25 @@ public class TroFragment extends Fragment {
                 return true;
             }
         });
-        trorecyclerView = view.findViewById(R.id.trorecyclerview);
-        trorecyclerView.setHasFixedSize(true);
-        trodatabase = FirebaseDatabase.getInstance().getReference("rooms/Tro");
-        trorecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
-        trolist = new ArrayList<>();
-        troAdapter = new RoomAdapter(getContext(), trolist);
-        trorecyclerView.setAdapter(troAdapter);
+        chungcurecyclerView = view.findViewById(R.id.chungcurecyclerview);
+        chungcurecyclerView.setHasFixedSize(true);
+        chungcudatabase = FirebaseDatabase.getInstance().getReference("rooms/ChungCuMini");
+        chungcurecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
+        chungculist = new ArrayList<>();
+        chungcuAdapter = new RoomAdapter(getContext(), chungculist);
+        chungcurecyclerView.setAdapter(chungcuAdapter);
         fetchtrorecyclerviewdatabase();
     }
 
     private void fetchtrorecyclerviewdatabase() {
-        trodatabase.addValueEventListener(new ValueEventListener() {
+        chungcudatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     RoomViewHolderData roomViewHolderData = dataSnapshot.getValue(RoomViewHolderData.class);
-                    trolist.add(roomViewHolderData);
+                    chungculist.add(roomViewHolderData);
                 }
-                troAdapter.notifyDataSetChanged();
+                chungcuAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -86,11 +87,11 @@ public class TroFragment extends Fragment {
     }
     public void searchList(String text){
         ArrayList<RoomViewHolderData> searchList = new ArrayList<>();
-        for (RoomViewHolderData roomViewHolderData: trolist){
+        for (RoomViewHolderData roomViewHolderData: chungculist){
             if (roomViewHolderData.getTitle_room().toLowerCase().contains(text.toLowerCase())){
                 searchList.add(roomViewHolderData);
             }
         }
-        troAdapter.searchDataList(searchList);
+        chungcuAdapter.searchDataList(searchList);
     }
 }
