@@ -33,9 +33,9 @@ public class TroAdapter extends RecyclerView.Adapter<TroAdapter.MyViewHolder> {
     public void onBindViewHolder(@NonNull TroAdapter.MyViewHolder holder, int position) {
         RoomViewHolderData roomViewHolderData =list.get(position);
         holder.title_room.setText(roomViewHolderData.getTitle_room());
-        holder.price_room.setText(roomViewHolderData.getPrice_room());
-        holder.area_room.setText(roomViewHolderData.getArea_room());
-        holder.people_room.setText(roomViewHolderData.getPeople_room());
+        holder.price_room.setText(String.valueOf(roomViewHolderData.getPrice_room()));
+        holder.area_room.setText(String.valueOf(roomViewHolderData.getArea_room()));
+        holder.people_room.setText(String.valueOf(roomViewHolderData.getPeople_room()));
 
         Addresse addresse = roomViewHolderData.getAddresse();
         holder.city.setText(addresse.getCity());

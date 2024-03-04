@@ -17,10 +17,10 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
 
     Context context;
 
-    ArrayList<DataClass> list;
+    ArrayList<RoomViewHolderData> list;
     int maxitemcount = 4;
 
-    public RoomAdapter(Context context, ArrayList<DataClass> list) {
+    public RoomAdapter(Context context, ArrayList<RoomViewHolderData> list) {
         this.context = context;
         this.list = list;
     }
@@ -34,13 +34,13 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        DataClass dataClass = list.get(position);
-        holder.title_room.setText(dataClass.getTitle_room());
-        holder.price_room.setText(String.valueOf(dataClass.getPrice_room()));
-        holder.area_room.setText(String.valueOf(dataClass.getArea_room()));
-        holder.people_room.setText(String.valueOf(dataClass.getPeople_room()));
+        RoomViewHolderData roomViewHolderData = list.get(position);
+        holder.title_room.setText(roomViewHolderData.getTitle_room());
+        holder.price_room.setText(String.valueOf(roomViewHolderData.getPrice_room()));
+        holder.area_room.setText(String.valueOf(roomViewHolderData.getArea_room()));
+        holder.people_room.setText(String.valueOf(roomViewHolderData.getPeople_room()));
 
-        Addresse addresse = dataClass.getAddresse();
+        Addresse addresse = roomViewHolderData.getAddresse();
         holder.city.setText(addresse.getCity());
         holder.district.setText(addresse.getDistrict());
         holder.detail.setText(addresse.getDetail());

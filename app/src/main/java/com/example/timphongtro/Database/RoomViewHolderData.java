@@ -1,6 +1,6 @@
 package com.example.timphongtro.Database;
 
-public class DataClass {
+public class RoomViewHolderData {
     String name, title_room;
     int price_room, people_room, area_room;
     Addresse addresse;

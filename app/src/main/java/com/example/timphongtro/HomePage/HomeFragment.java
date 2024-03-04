@@ -21,10 +21,10 @@ import android.widget.Toast;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
-import com.example.timphongtro.Database.DataClass;
 import com.example.timphongtro.Database.DistrictAdapter;
+import com.example.timphongtro.Database.DistrictData;
 import com.example.timphongtro.Database.RoomAdapter;
-import com.example.timphongtro.Database.ShowmoreAdapter;
+import com.example.timphongtro.Database.RoomViewHolderData;
 import com.example.timphongtro.R;
 import com.example.timphongtro.ShowMore;
 import com.google.firebase.database.DataSnapshot;
@@ -41,7 +41,8 @@ public class HomeFragment extends Fragment {
     DatabaseReference districtdatabase, roomdatabase, spinnerdatabase;
     DistrictAdapter districtAdapter;
     RoomAdapter roomAdapter;
-    ArrayList<DataClass> districtlist, roomlist;
+    ArrayList<DistrictData> districtlist;
+    ArrayList<RoomViewHolderData> roomlist;
     Spinner spinner;
     ArrayList<String> spinnerlist;
     ArrayAdapter<String> spinneradapter;
@@ -115,15 +116,15 @@ public class HomeFragment extends Fragment {
                         // Lấy dữ liệu từ child "Tro"
                         if (dataSnapshot.getKey().equals("Tro")) {
                             for (DataSnapshot troSnapshot : dataSnapshot.getChildren()) {
-                                DataClass dataClass = troSnapshot.getValue(DataClass.class);
-                                roomlist.add(dataClass);
+                                RoomViewHolderData roomViewHolderData = troSnapshot.getValue(RoomViewHolderData.class);
+                                roomlist.add(roomViewHolderData);
                             }
                         }
                         // Lấy dữ liệu từ child "ChungCu"
                         else if (dataSnapshot.getKey().equals("ChungCuMini")) {
                             for (DataSnapshot chungCuSnapshot : dataSnapshot.getChildren()) {
-                                DataClass dataClass = chungCuSnapshot.getValue(DataClass.class);
-                                roomlist.add(dataClass);
+                                RoomViewHolderData roomViewHolderData = chungCuSnapshot.getValue(RoomViewHolderData.class);
+                                roomlist.add(roomViewHolderData);
                             }
                         }
                     }
@@ -147,8 +148,8 @@ public class HomeFragment extends Fragment {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     if (dataSnapshot.getKey().equals("district")) {
                         for (DataSnapshot districtSnapshot : dataSnapshot.getChildren()) {
-                            DataClass dataClass = districtSnapshot.getValue(DataClass.class);
-                            districtlist.add(dataClass);
+                            DistrictData districtData = districtSnapshot.getValue(DistrictData.class);
+                            districtlist.add(districtData);
                         }
                     }
                 }
