@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Tìm phòng trọ</string>
+    <string name="app_name">RentRoom</string>
     <string name="bottom_home">Trang chủ</string>
     <string name="bottom_service">Dịch vụ</string>
     <string name="bottom_notification">Thông báo</string>

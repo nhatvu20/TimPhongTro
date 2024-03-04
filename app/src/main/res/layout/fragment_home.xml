@@ -4,29 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/darkerwhite">
+    android:background="@color/darkerwhite"
+    tools:context=".HomePage.HomeFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <RelativeLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cardView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/orange">
+                    android:background="@color/orange"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <com.denzcoskun.imageslider.ImageSlider
                         android:id="@+id/ImageSlider"
@@ -35,10 +35,13 @@
                         app:iss_auto_cycle="true"
                         app:iss_delay="1000"
                         app:iss_period="1000"
-                        app:iss_title_background="@drawable/default_gradient">
+                        app:iss_title_background="@drawable/default_gradient"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
                     </com.denzcoskun.imageslider.ImageSlider>
-                </RelativeLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <RelativeLayout
                     android:id="@+id/searchbox"
@@ -46,43 +49,44 @@
                     android:layout_height="200dp"
                     android:layout_below="@+id/cardView"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginStart="30dp"
                     android:layout_marginTop="-50dp"
-                    android:layout_marginEnd="40dp"
-                    android:background="@drawable/search_bg">
+                    android:layout_marginEnd="30dp"
+                    android:background="@drawable/search_bg"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardView">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginStart="10dp">
+                        android:layout_height="50dp"
+                        android:layout_margin="10dp"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/search_border"
+                            android:hint="Tìm kiếm tiêu đề...."
+                            android:padding="10dp">
+
+                        </EditText>
 
                         <Spinner
-                            android:paddingStart="5dp"
-                            android:background="@drawable/spinner_border"
-                            android:layout_width="match_parent"
+                            android:id="@+id/cityspinner"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="2">
+                            android:layout_marginStart="-100dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/spinner_border"
+                            android:paddingStart="5dp">
 
                         </Spinner>
 
-                        <SearchView
-                            android:id="@+id/searchbar"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/search_border"
-                            android:closeIcon="@drawable/ic_clear"
-                            android:focusable="false"
-                            android:iconifiedByDefault="false"
-                            android:queryHint="Tìm kiếm..."
-                            android:searchHintIcon="@null"
-                            android:searchIcon="@null"/>
                     </LinearLayout>
                 </RelativeLayout>
-            </RelativeLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/Explore"
@@ -94,7 +98,7 @@
             android:layout_weight="1"
             android:text="@string/Explore"
             android:textColor="@color/black"
-            android:textSize="25sp"
+            android:textSize="23sp"
             android:textStyle="bold" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -105,7 +109,7 @@
                 android:id="@+id/LocationExplore"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scrollbars="horizontal"
+                android:scrollbars="none"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -127,16 +131,16 @@
                 android:layout_weight="1"
                 android:text="@string/Recently"
                 android:textColor="@color/black"
-                android:textSize="25sp"
+                android:textSize="23sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/showmore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/Showmore"
                 android:textColor="@color/red"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -154,8 +158,3 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 </ScrollView>
-
-
-
-
-
