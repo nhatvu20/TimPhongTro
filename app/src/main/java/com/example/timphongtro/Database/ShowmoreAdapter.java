@@ -13,14 +13,13 @@ import com.example.timphongtro.R;
 
 import java.util.ArrayList;
 
-public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> {
+public class ShowmoreAdapter extends RecyclerView.Adapter<ShowmoreAdapter.MyViewHolder> {
 
     Context context;
 
     ArrayList<DataClass> list;
-    int maxitemcount = 4;
 
-    public RoomAdapter(Context context, ArrayList<DataClass> list) {
+    public ShowmoreAdapter(Context context, ArrayList<DataClass> list) {
         this.context = context;
         this.list = list;
     }
@@ -49,7 +48,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
 
     @Override
     public int getItemCount() {
-        return Math.min(list.size(), maxitemcount);
+        return list.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{

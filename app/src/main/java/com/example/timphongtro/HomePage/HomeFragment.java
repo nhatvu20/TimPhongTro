@@ -24,7 +24,9 @@ import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.timphongtro.Database.DataClass;
 import com.example.timphongtro.Database.DistrictAdapter;
 import com.example.timphongtro.Database.RoomAdapter;
+import com.example.timphongtro.Database.ShowmoreAdapter;
 import com.example.timphongtro.R;
+import com.example.timphongtro.ShowMore;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,7 +34,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class HomeFragment extends Fragment {
     String path = "/HaNoi";
@@ -42,7 +43,7 @@ public class HomeFragment extends Fragment {
     RoomAdapter roomAdapter;
     ArrayList<DataClass> districtlist, roomlist;
     Spinner spinner;
-    List<String> spinnerlist;
+    ArrayList<String> spinnerlist;
     ArrayAdapter<String> spinneradapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,13 +68,17 @@ public class HomeFragment extends Fragment {
 
         //Bấm vào ô search nhảy sang activity mới
         TextView searchTextView = view.findViewById(R.id.searchEditText);
-        searchTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), SearchActivity.class);
-                startActivity(intent);
-            }
+        searchTextView.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), SearchActivity.class);
+            startActivity(intent);
         });
+
+        TextView showmore = view.findViewById(R.id.showmore);
+        showmore.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), ShowMore.class);
+            startActivity(intent);
+        });
+
 
         //Lấy dữ liệu từ database truyền vào spinner
         spinner = view.findViewById(R.id.cityspinner);
@@ -93,7 +98,7 @@ public class HomeFragment extends Fragment {
         //Lấy dữ liệu từ database truyền vào roomrecyclerview
         roomrecyclerView = view.findViewById(R.id.RoomrecyclerView);
         roomrecyclerView.setHasFixedSize(true);
-        roomdatabase = FirebaseDatabase.getInstance().getReference("rooms/Tro");
+        roomdatabase = FirebaseDatabase.getInstance().getReference("rooms");
         roomrecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         roomlist = new ArrayList<>();
         roomAdapter = new RoomAdapter(getContext(), roomlist);
@@ -105,9 +110,23 @@ public class HomeFragment extends Fragment {
         roomdatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    DataClass dataClass = dataSnapshot.getValue(DataClass.class);
-                    roomlist.add(dataClass);
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    if (dataSnapshot.getKey().equals("Tro") || dataSnapshot.getKey().equals("ChungCuMini")) {
+                        // Lấy dữ liệu từ child "Tro"
+                        if (dataSnapshot.getKey().equals("Tro")) {
+                            for (DataSnapshot troSnapshot : dataSnapshot.getChildren()) {
+                                DataClass dataClass = troSnapshot.getValue(DataClass.class);
+                                roomlist.add(dataClass);
+                            }
+                        }
+                        // Lấy dữ liệu từ child "ChungCu"
+                        else if (dataSnapshot.getKey().equals("ChungCuMini")) {
+                            for (DataSnapshot chungCuSnapshot : dataSnapshot.getChildren()) {
+                                DataClass dataClass = chungCuSnapshot.getValue(DataClass.class);
+                                roomlist.add(dataClass);
+                            }
+                        }
+                    }
                 }
                 roomAdapter.notifyDataSetChanged();
             }
@@ -120,14 +139,18 @@ public class HomeFragment extends Fragment {
     }
 
     private void fetchcityrecyclerviewdatabase() {
-        districtdatabase = FirebaseDatabase.getInstance().getReference("city" + path + "/district");
+        districtdatabase = FirebaseDatabase.getInstance().getReference("city" + path);
         districtdatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 districtlist.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    DataClass dataClass = dataSnapshot.getValue(DataClass.class);
-                    districtlist.add(dataClass);
+                    if (dataSnapshot.getKey().equals("district")) {
+                        for (DataSnapshot districtSnapshot : dataSnapshot.getChildren()) {
+                            DataClass dataClass = districtSnapshot.getValue(DataClass.class);
+                            districtlist.add(dataClass);
+                        }
+                    }
                 }
                 districtAdapter.notifyDataSetChanged();
             }

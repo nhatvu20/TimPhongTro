@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="10dp">
+    android:layout_height="wrap_content"
+    android:padding="5dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -60,11 +60,21 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="5.700.000đ/tháng"
+                android:text="5.700.000"
                 android:textColor="@color/red"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/cardView2"
                 app:layout_constraintTop_toBottomOf="@+id/PostTitle" />
+
+            <TextView
+                android:id="@+id/currency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="đ/tháng"
+                android:textStyle="bold"
+                android:textColor="@color/red"
+                app:layout_constraintStart_toEndOf="@+id/RoomCost"
+                app:layout_constraintTop_toTopOf="@+id/RoomCost" />
 
             <TextView
                 android:id="@+id/CityAddress"
@@ -115,6 +125,8 @@
                 android:id="@+id/DetailName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="256 Xuân Đỉnh"
                 app:layout_constraintStart_toEndOf="@+id/DetailAddress"
                 app:layout_constraintTop_toBottomOf="@+id/DistrictAddress" />
