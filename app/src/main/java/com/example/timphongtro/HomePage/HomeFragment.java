@@ -26,6 +26,7 @@ import com.example.timphongtro.Database.DistrictData;
 import com.example.timphongtro.Database.RoomAdapter;
 import com.example.timphongtro.Database.RoomViewHolderData;
 import com.example.timphongtro.R;
+import com.example.timphongtro.SearchPage.SearchActivity;
 import com.example.timphongtro.ShowMore;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

@@ -1,4 +1,4 @@
-package com.example.timphongtro.TroActivity;
+package com.example.timphongtro.SearchPage;
 
 import android.os.Bundle;
 

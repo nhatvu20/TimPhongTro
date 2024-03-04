@@ -18,7 +18,7 @@
             android:name=".ShowMore"
             android:exported="false" />
         <activity
-            android:name=".HomePage.SearchActivity"
+            android:name=".SearchPage.SearchActivity"
             android:exported="false" />
         <activity
             android:name=".HomePage.MainActivity"
