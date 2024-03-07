@@ -21,6 +21,9 @@
             android:name=".ShowMore"
             android:exported="false" />
         <activity
+            android:name=".PostRoomActivity"
+            android:exported="false" />
+        <activity
             android:name=".HomePage.MainActivity"
             android:exported="true" />
         <activity

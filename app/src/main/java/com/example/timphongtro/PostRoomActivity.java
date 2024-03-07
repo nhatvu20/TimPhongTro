@@ -2,12 +2,15 @@ package com.example.timphongtro;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
@@ -15,6 +18,7 @@ import com.example.timphongtro.Database.Addresse;
 import com.example.timphongtro.Database.ImagesClass;
 import com.example.timphongtro.Database.Room;
 import com.example.timphongtro.Database.furnitureClass;
+import com.example.timphongtro.HomePage.MainActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -22,6 +26,8 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class PostRoomActivity extends AppCompatActivity {
+
+    ImageView btnBack;
     EditText edtTitleRoom;
 
     //Còn cần spinner cho address
@@ -64,6 +70,7 @@ public class PostRoomActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_room);
+        btnBack = (ImageView) this.<View>findViewById(R.id.btnBack);
 
         edtTitleRoom = (EditText) this.<View>findViewById(R.id.edtTitleRoom);
         edtPrice = (EditText) this.<View>findViewById(R.id.edtPrice);
@@ -108,6 +115,15 @@ public class PostRoomActivity extends AppCompatActivity {
 
         btn_create_room = (Button) this.<View>findViewById(R.id.btn_create_room);
 
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent main = new Intent(PostRoomActivity.this, MainActivity.class);
+                startActivity(main);
+            }
+        });
         btn_create_room.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
