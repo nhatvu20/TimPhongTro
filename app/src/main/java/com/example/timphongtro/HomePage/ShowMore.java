@@ -1,4 +1,4 @@
-package com.example.timphongtro;
+package com.example.timphongtro.HomePage;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.timphongtro.Database.RoomViewHolderData;
 import com.example.timphongtro.Database.ShowmoreAdapter;
-import com.example.timphongtro.HomePage.MainActivity;
+import com.example.timphongtro.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
