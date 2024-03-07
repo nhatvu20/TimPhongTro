@@ -13,18 +13,15 @@ import com.example.timphongtro.R;
 
 import java.util.ArrayList;
 
-public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> {
+public class TroAdapter extends RecyclerView.Adapter<TroAdapter.MyViewHolder> {
 
     Context context;
-
     ArrayList<RoomViewHolderData> list;
-    int maxitemcount = 4;
 
-    public RoomAdapter(Context context, ArrayList<RoomViewHolderData> list) {
+    public TroAdapter(Context context, ArrayList<RoomViewHolderData> list){
         this.context = context;
         this.list = list;
     }
-
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -33,8 +30,8 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        RoomViewHolderData roomViewHolderData = list.get(position);
+    public void onBindViewHolder(@NonNull TroAdapter.MyViewHolder holder, int position) {
+        RoomViewHolderData roomViewHolderData =list.get(position);
         holder.title_room.setText(roomViewHolderData.getTitle_room());
         holder.price_room.setText(String.valueOf(roomViewHolderData.getPrice_room()));
         holder.area_room.setText(String.valueOf(roomViewHolderData.getArea_room()));
@@ -44,15 +41,14 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
         holder.city.setText(addresse.getCity());
         holder.district.setText(addresse.getDistrict());
         holder.detail.setText(addresse.getDetail());
-
     }
 
     @Override
     public int getItemCount() {
-        return Math.min(list.size(), maxitemcount);
+        return list.size();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView people_room, price_room, area_room, city, district, detail, title_room;
         public MyViewHolder(@NonNull View itemView) {
@@ -67,4 +63,3 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
         }
     }
 }
-
