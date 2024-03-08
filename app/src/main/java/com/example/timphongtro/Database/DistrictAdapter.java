@@ -36,7 +36,7 @@ public class DistrictAdapter extends RecyclerView.Adapter<DistrictAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         DistrictData districtData = list.get(position);
-        Glide.with(context).load(districtData.getImg_district()).override(120,150).centerCrop().into(holder.img_district);
+        Glide.with(context).load(districtData.getImg_district()).centerCrop().into(holder.img_district);
         holder.name.setText(districtData.getName());
     }
 
