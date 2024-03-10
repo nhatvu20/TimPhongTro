@@ -1,5 +1,4 @@
 <resources>
-    <string name="layout_dangky"></string>
     <string name="app_name">RentRoom</string>
     <string name="bottom_home">Trang chủ</string>
     <string name="bottom_service">Dịch vụ</string>
@@ -13,6 +12,7 @@
     <string name="Recently">Mới đăng gần đây</string>
     <string name="Showmore">Xem thêm</string>
     <string name="Explore">Khám phá</string>
+    <string name="title_info_post">Thông tin đăng bài</string>
     <string name="hoten">Họ và tên</string>
     <string name="sdt">Số điện thoại</string>
     <string name="btn_dangky">Đăng ký</string>

@@ -15,10 +15,13 @@
         android:theme="@style/Theme.TimPhongTro"
         tools:targetApi="31">
         <activity
+            android:name=".HomePage.SearchActivity"
+            android:exported="false" />
+        <activity
             android:name=".ShowMore"
             android:exported="false" />
         <activity
-            android:name=".HomePage.SearchActivity"
+            android:name=".PostRoomActivity"
             android:exported="false" />
         <activity
             android:name=".HomePage.MainActivity"
