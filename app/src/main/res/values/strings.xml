@@ -1,4 +1,5 @@
 <resources>
+    <string name="layout_dangky"></string>
     <string name="app_name">RentRoom</string>
     <string name="bottom_home">Trang chủ</string>
     <string name="bottom_service">Dịch vụ</string>
@@ -14,6 +15,13 @@
     <string name="Explore">Khám phá</string>
     <string name="hoten">Họ và tên</string>
     <string name="sdt">Số điện thoại</string>
-    <string name="dangky">Đăng ký</string>
-    <string name="dangnhap">Đăng nhập</string>
+    <string name="btn_dangky">Đăng ký</string>
+    <string name="btn_dangnhap">Đăng nhập</string>
+    <string name="email">Email</string>
+    <string name="matkhau">Mật khẩu</string>
+    <string name="back"><![CDATA[<]]></string>
+    <string name="forgotpassword">Quên mật khẩu?</string>
+    <string name="textview_dangky">Chưa có tài khoản?</string>
+    <string name="dangxuat">Đăng xuất</string>
+    <string name="txtviewdangnhap">Đã có tài khoản?</string>
 </resources>

@@ -11,26 +11,36 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.timphongtro.HomePage.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
-    private EditText txtSDT;
-    private Button btnDangky, btnDangnhap;
+    private EditText txtemail;
+    private EditText txtpassword;
+    private Button btnDangnhap;
     private FirebaseAuth mAuth;
+
+    private TextView textviewDangky;
+    private LinearLayout layout_forgotpassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         mAuth = FirebaseAuth.getInstance();
-        txtSDT = (EditText) findViewById(R.id.txtSDT);
-        btnDangky = (Button) findViewById(R.id.btnDangky);
+        txtemail = (EditText) findViewById(R.id.txtemail);
+        txtpassword = (EditText) findViewById(R.id.txtpassword);
+        textviewDangky = (TextView) findViewById(R.id.textviewDangky);
         btnDangnhap = (Button) findViewById(R.id.btnDangnhap);
+        layout_forgotpassword = (LinearLayout) findViewById(R.id.layout_forgotpassword);
 
         btnDangnhap.setOnClickListener(new View.OnClickListener() {
 
@@ -40,28 +50,34 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             private void Dangnhap() {
-                String txtSDTedit;
-                txtSDTedit = txtSDT.getText().toString();
-                if (TextUtils.isEmpty(txtSDTedit)) {
-                    Toast.makeText(getApplicationContext(), "Vui long nhap so dien thoai.", Toast.LENGTH_SHORT).show();
+                String email;
+                String password;
+                email = txtemail.getText().toString();
+                password = txtpassword.getText().toString();
+                if (TextUtils.isEmpty(email)) {
+                    Toast.makeText(getApplicationContext(), "Vui lòng nhập Email.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                mAuth.signInWithCustomToken(txtSDTedit).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                if (TextUtils.isEmpty(password)) {
+                    Toast.makeText(getApplicationContext(), "Vui lòng nhập Mật khẩu.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), "Dang nhap thanh cong", LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Đăng nhập thành công", LENGTH_SHORT).show();
                             Intent i = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(i);
                         } else {
-                            Toast.makeText(getApplicationContext(), "Dang nhap khong thanh cong", LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Đăng nhập không thành công", LENGTH_SHORT).show();
                         }
                     }
                 });
             }
 
         });
-        btnDangky.setOnClickListener(new View.OnClickListener() {
+        textviewDangky.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Dangky();
