@@ -46,6 +46,7 @@ public class HomeFragment extends Fragment {
     Spinner spinner;
     ArrayList<String> spinnerlist;
     ArrayAdapter<String> spinneradapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -155,7 +156,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 districtlist.clear();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     if (dataSnapshot.getKey().equals("district")) {
                         for (DataSnapshot districtSnapshot : dataSnapshot.getChildren()) {
                             DistrictData districtData = districtSnapshot.getValue(DistrictData.class);
@@ -177,11 +178,11 @@ public class HomeFragment extends Fragment {
         spinnerdatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot:snapshot.getChildren()) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     String spinnername = dataSnapshot.child("name").getValue(String.class);
                     spinnerlist.add(spinnername);
                 }
-                spinneradapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item,spinnerlist);
+                spinneradapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, spinnerlist);
                 spinneradapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner.setAdapter(spinneradapter);
 
@@ -189,7 +190,7 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         String selectedspinner = spinnerlist.get(position);
-                        if (selectedspinner.equals("Hà Nội")){
+                        if (selectedspinner.equals("Hà Nội")) {
                             path = "/HaNoi";
                         } else if (selectedspinner.equals("Hồ Chí Minh")) {
                             path = "/HoChiMinh";

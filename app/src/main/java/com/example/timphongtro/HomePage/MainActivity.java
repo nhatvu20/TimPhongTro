@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.timphongtro.PostRoomActivity;
 import com.example.timphongtro.R;
 import com.example.timphongtro.databinding.ActivityMainBinding;
 
@@ -80,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
         contract.setOnClickListener(v -> {
             dialog.dismiss();
             Toast.makeText(MainActivity.this, "For Rent", Toast.LENGTH_SHORT).show();
+            Intent post = new Intent(this, PostRoomActivity.class);
+            startActivity(post);
         });
 
         cancelButton.setOnClickListener(v -> dialog.dismiss());

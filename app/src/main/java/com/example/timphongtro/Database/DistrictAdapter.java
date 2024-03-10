@@ -29,6 +29,7 @@ public class DistrictAdapter extends RecyclerView.Adapter<DistrictAdapter.MyView
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
         View v = LayoutInflater.from(context).inflate(R.layout.district_view_holder,parent,false);
         return new MyViewHolder(v);
     }
