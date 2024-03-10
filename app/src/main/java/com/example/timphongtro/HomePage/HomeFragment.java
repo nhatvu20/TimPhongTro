@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.content.Intent;
 import android.widget.TextView;
@@ -79,6 +80,16 @@ public class HomeFragment extends Fragment {
             startActivity(intent);
         });
 
+        LinearLayout find_tro = view.findViewById(R.id.find_tro);
+        LinearLayout find_chungcu = view.findViewById(R.id.find_chungcu);
+
+        find_tro.setOnClickListener(v -> {
+            Toast.makeText(getContext(), "In Developing...", Toast.LENGTH_SHORT).show();
+        });
+
+        find_chungcu.setOnClickListener(v -> {
+            Toast.makeText(getContext(), "In Developing...", Toast.LENGTH_SHORT).show();
+        });
 
         //Lấy dữ liệu từ database truyền vào spinner
         spinner = view.findViewById(R.id.cityspinner);

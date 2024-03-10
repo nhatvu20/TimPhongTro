@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/darkerwhite"
-    android:paddingBottom="50dp"
     tools:context=".HomePage.HomeFragment">
 
     <LinearLayout
@@ -237,5 +236,9 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="100dp" />
     </LinearLayout>
 </ScrollView>
