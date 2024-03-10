@@ -1,14 +1,14 @@
 package com.example.timphongtro.Database;
 
 
-public class furnitureClass {
+public class FurnitureClass {
     private String name;
     private String img;
 
-    public furnitureClass( ) {
+    public FurnitureClass( ) {
     }
 
-    public furnitureClass(String name, String img) {
+    public FurnitureClass(String name, String img) {
         this.name = name;
         this.img = img;
     }

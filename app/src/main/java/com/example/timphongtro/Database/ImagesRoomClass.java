@@ -1,7 +1,7 @@
 package com.example.timphongtro.Database;
 
 
-public class ImagesClass {
+public class ImagesRoomClass {
     private String img1;
     private String img2;
     private String img3;
@@ -48,10 +48,10 @@ public class ImagesClass {
         this.video = video;
     }
 
-    public ImagesClass() {
+    public ImagesRoomClass() {
     }
 
-    public ImagesClass(String img1, String img2, String img3, String img4, String video) {
+    public ImagesRoomClass(String img1, String img2, String img3, String img4, String video) {
         this.img1 = img1;
         this.img2 = img2;
         this.img3 = img3;

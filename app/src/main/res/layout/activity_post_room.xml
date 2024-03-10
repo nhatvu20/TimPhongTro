@@ -324,6 +324,7 @@
                                     android:layout_weight="1"
                                     android:background="@drawable/border_change_state_btn"
                                     android:button="@null"
+                                    android:checked="true"
                                     android:drawableStart="@drawable/ic_nam"
                                     android:gravity="center"
                                     android:padding="10dp"
@@ -337,6 +338,7 @@
                                     android:layout_weight="1"
                                     android:background="@drawable/border_change_state_btn"
                                     android:button="@null"
+                                    android:checked="true"
                                     android:drawableStart="@drawable/ic_nu"
                                     android:gravity="center"
                                     android:padding="10dp"
@@ -614,7 +616,7 @@
                                         android:layout_weight="1"
                                         android:ems="10"
                                         android:hint="Nhập mô tả chi tiết"
-                                        android:inputType="text" />
+                                        android:inputType="textMultiLine" />
                                 </LinearLayout>
 
                             </LinearLayout>
@@ -788,7 +790,7 @@
                                     android:drawableStart="@drawable/ic_ladder"
                                     android:gravity="center"
                                     android:padding="10dp"
-                                    android:text="Vệ sinh khép kín"
+                                    android:text="Ban công"
                                     android:textStyle="bold" />
 
                                 <CheckBox
@@ -994,7 +996,7 @@
                                     android:textStyle="bold" />
 
                                 <CheckBox
-                                    android:id="@+id/checkbosofa"
+                                    android:id="@+id/checkboxsofa"
                                     android:layout_width="120dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"

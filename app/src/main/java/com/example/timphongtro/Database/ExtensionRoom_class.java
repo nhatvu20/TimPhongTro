@@ -1,15 +1,13 @@
 package com.example.timphongtro.Database;
 
-import android.net.Uri;
-
-public class service_roomClass {
+public class ExtensionRoom_class {
     private String name;
-    private Uri img;
+    private String img;
 
-    public service_roomClass() {
+    public ExtensionRoom_class() {
     }
 
-    public service_roomClass(String name, Uri img) {
+    public ExtensionRoom_class(String name, String img) {
         this.name = name;
         this.img = img;
     }
@@ -22,11 +20,13 @@ public class service_roomClass {
         this.name = name;
     }
 
-    public Uri getImg() {
+    public String getImg() {
         return img;
     }
 
-    public void setImg(Uri img) {
+    public void setImg(String img) {
         this.img = img;
     }
+
+
 }

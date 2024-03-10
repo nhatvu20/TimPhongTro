@@ -21,15 +21,18 @@ public class Room {
     private int type_room;
     private String phone;
 
-    private ImagesClass images; //lưu ảnh và video cho bài viết
-    private ArrayList<furnitureClass> furniture;
+    private int floor;
 
-    private ArrayList<service_roomClass> services_room;
+    private ImagesRoomClass images; //lưu ảnh và video cho bài viết
+    private ArrayList<FurnitureClass> furniture;
+
+    private ArrayList<Service_roomClass> services_room;
+    private ArrayList<ExtensionRoom_class> extension_room;
 
     public Room() {
     }
 
-    public Room(String id_room, String title_room, long price_room, Addresse address, String area_room, long deposit_room, String description_room, String gender_room, int park_slot, int person_in_room, int status_room, int type_room, String phone, ImagesClass images, ArrayList<furnitureClass> furniture, ArrayList<service_roomClass> services_room) {
+    public Room(String id_room, String title_room, long price_room, Addresse address, String area_room, long deposit_room, String description_room, String gender_room, int park_slot, int person_in_room, int status_room, int type_room, String phone, ImagesRoomClass images, ArrayList<FurnitureClass> furniture, ArrayList<Service_roomClass> services_room, ArrayList<ExtensionRoom_class> extension_room,int floor) {
         this.id_room = id_room;
         this.title_room = title_room;
         this.price_room = price_room;
@@ -46,6 +49,8 @@ public class Room {
         this.images = images;
         this.furniture = furniture;
         this.services_room = services_room;
+        this.extension_room = extension_room;
+        this.floor = floor;
     }
 
     public String getId_room() {
@@ -152,27 +157,27 @@ public class Room {
         this.phone = phone;
     }
 
-    public ImagesClass getImages() {
+    public ImagesRoomClass getImages() {
         return images;
     }
 
-    public void setImages(ImagesClass images) {
+    public void setImages(ImagesRoomClass images) {
         this.images = images;
     }
 
-    public ArrayList<furnitureClass> getFurniture() {
+    public ArrayList<FurnitureClass> getFurniture() {
         return furniture;
     }
 
-    public void setFurniture(ArrayList<furnitureClass> furniture) {
+    public void setFurniture(ArrayList<FurnitureClass> furniture) {
         this.furniture = furniture;
     }
 
-    public ArrayList<service_roomClass> getServices_room() {
+    public ArrayList<Service_roomClass> getServices_room() {
         return services_room;
     }
 
-    public void setServices_room(ArrayList<service_roomClass> services_room) {
+    public void setServices_room(ArrayList<Service_roomClass> services_room) {
         this.services_room = services_room;
     }
 }
