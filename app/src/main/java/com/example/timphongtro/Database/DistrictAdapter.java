@@ -17,9 +17,9 @@ public class DistrictAdapter extends RecyclerView.Adapter<DistrictAdapter.MyView
 
     Context context;
 
-    ArrayList<DataClass> list;
+    ArrayList<DistrictData> list;
 
-    public DistrictAdapter(Context context, ArrayList<DataClass> list) {
+    public DistrictAdapter(Context context, ArrayList<DistrictData> list) {
         this.context = context;
         this.list = list;
     }
@@ -33,8 +33,8 @@ public class DistrictAdapter extends RecyclerView.Adapter<DistrictAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        DataClass dataClass = list.get(position);
-        holder.name.setText(dataClass.getName());
+        DistrictData districtData = list.get(position);
+        holder.name.setText(districtData.getName());
     }
 
     @Override
