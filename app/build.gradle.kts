@@ -55,4 +55,6 @@ dependencies {
     implementation ("com.github.denzcoskun:ImageSlideshow:0.1.2") // Auto Image Slider
     implementation ("androidx.cardview:cardview:1.0.0") // Cardview
     implementation ("com.github.bumptech.glide:glide:4.16.0") //Load ảnh từ firebase về
+    implementation ("com.google.firebase:firebase-storage:20.3.0")
+
 }
