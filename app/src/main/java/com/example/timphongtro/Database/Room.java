@@ -177,6 +177,22 @@ public class Room {
         return services_room;
     }
 
+    public int getFloor() {
+        return floor;
+    }
+
+    public void setFloor(int floor) {
+        this.floor = floor;
+    }
+
+    public ArrayList<ExtensionRoom_class> getExtension_room() {
+        return extension_room;
+    }
+
+    public void setExtension_room(ArrayList<ExtensionRoom_class> extension_room) {
+        this.extension_room = extension_room;
+    }
+
     public void setServices_room(ArrayList<Service_roomClass> services_room) {
         this.services_room = services_room;
     }
