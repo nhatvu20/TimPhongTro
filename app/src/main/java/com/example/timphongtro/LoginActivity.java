@@ -2,12 +2,16 @@ package com.example.timphongtro;
 
 import static android.widget.Toast.LENGTH_SHORT;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.IntentSender;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,7 +20,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.timphongtro.HomePage.MainActivity;
+import com.google.android.gms.auth.api.identity.BeginSignInRequest;
+import com.google.android.gms.auth.api.identity.BeginSignInResult;
+import com.google.android.gms.auth.api.identity.Identity;
+import com.google.android.gms.auth.api.identity.SignInClient;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,6 +40,12 @@ public class LoginActivity extends AppCompatActivity {
     private TextView textviewDangky;
     private LinearLayout layout_forgotpassword;
 
+    private Button btnGGSignin;
+    private SignInClient oneTapClient;
+    private BeginSignInRequest signInRequest;
+
+    private static final int REQ_ONE_TAP = 100;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +57,41 @@ public class LoginActivity extends AppCompatActivity {
         textviewDangky = (TextView) findViewById(R.id.textviewDangky);
         btnDangnhap = (Button) findViewById(R.id.btnDangnhap);
         layout_forgotpassword = (LinearLayout) findViewById(R.id.layout_forgotpassword);
+        btnGGSignin = (Button) findViewById(R.id.btnGGSignin);
 
+
+        oneTapClient = Identity.getSignInClient(this);
+        signInRequest = BeginSignInRequest.builder()
+                        .setPasswordRequestOptions(BeginSignInRequest.PasswordRequestOptions.builder()
+                                .setSupported(true)
+                                .build())
+                                .setGoogleIdTokenRequestOptions(BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+                                        .setSupported(true)
+                                      //  .setServerClientId(getString(R.string.default_web_client_id))
+                                        .setFilterByAuthorizedAccounts(false)
+                                        .build())
+                .setAutoSelectEnabled(true)
+                .build();
+        public void btnGGSignin(View view){
+            oneTapClient.beginSignIn(signInRequest).addOnSuccessListener(this, new OnSuccessListener<BeginSignInResult>() {
+                @Override
+                public void onSuccess(BeginSignInResult beginSignInResult) {
+                    try {
+                        startIntentSenderForResult(beginSignInResult.getPendingIntent().getIntentSender(),REQ_ONE_TAP,null,0,0,0);
+
+                    }
+                    catch(IntentSender.SendIntentException e) {
+                        Log.e(TAG,"Couldn't start One Tap UI: "+e.getLocalizedMessage());
+                    }
+                }
+            })
+                    .addOnFailureListener(this, new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d(TAG,e.getLocalizedMessage());
+                        }
+                    });
+        }
         btnDangnhap.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -75,8 +125,8 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
             }
-
         });
+//        btnGGSignin
         textviewDangky.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
