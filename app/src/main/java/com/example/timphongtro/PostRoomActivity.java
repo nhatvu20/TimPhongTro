@@ -190,7 +190,9 @@ public class PostRoomActivity extends AppCompatActivity {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                onClickPushData();
+                                if (!isUploadImg1 || !isUploadImg2) onClickPushData();
+                                else
+                                    Toast.makeText(getApplicationContext(),"Vui lòng chọn 2 tấm ảnh",Toast.LENGTH_SHORT);
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -331,7 +333,7 @@ public class PostRoomActivity extends AppCompatActivity {
             isValid = false;
             radiobtnTro.setError("Vui lòng chọn loại phòng");
         }
-        DatabaseReference myRef = database.getReference("roomsTest/" + path);
+        DatabaseReference myRef = database.getReference("rooms/" + path);
 
         if (radiobtnPhongTrong.isChecked() || radiobtnDaChoThue.isChecked()) {
             if (radiobtnDaChoThue.isChecked()) {

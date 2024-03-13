@@ -143,6 +143,7 @@
                             android:ems="10"
                             android:hint="Nhập địa chỉ"
                             android:inputType="text" />
+
                     </LinearLayout>
 
                 </LinearLayout>
@@ -322,7 +323,7 @@
                                 <ImageView
                                     android:id="@+id/imageViewP1"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:src="@drawable/ic_upload" />
 
@@ -350,7 +351,7 @@
                                 <ImageView
                                     android:id="@+id/imageViewP2"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:background="@drawable/border"
                                     android:src="@drawable/ic_upload" />
@@ -360,13 +361,6 @@
                     </androidx.cardview.widget.CardView>
 
                 </LinearLayout>
-
-                <Button
-                    android:id="@+id/btnUploadImg"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Upload" />
 
             </LinearLayout>
 
