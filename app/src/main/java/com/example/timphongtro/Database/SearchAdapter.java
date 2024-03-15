@@ -17,9 +17,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
 
     Context context;
 
-    ArrayList<RoomViewHolderData> list;
+    ArrayList<Room> list;
 
-    public SearchAdapter(Context context, ArrayList<RoomViewHolderData> list) {
+    public SearchAdapter(Context context, ArrayList<Room> list) {
         this.context = context;
         this.list = list;
     }
@@ -33,13 +33,13 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        RoomViewHolderData roomViewHolderData = list.get(position);
-        holder.title_room.setText(roomViewHolderData.getTitle_room());
-        holder.price_room.setText(String.valueOf(roomViewHolderData.getPrice_room()));
-        holder.area_room.setText(String.valueOf(roomViewHolderData.getArea_room()));
-        holder.people_room.setText(String.valueOf(roomViewHolderData.getPeople_room()));
+        Room room = list.get(position);
+        holder.title_room.setText(room.getTitle_room());
+        holder.price_room.setText(String.valueOf(room.getPrice_room()));
+        holder.area_room.setText(String.valueOf(room.getArea_room()));
+        holder.people_room.setText(String.valueOf(room.getPerson_in_room()));
 
-        Addresse addresse = roomViewHolderData.getAddresse();
+        Addresse addresse = room.getAddress();
         holder.city.setText(addresse.getCity());
         holder.district.setText(addresse.getDistrict());
         holder.detail.setText(addresse.getDetail());
@@ -51,7 +51,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
         return list.size();
     }
 
-    public void searchDataList(ArrayList<RoomViewHolderData> searchList){
+    public void searchDataList(ArrayList<Room> searchList){
         list = searchList;
         notifyDataSetChanged();
     }

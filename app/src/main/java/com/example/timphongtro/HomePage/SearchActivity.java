@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.timphongtro.Database.Room;
 import com.example.timphongtro.Database.RoomAdapter;
 import com.example.timphongtro.Database.RoomViewHolderData;
 import com.example.timphongtro.Database.SearchAdapter;
@@ -27,7 +28,7 @@ public class SearchActivity extends AppCompatActivity {
     RecyclerView roomrecyclerView;
     DatabaseReference roomdatabase;
     SearchAdapter searchAdapter;
-    ArrayList<RoomViewHolderData> roomlist;
+    ArrayList<Room> roomlist;
     SearchView searchView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,15 +75,15 @@ public class SearchActivity extends AppCompatActivity {
                         // Lấy dữ liệu từ child "Tro"
                         if (dataSnapshot.getKey().equals("Tro")) {
                             for (DataSnapshot troSnapshot : dataSnapshot.getChildren()) {
-                                RoomViewHolderData roomViewHolderData = troSnapshot.getValue(RoomViewHolderData.class);
-                                roomlist.add(roomViewHolderData);
+                                Room room = troSnapshot.getValue(Room.class);
+                                roomlist.add(room);
                             }
                         }
                         // Lấy dữ liệu từ child "ChungCu"
                         else if (dataSnapshot.getKey().equals("ChungCuMini")) {
                             for (DataSnapshot chungCuSnapshot : dataSnapshot.getChildren()) {
-                                RoomViewHolderData roomViewHolderData = chungCuSnapshot.getValue(RoomViewHolderData.class);
-                                roomlist.add(roomViewHolderData);
+                                Room room = chungCuSnapshot.getValue(Room.class);
+                                roomlist.add(room);
                             }
                         }
                     }
@@ -98,10 +99,10 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void searchList(String text){
-        ArrayList<RoomViewHolderData> searchList = new ArrayList<>();
-        for (RoomViewHolderData roomViewHolderData: roomlist){
-            if (roomViewHolderData.getTitle_room().toLowerCase().contains(text.toLowerCase())){
-                searchList.add(roomViewHolderData);
+        ArrayList<Room> searchList = new ArrayList<>();
+        for (Room room: roomlist){
+            if (room.getTitle_room().toLowerCase().contains(text.toLowerCase())){
+                searchList.add(room);
             }
         }
         searchAdapter.searchDataList(searchList);
