@@ -17,10 +17,10 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
 
     Context context;
 
-    ArrayList<RoomViewHolderData> list;
+    ArrayList<Room> list;
     int maxitemcount = 4;
 
-    public RoomAdapter(Context context, ArrayList<RoomViewHolderData> list) {
+    public RoomAdapter(Context context, ArrayList<Room> list) {
         this.context = context;
         this.list = list;
     }
@@ -34,13 +34,13 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        RoomViewHolderData roomViewHolderData = list.get(position);
-        holder.title_room.setText(roomViewHolderData.getTitle_room());
-        holder.price_room.setText(String.valueOf(roomViewHolderData.getPrice_room()));
-        holder.area_room.setText(String.valueOf(roomViewHolderData.getArea_room()));
-        holder.people_room.setText(String.valueOf(roomViewHolderData.getPeople_room()));
+        Room room = list.get(position);
+        holder.title_room.setText(room.getTitle_room());
+        holder.price_room.setText(String.valueOf(room.getPrice_room()));
+        holder.area_room.setText(String.valueOf(room.getArea_room()));
+        holder.people_room.setText(String.valueOf(room.getPerson_in_room()));
 
-        Addresse addresse = roomViewHolderData.getAddresse();
+        Addresse addresse = room.getAddress();
         holder.city.setText(addresse.getCity());
         holder.district.setText(addresse.getDistrict());
         holder.detail.setText(addresse.getDetail());
@@ -52,10 +52,6 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
         return Math.min(list.size(), maxitemcount);
     }
 
-    public void searchDataList(ArrayList<RoomViewHolderData> searchList){
-        list = searchList;
-        notifyDataSetChanged();
-    }
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView people_room, price_room, area_room, city, district, detail, title_room;

@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.timphongtro.Database.Room;
 import com.example.timphongtro.Database.RoomViewHolderData;
 import com.example.timphongtro.Database.ShowmoreAdapter;
 import com.example.timphongtro.R;
@@ -24,7 +25,7 @@ public class ShowMore extends AppCompatActivity {
     RecyclerView roomrecyclerView;
     DatabaseReference roomdatabase;
     ShowmoreAdapter showmoreAdapter;
-    ArrayList<RoomViewHolderData> roomlist;
+    ArrayList<Room> roomlist;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,15 +56,15 @@ public class ShowMore extends AppCompatActivity {
                         // Lấy dữ liệu từ child "Tro"
                         if (dataSnapshot.getKey().equals("Tro")) {
                             for (DataSnapshot troSnapshot : dataSnapshot.getChildren()) {
-                                RoomViewHolderData roomViewHolderData = troSnapshot.getValue(RoomViewHolderData.class);
-                                roomlist.add(roomViewHolderData);
+                                Room room = troSnapshot.getValue(Room.class);
+                                roomlist.add(room);
                             }
                         }
                         // Lấy dữ liệu từ child "ChungCu"
                         else if (dataSnapshot.getKey().equals("ChungCuMini")) {
                             for (DataSnapshot chungCuSnapshot : dataSnapshot.getChildren()) {
-                                RoomViewHolderData roomViewHolderData = chungCuSnapshot.getValue(RoomViewHolderData.class);
-                                roomlist.add(roomViewHolderData);
+                                Room room = chungCuSnapshot.getValue(Room.class);
+                                roomlist.add(room);
                             }
                         }
                     }
