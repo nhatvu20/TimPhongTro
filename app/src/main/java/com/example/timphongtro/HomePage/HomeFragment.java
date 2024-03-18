@@ -120,6 +120,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void fetchroomrecyclerviewdatabse() {
+        spinnerlist.clear();
         roomdatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
