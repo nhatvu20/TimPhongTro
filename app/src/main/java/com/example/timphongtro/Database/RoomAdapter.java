@@ -4,11 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.timphongtro.R;
 
 import java.util.ArrayList;
@@ -18,7 +20,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
     Context context;
 
     ArrayList<Room> list;
-    int maxitemcount = 4;
+    int maxitemcount = 10;
 
     public RoomAdapter(Context context, ArrayList<Room> list) {
         this.context = context;
@@ -40,6 +42,9 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
         holder.area_room.setText(String.valueOf(room.getArea_room()));
         holder.people_room.setText(String.valueOf(room.getPerson_in_room()));
 
+        ImagesRoomClass imagesRoomClass = room.getImages();
+        Glide.with(context).load(imagesRoomClass.getImg1()).centerCrop().into(holder.img_post);
+
         Addresse addresse = room.getAddress();
         holder.city.setText(addresse.getCity());
         holder.district.setText(addresse.getDistrict());
@@ -55,6 +60,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView people_room, price_room, area_room, city, district, detail, title_room;
+        ImageView img_post;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             title_room = itemView.findViewById(R.id.PostTitle);
@@ -64,6 +70,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
             district = itemView.findViewById(R.id.DistrictName);
             detail = itemView.findViewById(R.id.DetailName);
             people_room = itemView.findViewById(R.id.Size);
+            img_post = itemView.findViewById(R.id.img_post);
         }
     }
 }
