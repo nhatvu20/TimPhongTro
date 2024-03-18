@@ -71,17 +71,17 @@ public class MainActivity extends AppCompatActivity {
 
         house.setOnClickListener(v -> {
             dialog.dismiss();
-            Toast.makeText(MainActivity.this, "Find a place", Toast.LENGTH_SHORT).show();
+            Intent search = new Intent(this,SearchActivity.class);
+            startActivity(search);
         });
 
         groupusers.setOnClickListener(v -> {
             dialog.dismiss();
-            Toast.makeText(MainActivity.this, "Find people", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "In Developping", Toast.LENGTH_SHORT).show();
         });
 
         contract.setOnClickListener(v -> {
             dialog.dismiss();
-            Toast.makeText(MainActivity.this, "For Rent", Toast.LENGTH_SHORT).show();
             Intent post = new Intent(this, PostRoomActivity.class);
             startActivity(post);
         });
