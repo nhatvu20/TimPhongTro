@@ -1,14 +1,17 @@
 package com.example.timphongtro.Database;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.timphongtro.DetailRoomActivity;
 import com.example.timphongtro.R;
 
 import java.util.ArrayList;
@@ -45,6 +48,15 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
         holder.district.setText(addresse.getDistrict());
         holder.detail.setText(addresse.getDetail());
 
+        holder.cardViewRoom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent detailRoom = new Intent(context, DetailRoomActivity.class);
+                detailRoom.putExtra("Title",list.get(holder.getAdapterPosition()).getTitle_room());
+                context.startActivity(detailRoom);
+            }
+        });
+
     }
 
     @Override
@@ -55,6 +67,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView people_room, price_room, area_room, city, district, detail, title_room;
+        CardView cardViewRoom;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             title_room = itemView.findViewById(R.id.PostTitle);
@@ -64,6 +77,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
             district = itemView.findViewById(R.id.DistrictName);
             detail = itemView.findViewById(R.id.DetailName);
             people_room = itemView.findViewById(R.id.Size);
+            cardViewRoom = itemView.findViewById(R.id.cardViewRoom);
         }
     }
 }
