@@ -3,6 +3,7 @@ package com.example.timphongtro;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
@@ -11,7 +12,7 @@ import com.denzcoskun.imageslider.models.SlideModel;
 import java.util.ArrayList;
 
 public class DetailRoomActivity extends AppCompatActivity {
-
+    TextView textViewTitle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,5 +26,11 @@ public class DetailRoomActivity extends AppCompatActivity {
         slideModels.add(new SlideModel(R.drawable.image4, ScaleTypes.FIT));
 
         imageSlider.setImageList(slideModels, ScaleTypes.FIT);
+
+        textViewTitle = (TextView) findViewById(R.id.textViewTitle);
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null){
+            textViewTitle.setText(bundle.getString("Title"));
+        }
     }
 }

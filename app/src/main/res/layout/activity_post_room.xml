@@ -101,6 +101,7 @@
                             android:ems="10"
                             android:hint="Nhập tiêu đề bài đăng"
                             android:inputType="text"
+                            android:text="Phòng trọ giá hạt rẻ"
                             android:textCursorDrawable="@color/orange" />
                     </LinearLayout>
                 </LinearLayout>
@@ -213,7 +214,8 @@
                             android:layout_weight="1"
                             android:ems="10"
                             android:hint="Nhập địa chỉ"
-                            android:inputType="text" />
+                            android:inputType="text"
+                            android:text="Ngõ 10" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -289,7 +291,8 @@
                                 android:layout_weight="1"
                                 android:ems="10"
                                 android:hint="Nhập giá phòng"
-                                android:inputType="number" />
+                                android:inputType="number"
+                                android:text="1000000" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -330,7 +333,8 @@
                                 android:layout_weight="1"
                                 android:ems="10"
                                 android:hint="Nhập tiền cọc"
-                                android:inputType="number" />
+                                android:inputType="number"
+                                android:text="800000" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -394,7 +398,7 @@
                                 <ImageView
                                     android:id="@+id/imageViewP1"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="250dp"
                                     android:layout_weight="1"
                                     android:src="@drawable/ic_upload" />
 
@@ -422,7 +426,7 @@
                                 <ImageView
                                     android:id="@+id/imageViewP2"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="250dp"
                                     android:layout_weight="1"
                                     android:background="@drawable/border"
                                     android:src="@drawable/ic_upload" />
@@ -567,6 +571,7 @@
                                 android:layout_weight="1"
                                 android:background="@drawable/border_change_state_btn"
                                 android:button="@null"
+                                android:checked="true"
                                 android:gravity="center"
                                 android:text="Trọ"
                                 android:textStyle="bold" />
@@ -611,7 +616,8 @@
                                 android:layout_weight="1"
                                 android:ems="10"
                                 android:hint="Nhập diện tích"
-                                android:inputType="number" />
+                                android:inputType="number"
+                                android:text="20" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -654,7 +660,8 @@
                                 android:layout_weight="1"
                                 android:ems="10"
                                 android:hint="Nhập số điện thoại"
-                                android:inputType="phone" />
+                                android:inputType="phone"
+                                android:text="0964259203" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -696,7 +703,8 @@
                                 android:layout_weight="1"
                                 android:ems="10"
                                 android:hint="Nhập tầng"
-                                android:inputType="number" />
+                                android:inputType="number"
+                                android:text="2" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -739,7 +747,8 @@
                                 android:layout_weight="1"
                                 android:ems="10"
                                 android:hint="Nhập số Người/Phòng"
-                                android:inputType="number" />
+                                android:inputType="number"
+                                android:text="2" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -780,7 +789,8 @@
                                 android:layout_weight="1"
                                 android:ems="10"
                                 android:hint="Nhập mô tả chi tiết"
-                                android:inputType="textMultiLine" />
+                                android:inputType="textMultiLine"
+                                android:text="Phòng siêu đẹp" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -822,7 +832,8 @@
                                 android:layout_weight="1"
                                 android:ems="10"
                                 android:hint="Nhập số chỗ để xe"
-                                android:inputType="number" />
+                                android:inputType="number"
+                                android:text="2" />
                         </LinearLayout>
 
                     </LinearLayout>

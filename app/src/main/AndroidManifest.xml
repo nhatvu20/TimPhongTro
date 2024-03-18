@@ -34,6 +34,9 @@
             android:name=".PostRoomActivity"
             android:exported="true" />
         <activity
+            android:name=".DetailRoomActivity"
+            android:exported="true" />
+        <activity
             android:name=".SplashScreen"
             android:exported="true"
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
