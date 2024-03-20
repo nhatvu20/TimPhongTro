@@ -46,7 +46,6 @@
                     android:id="@+id/imageView"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_weight="1"
                     android:src="@drawable/ic_heart_thin_icon" />
 
             </LinearLayout>
@@ -314,7 +313,7 @@
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:src="@drawable/ic_extension" />
+                        android:src="@drawable/icon_service_color" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -500,6 +499,46 @@
                     android:id="@+id/recycleviewFuniture"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:background="@drawable/border_grey"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="5dp"
+                    tools:paddingTop="5dp">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_extension" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:gravity="center"
+                        android:text="Tiện ích"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycleviewExtension"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
             </LinearLayout>
 
             <LinearLayout

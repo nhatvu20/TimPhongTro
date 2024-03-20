@@ -47,11 +47,6 @@ public class DetailRoomActivity extends AppCompatActivity {
         textViewInternet = findViewById(R.id.textViewInternet);
         textViewElectric = findViewById(R.id.textViewElectric);
 
-////        Room roomData = (Room) getIntent().getSerializableExtra("roomData");
-//        Room roomData = (Room) getIntent().getParcelableExtra("roomData");
-//        String title = roomData.getTitle_room().toString();
-//        textViewTitle.setText(title);
-
         if (bundle != null) {
             String roomString = bundle.getString("DataRoom");
             Gson gson = new Gson();
@@ -73,22 +68,13 @@ public class DetailRoomActivity extends AppCompatActivity {
             textViewElectric.setText(String.valueOf(roomData.getPrice_electric()));
 
 
-
-            String img1 = bundle.getString("Image1", "");
-            String img2 = bundle.getString("Image2", "");
-            String IdRoom = bundle.getString("Id_Room");
-
-            if (!TextUtils.isEmpty(img1)) {
-                slideModels.add(new SlideModel(img1, ScaleTypes.FIT));
-            }
-
-            if (!TextUtils.isEmpty(img2)) {
-                slideModels.add(new SlideModel(img2, ScaleTypes.FIT));
-            }
+            slideModels.add(new SlideModel(roomData.getImages().getImg1(), ScaleTypes.FIT));
+            slideModels.add(new SlideModel(roomData.getImages().getImg2(), ScaleTypes.FIT));
+            slideModels.add(new SlideModel(roomData.getImages().getImg3(), ScaleTypes.FIT));
+            slideModels.add(new SlideModel(roomData.getImages().getImg4(), ScaleTypes.FIT));
 
             imageSlider.setImageList(slideModels, ScaleTypes.FIT);
 
-//            roomRef.child("f")
             ArrayList<FurnitureClass> furnitures = roomData.getFurniture();
 
             furnitureAdapter = new FurnitureAdapter(DetailRoomActivity.this, furnitures);

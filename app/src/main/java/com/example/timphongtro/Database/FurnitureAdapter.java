@@ -37,21 +37,20 @@ public class FurnitureAdapter extends RecyclerView.Adapter<FurnitureAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolderFurniture holder, int position) {
         holder.titleFurniture.setText(list.get(holder.getAdapterPosition()).getName());
-//        if(!"".equals(list.get(holder.getAdapterPosition()).getImg())){
-//            Glide.with(context)
-//                    .load(list.get(holder.getAdapterPosition()).getImg())
-//                    .apply(new RequestOptions()
-//                            .centerCrop()
-//                            .diskCacheStrategy(DiskCacheStrategy.ALL)) // để lưu ảnh trong bộ nhớ cache.
-//                    .into(holder.imageViewFuniture);
-        String svgPath = list.get(holder.getAdapterPosition()).getImg();
-        Uri svgUri = Uri.parse(svgPath);
-
-
+        if(!"".equals(list.get(holder.getAdapterPosition()).getImg())){
+            Glide.with(context)
+                    .load(list.get(holder.getAdapterPosition()).getImg())
+                    .apply(new RequestOptions()
+                            .centerCrop()
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)) // để lưu ảnh trong bộ nhớ cache.
+                    .into(holder.imageViewFuniture);
+//        String svgPath = list.get(holder.getAdapterPosition()).getImg();
+//        Uri svgUri = Uri.parse(svgPath);
+//
 //        Glide.with(context)
 //                .load(svgUri)
 //                .into(holder.imageViewFuniture);
-////        }
+        }
     }
 
     @Override

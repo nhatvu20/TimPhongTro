@@ -62,9 +62,9 @@ public class PostRoomActivity extends AppCompatActivity {
 
     ImageView uploadPicture1, uploadPicture2;
     String imageURL1;
-    String imageURL2;
+//    String imageURL2;
     Uri uri;
-    Uri uri2;
+//    Uri uri2;
     Spinner spinnerCity, spinnerDistrict, spinnerWard;
 
     boolean isUploadImg1;
@@ -125,7 +125,7 @@ public class PostRoomActivity extends AppCompatActivity {
         btn_create_room = (Button) this.<View>findViewById(R.id.btn_create_room);
 
         uploadPicture1 = (ImageView) findViewById(R.id.imageViewP1);
-        uploadPicture2 = (ImageView) findViewById(R.id.imageViewP2);
+//        uploadPicture2 = (ImageView) findViewById(R.id  .imageViewP2);
         isUploadImg1 = false;
 //        isUploadImg2 = false;
 
@@ -180,19 +180,19 @@ public class PostRoomActivity extends AppCompatActivity {
                 }
             }
         });
-        ActivityResultLauncher<Intent> activityResultLauncher2 = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-            @Override
-            public void onActivityResult(ActivityResult result) {
-                if (result.getResultCode() == Activity.RESULT_OK) {
-                    Intent data = result.getData();
-                    uri2 = data.getData();
-                    uploadPicture2.setImageURI(uri2);
-                    isUploadImg2 = true;
-                } else {
-                    Toast.makeText(PostRoomActivity.this, "No image selected", Toast.LENGTH_SHORT);
-                }
-            }
-        });
+//        ActivityResultLauncher<Intent> activityResultLauncher2 = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+//            @Override
+//            public void onActivityResult(ActivityResult result) {
+//                if (result.getResultCode() == Activity.RESULT_OK) {
+//                    Intent data = result.getData();
+//                    uri2 = data.getData();
+//                    uploadPicture2.setImageURI(uri2);
+//                    isUploadImg2 = true;
+//                } else {
+//                    Toast.makeText(PostRoomActivity.this, "No image selected", Toast.LENGTH_SHORT);
+//                }
+//            }
+//        });
         btn_create_room.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -230,14 +230,14 @@ public class PostRoomActivity extends AppCompatActivity {
                 activityResultLauncher.launch(photoPicker);
             }
         });
-        uploadPicture2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent photoPicker = new Intent(Intent.ACTION_PICK);
-                photoPicker.setType("image/*");
-                activityResultLauncher2.launch(photoPicker);
-            }
-        });
+//        uploadPicture2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent photoPicker = new Intent(Intent.ACTION_PICK);
+//                photoPicker.setType("image/*");
+//                activityResultLauncher2.launch(photoPicker);
+//            }
+//        });
 
     }
 
@@ -288,7 +288,7 @@ public class PostRoomActivity extends AppCompatActivity {
 
     public void saveImage() {
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("roomImgage").child(Objects.requireNonNull(uri.getLastPathSegment()));
-        StorageReference storageReference2 = FirebaseStorage.getInstance().getReference().child("roomImgage").child(Objects.requireNonNull(uri2.getLastPathSegment()));
+//        StorageReference storageReference2 = FirebaseStorage.getInstance().getReference().child("roomImgage").child(Objects.requireNonNull(uri2.getLastPathSegment()));
         AlertDialog.Builder builder = new AlertDialog.Builder(PostRoomActivity.this);
         builder.setCancelable(false);
         builder.setView(R.layout.progress_layout);
@@ -301,22 +301,6 @@ public class PostRoomActivity extends AppCompatActivity {
                 while (!uriTask.isComplete()) ;
                 Uri urlImage = uriTask.getResult();
                 imageURL1 = String.valueOf(urlImage);
-                dialog.dismiss();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                dialog.dismiss();
-
-            }
-        });
-        storageReference2.putFile(uri2).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                while (!uriTask.isComplete()) ;
-                Uri urlImage2 = uriTask.getResult();
-                imageURL2 = String.valueOf(urlImage2);
                 onClickPushData();
                 dialog.dismiss();
             }
@@ -327,6 +311,22 @@ public class PostRoomActivity extends AppCompatActivity {
 
             }
         });
+//        storageReference2.putFile(uri2).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//            @Override
+//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+//                while (!uriTask.isComplete()) ;
+//                Uri urlImage2 = uriTask.getResult();
+//                imageURL2 = String.valueOf(urlImage2);
+//                dialog.dismiss();
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                dialog.dismiss();
+//
+//            }
+//        });
 
     }
 
@@ -490,7 +490,7 @@ public class PostRoomActivity extends AppCompatActivity {
             furnitures.add(new FurnitureClass(checkboxsofa.getText().toString(), "https://firebasestorage.googleapis.com/v0/b/my-application-67ef3.appspot.com/o/icon_png%2Fic-sofa.png?alt=media&token=f9bba804-271b-4740-b28c-d7d89d083d6f"));
         }
 
-        ImagesRoomClass images = new ImagesRoomClass(imageURL1, imageURL2, "", "", "");
+        ImagesRoomClass images = new ImagesRoomClass(imageURL1, imageURL1, imageURL1, imageURL1, "");
 
         ArrayList<ExtensionRoom_class> extensions_room = new ArrayList<>();
         if (checkboxtoilet.isChecked()) {
