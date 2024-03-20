@@ -29,10 +29,13 @@ import com.example.timphongtro.Database.DistrictData;
 import com.example.timphongtro.Database.Room;
 import com.example.timphongtro.Database.RoomAdapter;
 import com.example.timphongtro.Database.RoomViewHolderData;
+import com.example.timphongtro.LoginActivity;
 import com.example.timphongtro.PostRoomActivity;
 import com.example.timphongtro.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -56,6 +59,7 @@ public class HomeFragment extends Fragment {
     ArrayList<String> spinnerlist;
     ArrayAdapter<String> spinneradapter;
     FirebaseStorage storage = FirebaseStorage.getInstance();
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,8 +90,16 @@ public class HomeFragment extends Fragment {
         //Bấm vào ô search nhảy sang activity mới
         TextView searchTextView = view.findViewById(R.id.searchEditText);
         searchTextView.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), SearchActivity.class);
-            startActivity(intent);
+            FirebaseUser user = firebaseAuth.getCurrentUser();
+            if (user != null) {
+                Intent intent = new Intent(getContext(), SearchActivity.class);
+                startActivity(intent);
+            }
+            else {
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                startActivity(intent);
+            }
+
         });
 
         TextView showmore = view.findViewById(R.id.showmore);

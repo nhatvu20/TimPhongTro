@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    private FirebaseUser user = firebaseAuth.getCurrentUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +48,8 @@ public class MainActivity extends AppCompatActivity {
             } else if (item.getItemId() == R.id.notification) {
                 replaceFragment(new NotificationFragment());
             } else if (item.getItemId() == R.id.profile) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     replaceFragment(new ProfileFragment());
-
                 }
                 else {
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
@@ -60,7 +59,15 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
-        binding.fab.setOnClickListener(v -> showBottomDialog());
+        binding.fab.setOnClickListener(v -> {
+            if (user != null) {
+                showBottomDialog();
+            }
+            else {
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void replaceFragment(Fragment fragment) {
@@ -94,8 +101,8 @@ public class MainActivity extends AppCompatActivity {
 
         contract.setOnClickListener(v -> {
             dialog.dismiss();
-            Intent post = new Intent(this, PostRoomActivity.class);
-            startActivity(post);
+                Intent post = new Intent(this, PostRoomActivity.class);
+                startActivity(post);
         });
 
         cancelButton.setOnClickListener(v -> dialog.dismiss());
