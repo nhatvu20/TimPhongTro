@@ -73,6 +73,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
                     typeRoomStr = "Chung cư mini";
                 }
                 detailRoom.putExtra("TypeRoom",typeRoomStr);
+                detailRoom.putExtra("TypeRoomInt",typeRoom);
                 detailRoom.putExtra("Floor",list.get(holder.getAdapterPosition()).getFloor());
                 detailRoom.putExtra("Area",list.get(holder.getAdapterPosition()).getArea_room());
                 detailRoom.putExtra("Deposit",list.get(holder.getAdapterPosition()).getDeposit_room());

@@ -24,17 +24,20 @@ public class Room {
     private String phone;
 
     private int floor;
+    private long price_electric;
+    private long price_water;
+    private long price_internet;
 
     private ImagesRoomClass images; //lưu ảnh và video cho bài viết
     private ArrayList<FurnitureClass> furniture;
 
-    private ArrayList<Service_roomClass> services_room;
+    //    private ArrayList<Service_roomClass> services_room;
     private ArrayList<ExtensionRoom_class> extension_room;
 
     public Room() {
     }
 
-    public Room(String id_room, String title_room, long price_room, Addresse address, String area_room, long deposit_room, String description_room, String gender_room, int park_slot, int person_in_room, int status_room, int type_room, String phone, ImagesRoomClass images, ArrayList<FurnitureClass> furniture, ArrayList<Service_roomClass> services_room, ArrayList<ExtensionRoom_class> extension_room,int floor) {
+    public Room(String id_room, String title_room, long price_room, Addresse address, String area_room, long deposit_room, String description_room, String gender_room, int park_slot, int person_in_room, int status_room, int type_room, String phone, int floor, ImagesRoomClass images, ArrayList<FurnitureClass> furniture, ArrayList<ExtensionRoom_class> extension_room, long price_electric, long price_water, long price_internet) {
         this.id_room = id_room;
         this.title_room = title_room;
         this.price_room = price_room;
@@ -48,11 +51,37 @@ public class Room {
         this.status_room = status_room;
         this.type_room = type_room;
         this.phone = phone;
+        this.floor = floor;
+        this.price_electric = price_electric;
+        this.price_water = price_water;
+        this.price_internet = price_internet;
         this.images = images;
         this.furniture = furniture;
-        this.services_room = services_room;
         this.extension_room = extension_room;
-        this.floor = floor;
+    }
+
+    public long getPrice_electric() {
+        return price_electric;
+    }
+
+    public void setPrice_electric(long price_electric) {
+        this.price_electric = price_electric;
+    }
+
+    public long getPrice_water() {
+        return price_water;
+    }
+
+    public void setPrice_water(long price_water) {
+        this.price_water = price_water;
+    }
+
+    public long getPrice_internet() {
+        return price_internet;
+    }
+
+    public void setPrice_internet(long price_internet) {
+        this.price_internet = price_internet;
     }
 
     public String getId_room() {
@@ -175,10 +204,6 @@ public class Room {
         this.furniture = furniture;
     }
 
-    public ArrayList<Service_roomClass> getServices_room() {
-        return services_room;
-    }
-
     public int getFloor() {
         return floor;
     }
@@ -193,10 +218,6 @@ public class Room {
 
     public void setExtension_room(ArrayList<ExtensionRoom_class> extension_room) {
         this.extension_room = extension_room;
-    }
-
-    public void setServices_room(ArrayList<Service_roomClass> services_room) {
-        this.services_room = services_room;
     }
 
     @Override

@@ -30,7 +30,7 @@ import com.example.timphongtro.Database.ExtensionRoom_class;
 import com.example.timphongtro.Database.ImagesRoomClass;
 import com.example.timphongtro.Database.Room;
 import com.example.timphongtro.Database.FurnitureClass;
-import com.example.timphongtro.Database.Service_roomClass;
+//import com.example.timphongtro.Database.Service_roomClass;
 import com.example.timphongtro.HomePage.MainActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -330,6 +330,21 @@ public class PostRoomActivity extends AppCompatActivity {
 
     }
 
+    String getUriImage(String nameImg) {
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("icon_png/"+nameImg+".png");
+
+        // Lấy URI của tệp tin
+        final String[] fileUri = {""};
+        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                // URI của tệp tin
+                fileUri[0] = uri.toString();
+            }
+        });
+        return fileUri[0];
+    }
+
     void onClickPushData() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 //        DatabaseReference myRef = database.getReference("roomsTest/Tro");
@@ -342,7 +357,7 @@ public class PostRoomActivity extends AppCompatActivity {
         String district = spinnerDistrict.getSelectedItem().toString();
         String detail = edtAddress.getText().toString();
         String ward = "";
-        String address_combine = detail + ", " + ward + ", " + district + ", " + city;
+        String address_combine = detail + ", " + district + ", " + city;
 
         Addresse address = new Addresse(city, district, detail, ward, address_combine);
         String area_room = edtArea.getText().toString();
@@ -466,16 +481,16 @@ public class PostRoomActivity extends AppCompatActivity {
         // Them noi that
         ArrayList<FurnitureClass> furnitures = new ArrayList<>();
         if (checkbox_air_condition.isChecked()) {
-            furnitures.add(new FurnitureClass(checkbox_air_condition.getText().toString(), "https://firebasestorage.googleapis.com/v0/b/my-application-67ef3.appspot.com/o/icon%2Fic-Wardrobe.svg?alt=media&token=0853bfec-58f6-4865-acb0-8892729708c8"));
+            furnitures.add(new FurnitureClass(checkbox_air_condition.getText().toString(), getUriImage("ic-air-condittion")));
         }
         if (checkbox_heater.isChecked()) {
-            furnitures.add(new FurnitureClass(checkbox_heater.getText().toString(), "https://firebasestorage.googleapis.com/v0/b/my-application-67ef3.appspot.com/o/icon%2Fic-heater.svg?alt=media&token=a79c86fb-e9a6-4bd7-8d3b-5332b75de499"));
+            furnitures.add(new FurnitureClass(checkbox_heater.getText().toString(), getUriImage("ic-heater")));
         }
         if (checkbox_curtain.isChecked()) {
-            furnitures.add(new FurnitureClass(checkbox_curtain.getText().toString(), "https://firebasestorage.googleapis.com/v0/b/my-application-67ef3.appspot.com/o/ic-curtain.svg?alt=media&token=fb16bddd-da81-4a9c-bcdf-4bf2b3b13439"));
+            furnitures.add(new FurnitureClass(checkbox_curtain.getText().toString(), getUriImage("ic-curtain")));
         }
         if (checkboxfridge.isChecked()) {
-            furnitures.add(new FurnitureClass(checkboxfridge.getText().toString(), "https://firebasestorage.googleapis.com/v0/b/my-application-67ef3.appspot.com/o/icon%2Fic-fridge.svg?alt=media&token=88261dd0-bbb6-4bb2-83e7-cd7a19722f7b"));
+            furnitures.add(new FurnitureClass(checkboxfridge.getText().toString(),getUriImage("ic-fridge") ));
         }
         if (checkboxbed.isChecked()) {
             furnitures.add(new FurnitureClass(checkboxbed.getText().toString(), "https://firebasestorage.googleapis.com/v0/b/my-application-67ef3.appspot.com/o/icon%2Fic-bed.svg?alt=media&token=8d7dd976-7514-4f97-b3f6-c90023ca6b1a"));
@@ -491,11 +506,6 @@ public class PostRoomActivity extends AppCompatActivity {
         }
 
         ImagesRoomClass images = new ImagesRoomClass(imageURL1, imageURL2, "", "", "");
-
-        ArrayList<Service_roomClass> services_room = new ArrayList<>();
-        services_room.add(new Service_roomClass("Mạng", "https://firebasestorage.googleapis.com/v0/b/my-application-67ef3.appspot.com/o/icon%2Fic-internet.svg?alt=media&token=1bb413e5-56c5-4ef6-b010-2edb959377d0", "đ/phòng", Long.parseLong(edtInternet.getText().toString())));
-        services_room.add(new Service_roomClass("Điện", "https://firebasestorage.googleapis.com/v0/b/my-application-67ef3.appspot.com/o/icon%2Fic-electric.svg?alt=media&token=f8126a05-c4fd-4cf4-bae2-c5eb52e079c4", "đ/Kwh", Long.parseLong(edtElectric.getText().toString())));
-        services_room.add(new Service_roomClass("Nước", "https://firebasestorage.googleapis.com/v0/b/my-application-67ef3.appspot.com/o/icon%2Fic-water.svg?alt=media&token=ed7f99da-99fa-4398-adda-6c577608a147", "đ/m3", Long.parseLong(edtWater.getText().toString())));
 
         ArrayList<ExtensionRoom_class> extensions_room = new ArrayList<>();
         if (checkboxtoilet.isChecked()) {
@@ -520,15 +530,14 @@ public class PostRoomActivity extends AppCompatActivity {
             extensions_room.add(new ExtensionRoom_class(checkbox_w_owner.getText().toString(), "https://firebasestorage.googleapis.com/v0/b/my-application-67ef3.appspot.com/o/icon%2Fic-user.svg?alt=media&token=7614a59a-cea8-4cb5-905e-a1082d378f60"));
         }
 //        saveImage();
-        Room room = new Room(id_room, title_room, price_room, address, area_room,
-                deposit_room, description_room, gender_room, park_slot,
-                person_in_room, status_room, type_room, phone, images
-                , furnitures, services_room, extensions_room, floor);
+        Room room = new Room(id_room, title_room, price_room, address, area_room, deposit_room, description_room, gender_room, park_slot,
+                person_in_room, status_room, type_room, phone, floor, images, furnitures, extensions_room,
+                Long.parseLong(edtInternet.getText().toString()), Long.parseLong(edtWater.getText().toString()), Long.parseLong(edtInternet.getText().toString()));
         myRef.child(id_room).setValue(room);
 //        setValue myRef.setValue(doi tuong, new DatabaseReference.Completionlistener )
 //        myRef.child("tạo id").setValue()
         Toast.makeText(PostRoomActivity.this, "Đăng bài thành công", Toast.LENGTH_SHORT);
-        Intent main = new Intent(this,MainActivity.class);
+        Intent main = new Intent(this, MainActivity.class);
         startActivity(main);
     }
 
