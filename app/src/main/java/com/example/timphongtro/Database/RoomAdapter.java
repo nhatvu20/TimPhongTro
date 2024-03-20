@@ -78,6 +78,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
                 detailRoom.putExtra("Deposit",list.get(holder.getAdapterPosition()).getDeposit_room());
                 detailRoom.putExtra("PersonInRoom",list.get(holder.getAdapterPosition()).getPerson_in_room());
                 detailRoom.putExtra("Gender",list.get(holder.getAdapterPosition()).getGender_room());
+                detailRoom.putExtra("DataRoom",room.toString());
 
                 context.startActivity(detailRoom);
             }

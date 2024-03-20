@@ -1,5 +1,7 @@
 package com.example.timphongtro.Database;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 
 public class Room {
@@ -195,5 +197,11 @@ public class Room {
 
     public void setServices_room(ArrayList<Service_roomClass> services_room) {
         this.services_room = services_room;
+    }
+
+    @Override
+    public String toString() {
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 }
