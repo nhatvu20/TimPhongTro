@@ -1,5 +1,7 @@
 package com.example.timphongtro.HomePage;
 
+import android.app.AlertDialog;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -27,12 +29,18 @@ import com.example.timphongtro.Database.DistrictData;
 import com.example.timphongtro.Database.Room;
 import com.example.timphongtro.Database.RoomAdapter;
 import com.example.timphongtro.Database.RoomViewHolderData;
+import com.example.timphongtro.PostRoomActivity;
 import com.example.timphongtro.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.ListResult;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -47,6 +55,7 @@ public class HomeFragment extends Fragment {
     Spinner spinner;
     ArrayList<String> spinnerlist;
     ArrayAdapter<String> spinneradapter;
+    FirebaseStorage storage = FirebaseStorage.getInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,14 +69,19 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //Auto Image Slider
+        StorageReference storageReference = storage.getReference().child("HomeImageSlider");
         ImageSlider imageSlider = view.findViewById(R.id.ImageSlider);
-        ArrayList<SlideModel> slideModels = new ArrayList<>();
+        storageReference.listAll().addOnSuccessListener(listResult -> {
+            ArrayList<SlideModel> slideModels = new ArrayList<>();
+            for (StorageReference item : listResult.getItems()) {
+                item.getDownloadUrl().addOnSuccessListener(uri -> {
+                    slideModels.add(new SlideModel(uri.toString(), ScaleTypes.FIT));
+                    imageSlider.setImageList(slideModels, ScaleTypes.FIT);
+                });
+            }
+        }).addOnFailureListener(e -> {
 
-        slideModels.add(new SlideModel(R.drawable.image1, ScaleTypes.FIT));
-        slideModels.add(new SlideModel(R.drawable.image2, ScaleTypes.FIT));
-        slideModels.add(new SlideModel(R.drawable.image3, ScaleTypes.FIT));
-        slideModels.add(new SlideModel(R.drawable.image4, ScaleTypes.FIT));
-        imageSlider.setImageList(slideModels, ScaleTypes.FIT);
+        });
 
         //Bấm vào ô search nhảy sang activity mới
         TextView searchTextView = view.findViewById(R.id.searchEditText);
