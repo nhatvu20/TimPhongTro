@@ -93,8 +93,8 @@ public class DetailRoomActivity extends AppCompatActivity {
 
             furnitureAdapter = new FurnitureAdapter(DetailRoomActivity.this, furnitures);
             LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-            layoutManager.setOrientation(RecyclerView.HORIZONTAL);
             recycleviewFuniture.setLayoutManager(layoutManager);
+            layoutManager.setOrientation(RecyclerView.HORIZONTAL);
             recycleviewFuniture.setAdapter(furnitureAdapter);
 
         }
