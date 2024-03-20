@@ -38,10 +38,10 @@ android {
 
 dependencies {
 //    implementation("com.google.firebase:firebase-messaging:9.2.0")
-    implementation("com.google.firebase:firebase-auth:19.2.0")
-    implementation("com.google.firebase:firebase-core:11.0.1")
-    implementation("com.google.firebase:firebase-analytics:17.2.1")
-    implementation("com.google.firebase:firebase-firestore:21.3.0")
+    implementation("com.google.firebase:firebase-auth:22.3.1")
+    implementation("com.google.firebase:firebase-core:21.1.1")
+    implementation("com.google.firebase:firebase-analytics:21.5.1")
+    implementation("com.google.firebase:firebase-firestore:24.10.3")
 //    implementation("com.google.firebase:firebase-database:11.0.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
