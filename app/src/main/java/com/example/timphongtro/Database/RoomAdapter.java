@@ -66,19 +66,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
 //                detailRoom.putExtra("Image1",images.getImg1());
 //                detailRoom.putExtra("Image2",images.getImg2());
                 int typeRoom = list.get(holder.getAdapterPosition()).getType_room();
-                String typeRoomStr = "";
-                if(typeRoom==0){
-                    typeRoomStr = "Trọ";
-                }else{
-                    typeRoomStr = "Chung cư mini";
-                }
-//                detailRoom.putExtra("TypeRoom",typeRoomStr);
-//                detailRoom.putExtra("TypeRoomInt",typeRoom);
-//                detailRoom.putExtra("Floor",list.get(holder.getAdapterPosition()).getFloor());
-//                detailRoom.putExtra("Area",list.get(holder.getAdapterPosition()).getArea_room());
-//                detailRoom.putExtra("Deposit",list.get(holder.getAdapterPosition()).getDeposit_room());
-//                detailRoom.putExtra("PersonInRoom",list.get(holder.getAdapterPosition()).getPerson_in_room());
-//                detailRoom.putExtra("Gender",list.get(holder.getAdapterPosition()).getGender_room());
+                //Truyền object qua intent
                 detailRoom.putExtra("DataRoom",room.toString());
 
                 context.startActivity(detailRoom);
