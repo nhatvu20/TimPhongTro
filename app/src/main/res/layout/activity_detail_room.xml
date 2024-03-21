@@ -7,14 +7,22 @@
     tools:context=".DetailRoomActivity">
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="wrap_content"
+        android:paddingBottom="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -70,474 +78,550 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="10dp"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textViewTypeRoom"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="20dp"
+                            android:text="TextView"
+                            android:textColor="@color/orange"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textViewGender"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="1"
+                            android:drawableStart="@drawable/ic_gender"
+                            android:drawablePadding="10dp"
+                            android:gravity="center_vertical"
+                            android:text="TextView"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+                    </LinearLayout>
 
                     <TextView
-                        android:id="@+id/textViewTypeRoom"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/textViewTitle"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="10dp"
                         android:text="TextView"
-                        android:textColor="@color/orange"
+                        android:textColor="@color/black"
+                        android:textSize="25dp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/textViewGender"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/textViewPrice"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight="1"
-                        android:drawableStart="@drawable/ic_gender"
+                        android:layout_marginTop="10dp"
+                        android:text="TextView"
+                        android:textColor="@color/red_300"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textViewCombine_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:drawableStart="@drawable/ic_location"
                         android:drawablePadding="10dp"
                         android:gravity="center_vertical"
-                        android:text="TextView"
-                        android:textColor="@color/black"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/textViewTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="TextView"
-                    android:textColor="@color/black"
-                    android:textSize="25dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textViewPrice"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="TextView"
-                    android:textColor="@color/red_300"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textViewCombine_address"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:drawableStart="@drawable/ic_location"
-                    android:drawablePadding="10dp"
-                    android:gravity="center_vertical"
-                    android:text="TextView" />
-
-                <TextView
-                    android:id="@+id/textViewPhone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:drawableStart="@drawable/ic_phone"
-                    android:drawablePadding="10dp"
-                    android:gravity="center_vertical"
-                    android:text="TextView" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="15dp"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="5dp"
-                    android:background="@drawable/border_grey"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="5dp"
-                    tools:paddingTop="5dp">
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/ic_house_color" />
+                        android:text="TextView" />
 
                     <TextView
+                        android:id="@+id/textViewPhone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:gravity="center"
-                        android:text="Thông tin cơ bản"
-                        android:textColor="@color/black"
-                        android:textStyle="bold" />
+                        android:layout_marginTop="15dp"
+                        android:drawableStart="@drawable/ic_phone"
+                        android:drawablePadding="10dp"
+                        android:gravity="center_vertical"
+                        android:text="TextView" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="20dp"
-                    android:orientation="horizontal">
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center|center_horizontal"
-                        android:orientation="vertical"
-                        android:textAlignment="center">
-
-                        <TextView
-                            android:id="@+id/textView10"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:drawableTop="@drawable/ic_ladder"
-                            android:drawablePadding="10dp"
-                            android:text="Tầng"
-                            android:textAlignment="center" />
-
-                        <TextView
-                            android:id="@+id/textViewFloor"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="TextView"
-                            android:textAlignment="center"
-                            android:textColor="@color/black" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center|center_horizontal"
-                        android:orientation="vertical"
-                        android:textAlignment="center">
-
-                        <TextView
-                            android:id="@+id/textViewtitleArea"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:drawableTop="@drawable/ic_area"
-                            android:drawablePadding="10dp"
-                            android:text="Diện tích"
-                            android:textAlignment="center" />
-
-                        <TextView
-                            android:id="@+id/textViewArea"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="TextView"
-                            android:textAlignment="center"
-                            android:textColor="@color/black" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center|center_horizontal"
-                        android:orientation="vertical"
-                        android:textAlignment="center">
-
-                        <TextView
-                            android:id="@+id/textViewtitleDeposit"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:drawableTop="@drawable/ic_money"
-                            android:drawablePadding="10dp"
-                            android:text="Đặt cọc"
-                            android:textAlignment="center" />
-
-                        <TextView
-                            android:id="@+id/textViewDeposit"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="TextView"
-                            android:textAlignment="center"
-                            android:textColor="@color/black" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center|center_horizontal"
-                        android:orientation="vertical"
-                        android:textAlignment="center">
-
-                        <TextView
-                            android:id="@+id/textViewtitleElectric"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:drawableTop="@drawable/ic_user"
-                            android:drawablePadding="10dp"
-                            android:text="Số người"
-                            android:textAlignment="center" />
-
-                        <TextView
-                            android:id="@+id/textViewPersonInRoom"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="TextView"
-                            android:textAlignment="center"
-                            android:textColor="@color/black" />
-                    </LinearLayout>
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="15dp"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/border_grey"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="5dp"
-                    tools:paddingTop="5dp">
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/icon_service_color" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:gravity="center"
-                        android:text="Phí dịch vụ"
-                        android:textColor="@color/black"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center|center_horizontal"
-                        android:orientation="vertical"
-                        android:textAlignment="center">
+                        android:orientation="horizontal"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="5dp"
+                        tools:paddingTop="5dp">
 
                         <ImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:layout_marginBottom="5dp"
-                            android:layout_weight="1"
-                            app:srcCompat="@drawable/ic_electric" />
-
-                        <TextView
-                            android:id="@+id/textViewtitlePersonInRoom"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:layout_weight="1"
-                            android:drawablePadding="10dp"
-                            android:text="Điện"
-                            android:textAlignment="center" />
-
-                        <TextView
-                            android:id="@+id/textViewElectric"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="TextView"
-                            android:textAlignment="center"
-                            android:textColor="@color/black" />
+                            android:src="@drawable/ic_house_color" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="đ/kwh"
-                            android:textAlignment="center"
-                            android:textColor="@color/orange"
+                            android:layout_marginStart="5dp"
+                            android:background="@drawable/border_bottom"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="Thông tin cơ bản"
+                            android:textColor="@color/black"
                             android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center|center_horizontal"
+                            android:orientation="vertical"
+                            android:textAlignment="center">
+
+                            <TextView
+                                android:id="@+id/textView10"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="5dp"
+                                android:drawableTop="@drawable/ic_ladder"
+                                android:drawablePadding="10dp"
+                                android:text="Tầng"
+                                android:textAlignment="center" />
+
+                            <TextView
+                                android:id="@+id/textViewFloor"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="TextView"
+                                android:textAlignment="center"
+                                android:textColor="@color/black" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center|center_horizontal"
+                            android:orientation="vertical"
+                            android:textAlignment="center">
+
+                            <TextView
+                                android:id="@+id/textViewtitleArea"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="5dp"
+                                android:drawableTop="@drawable/ic_area"
+                                android:drawablePadding="10dp"
+                                android:text="Diện tích"
+                                android:textAlignment="center" />
+
+                            <TextView
+                                android:id="@+id/textViewArea"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="TextView"
+                                android:textAlignment="center"
+                                android:textColor="@color/black" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center|center_horizontal"
+                            android:orientation="vertical"
+                            android:textAlignment="center">
+
+                            <TextView
+                                android:id="@+id/textViewtitleDeposit"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="5dp"
+                                android:drawableTop="@drawable/ic_money"
+                                android:drawablePadding="10dp"
+                                android:text="Đặt cọc"
+                                android:textAlignment="center" />
+
+                            <TextView
+                                android:id="@+id/textViewDeposit"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="TextView"
+                                android:textAlignment="center"
+                                android:textColor="@color/black" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center|center_horizontal"
+                            android:orientation="vertical"
+                            android:textAlignment="center">
+
+                            <TextView
+                                android:id="@+id/textViewtitleElectric"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="5dp"
+                                android:drawableTop="@drawable/ic_user"
+                                android:drawablePadding="10dp"
+                                android:text="Số người"
+                                android:textAlignment="center" />
+
+                            <TextView
+                                android:id="@+id/textViewPersonInRoom"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="TextView"
+                                android:textAlignment="center"
+                                android:textColor="@color/black" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
                         android:layout_weight="1"
-                        android:gravity="center|center_horizontal"
-                        android:orientation="vertical"
-                        android:textAlignment="center">
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="5dp"
+                        tools:paddingTop="5dp">
 
                         <ImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:layout_marginBottom="5dp"
-                            android:layout_weight="1"
-                            app:srcCompat="@drawable/ic_water" />
-
-                        <TextView
-                            android:id="@+id/textViewtitleWater"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:layout_weight="1"
-                            android:drawablePadding="10dp"
-                            android:text="Nước"
-                            android:textAlignment="center" />
-
-                        <TextView
-                            android:id="@+id/textViewWater"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="TextView"
-                            android:textAlignment="center"
-                            android:textColor="@color/black" />
+                            android:src="@drawable/icon_service_color" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="đ/m3"
-                            android:textAlignment="center"
-                            android:textColor="@color/orange"
+                            android:layout_marginStart="5dp"
+                            android:background="@drawable/border_bottom"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="Phí dịch vụ"
+                            android:textColor="@color/black"
                             android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
                         android:layout_weight="1"
-                        android:gravity="center|center_horizontal"
-                        android:orientation="vertical"
-                        android:textAlignment="center">
+                        android:orientation="horizontal">
 
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="30dp"
-                            android:layout_marginBottom="5dp"
-                            android:layout_weight="1"
-                            app:srcCompat="@drawable/ic_internet" />
-
-                        <TextView
-                            android:id="@+id/textViewtitleInternet"
+                        <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:text="Số người"
-                            android:textAlignment="center" />
+                            android:gravity="center|center_horizontal"
+                            android:orientation="vertical"
+                            android:textAlignment="center">
 
-                        <TextView
-                            android:id="@+id/textViewInternet"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="TextView"
-                            android:textAlignment="center"
-                            android:textColor="@color/black" />
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
+                                app:srcCompat="@drawable/ic_electric" />
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            <TextView
+                                android:id="@+id/textViewtitlePersonInRoom"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
+                                android:drawablePadding="10dp"
+                                android:text="Điện"
+                                android:textAlignment="center" />
+
+                            <TextView
+                                android:id="@+id/textViewElectric"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="TextView"
+                                android:textAlignment="center"
+                                android:textColor="@color/black" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="đ/kwh"
+                                android:textAlignment="center"
+                                android:textColor="@color/orange"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:text="đ/phòng"
-                            android:textAlignment="center"
-                            android:textColor="@color/orange"
-                            android:textStyle="bold" />
+                            android:gravity="center|center_horizontal"
+                            android:orientation="vertical"
+                            android:textAlignment="center">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
+                                app:srcCompat="@drawable/ic_water" />
+
+                            <TextView
+                                android:id="@+id/textViewtitleWater"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
+                                android:drawablePadding="10dp"
+                                android:text="Nước"
+                                android:textAlignment="center" />
+
+                            <TextView
+                                android:id="@+id/textViewWater"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="TextView"
+                                android:textAlignment="center"
+                                android:textColor="@color/black" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="đ/m3"
+                                android:textAlignment="center"
+                                android:textColor="@color/orange"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center|center_horizontal"
+                            android:orientation="vertical"
+                            android:textAlignment="center">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="30dp"
+                                android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
+                                app:srcCompat="@drawable/ic_internet" />
+
+                            <TextView
+                                android:id="@+id/textViewtitleInternet"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
+                                android:text="Số người"
+                                android:textAlignment="center" />
+
+                            <TextView
+                                android:id="@+id/textViewInternet"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="TextView"
+                                android:textAlignment="center"
+                                android:textColor="@color/black" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="đ/phòng"
+                                android:textAlignment="center"
+                                android:textColor="@color/orange"
+                                android:textStyle="bold" />
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="15dp"
-                android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:background="@drawable/border_grey"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="5dp"
-                    tools:paddingTop="5dp">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical">
 
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/ic_furniture" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="5dp"
+                        tools:paddingTop="5dp">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_extension" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:background="@drawable/border_bottom"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="Tiện ích"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycleviewExtension"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="5dp"
+                        tools:paddingTop="5dp">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_furniture" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:background="@drawable/border_bottom"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="Nội thất"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycleviewFuniture"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/imageViewAvatar"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/a" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/textViewNameUser"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Nhất Vũ"
+                                android:textColor="@color/black"
+                                android:textSize="18sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:gravity="center"
-                        android:text="Nội thất"
-                        android:textColor="@color/black"
+                        android:drawableStart="@drawable/ic_pencil"
+                        android:drawablePadding="5dp"
+                        android:gravity="center_vertical"
+                        android:text="Chi tiết"
                         android:textStyle="bold" />
-                </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycleviewFuniture"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="15dp"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:background="@drawable/border_grey"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="5dp"
-                    tools:paddingTop="5dp">
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/ic_extension" />
 
                     <TextView
+                        android:id="@+id/textviewDescriptionRoom"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:gravity="center"
-                        android:text="Tiện ích"
-                        android:textColor="@color/black"
-                        android:textStyle="bold" />
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_vertical"
+                        android:inputType="text|textMultiLine"
+                        android:text="Chi tiết" />
                 </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycleviewExtension"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
 
             </LinearLayout>
 
@@ -550,8 +634,40 @@
     </ScrollView>
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"></LinearLayout>
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="0dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCall"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:text="Gọi"
+            android:textColor="@color/orange"
+            android:textSize="16sp"
+            app:icon="@drawable/ic_phone"
+            app:iconPadding="0dp"
+            app:strokeColor="@color/orange" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnBookRoom"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+
+            android:backgroundTint="@color/orange"
+            android:text="Xem phòng"
+            app:cornerRadius="10dp" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
