@@ -16,6 +16,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -67,6 +69,12 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(getApplicationContext(),"Đăng ký thành công.",Toast.LENGTH_SHORT).show();
+
+                            String userID = mAuth.getCurrentUser().getUid();
+                            DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("users");
+                            DatabaseReference userRef = usersRef.child(userID);
+                            userRef.child("email").setValue(email);
+                            userRef.child("password").setValue(password);
                             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                             startActivity(intent);
                         }
