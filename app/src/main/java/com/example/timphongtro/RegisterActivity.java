@@ -70,11 +70,11 @@ public class RegisterActivity extends AppCompatActivity {
                         if(task.isSuccessful()){
                             Toast.makeText(getApplicationContext(),"Đăng ký thành công.",Toast.LENGTH_SHORT).show();
 
-                            String userID = mAuth.getCurrentUser().getUid();
-                            DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("users");
-                            DatabaseReference userRef = usersRef.child(userID);
-                            userRef.child("email").setValue(email);
-                            userRef.child("password").setValue(password);
+//                            String userID = mAuth.getCurrentUser().getUid();
+//                            DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("users");
+//                            DatabaseReference userRef = usersRef.child(userID);
+//                            userRef.child("email").setValue(email);
+//                            userRef.child("password").setValue(password);
                             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                             startActivity(intent);
                         }
