@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.TargetApi;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -46,6 +47,7 @@ public class DetailRoomActivity extends AppCompatActivity {
     Button btnCall;
     private static final int CALL_PHONE_PERMISSION_REQUEST_CODE = 1;
 
+    private static final int codeL = 100;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -144,6 +146,7 @@ public class DetailRoomActivity extends AppCompatActivity {
                         } else {
                             // Quyền gọi điện thoại đã được cấp
                             // Tiến hành thực hiện cuộc gọi điện thoại
+                            Toast.makeText(getApplicationContext(),roomData.getPhone(),Toast.LENGTH_SHORT).show();
                             makePhoneCall();
                         }
                     }
