@@ -42,6 +42,11 @@ public class SearchActivity extends AppCompatActivity {
         });
 
         searchView = findViewById(R.id.search_room);
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            String district = bundle.getString("District");
+            searchView.setQuery(district,false);
+        }
         searchView.clearFocus();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -101,7 +106,7 @@ public class SearchActivity extends AppCompatActivity {
     private void searchList(String text){
         ArrayList<Room> searchList = new ArrayList<>();
         for (Room room: roomlist){
-            if (room.getTitle_room().toLowerCase().contains(text.toLowerCase())){
+            if (room.getAddress().getDistrict().contains(text.toLowerCase()) || room.getTitle_room().toLowerCase().contains(text.toLowerCase())){
                 searchList.add(room);
             }
         }
