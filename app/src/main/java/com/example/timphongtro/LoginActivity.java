@@ -100,6 +100,7 @@ public class LoginActivity extends AppCompatActivity {
 //                        }
 //                    });
 //        }
+
         btnDangnhap.setOnClickListener(new View.OnClickListener() {
 
             @Override

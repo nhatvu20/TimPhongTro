@@ -24,6 +24,7 @@ import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.timphongtro.Database.DistrictAdapter;
 import com.example.timphongtro.Database.DistrictData;
+import com.example.timphongtro.Database.Room;
 import com.example.timphongtro.Database.RoomAdapter;
 import com.example.timphongtro.Database.RoomViewHolderData;
 import com.example.timphongtro.R;
@@ -42,7 +43,7 @@ public class HomeFragment extends Fragment {
     DistrictAdapter districtAdapter;
     RoomAdapter roomAdapter;
     ArrayList<DistrictData> districtlist;
-    ArrayList<RoomViewHolderData> roomlist;
+    ArrayList<Room> roomlist;
     Spinner spinner;
     ArrayList<String> spinnerlist;
     ArrayAdapter<String> spinneradapter;
@@ -119,6 +120,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void fetchroomrecyclerviewdatabse() {
+        spinnerlist.clear();
         roomdatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -127,15 +129,15 @@ public class HomeFragment extends Fragment {
                         // Lấy dữ liệu từ child "Tro"
                         if (dataSnapshot.getKey().equals("Tro")) {
                             for (DataSnapshot troSnapshot : dataSnapshot.getChildren()) {
-                                RoomViewHolderData roomViewHolderData = troSnapshot.getValue(RoomViewHolderData.class);
-                                roomlist.add(roomViewHolderData);
+                                Room room = troSnapshot.getValue(Room.class);
+                                roomlist.add(room);
                             }
                         }
                         // Lấy dữ liệu từ child "ChungCu"
                         else if (dataSnapshot.getKey().equals("ChungCuMini")) {
                             for (DataSnapshot chungCuSnapshot : dataSnapshot.getChildren()) {
-                                RoomViewHolderData roomViewHolderData = chungCuSnapshot.getValue(RoomViewHolderData.class);
-                                roomlist.add(roomViewHolderData);
+                                Room room = chungCuSnapshot.getValue(Room.class);
+                                roomlist.add(room);
                             }
                         }
                     }

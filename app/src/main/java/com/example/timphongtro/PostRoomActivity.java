@@ -15,11 +15,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.timphongtro.Database.Addresse;
@@ -32,13 +35,17 @@ import com.example.timphongtro.HomePage.MainActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -63,6 +70,7 @@ public class PostRoomActivity extends AppCompatActivity {
     EditText edtPerson;
     EditText edtDescriptionRoom;
     EditText edtPark;
+    EditText edtAddress;
     CheckBox checkboxtoilet;
     CheckBox checkboxfloor;
     CheckBox checkbox_time_flex;
@@ -87,9 +95,15 @@ public class PostRoomActivity extends AppCompatActivity {
     String imageURL1;
     String imageURL2;
     Uri uri;
+    Spinner spinnerCity,spinnerDistrict,spinnerWard;
 
     boolean isUploadImg1;
     boolean isUploadImg2;
+
+    List<String> cities,districts,wards;
+
+    String path;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,6 +158,37 @@ public class PostRoomActivity extends AppCompatActivity {
         uploadPicture2 = (ImageView) findViewById(R.id.imageViewP2);
         isUploadImg1 = false;
         isUploadImg2 = false;
+
+        spinnerCity = (Spinner)findViewById(R.id.spinnerCity);
+        spinnerDistrict = (Spinner)findViewById(R.id.spinnerDistrict);
+
+        edtAddress = (EditText)findViewById(R.id.edtAddress);
+
+        cities = new ArrayList<>();
+        districts = new ArrayList<>();
+
+        getDataForSpinnerCity();
+        path = "city/HaNoi/district";
+        spinnerCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedspinner = cities.get(position);
+                if (selectedspinner.equals("Hà Nội")) {
+                    path = "city/HaNoi/district";
+                } else if (selectedspinner.equals("Hồ Chí Minh")) {
+                    path = "city/HoChiMinh/district";
+                }
+                getDataForSpinnerDistrict();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        getDataForSpinnerDistrict();
+
+
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,8 +203,14 @@ public class PostRoomActivity extends AppCompatActivity {
                 if (result.getResultCode() == Activity.RESULT_OK) {
                     Intent data = result.getData();
                     uri = data.getData();
-                    uploadPicture1.setImageURI(uri);
-                    isUploadImg1 = true;
+//                    try {
+//                        if(!uri.toString().equals("")){
+                            uploadPicture1.setImageURI(uri);
+                            isUploadImg1 = true;
+//                        }
+//                    } catch (Exception e) {
+//                        throw new RuntimeException(e);
+//                    }
                 } else {
                     Toast.makeText(PostRoomActivity.this, "No image selected", Toast.LENGTH_SHORT);
                 }
@@ -185,15 +236,17 @@ public class PostRoomActivity extends AppCompatActivity {
 //                Toast.makeText(getApplicationContext(), "OK", Toast.LENGTH_SHORT).show();
 //                onClickPushData();
                 AlertDialog.Builder builder = new AlertDialog.Builder(PostRoomActivity.this);
-                builder.setTitle("Confirm") // Thiết lập tiêu đề của Dialog
-                        .setMessage("Are you sure?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                builder.setTitle("Xác nhận") // Thiết lập tiêu đề của Dialog
+                        .setMessage("Bạn chắc chắn chứ?")
+                        .setPositiveButton("Có", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                onClickPushData();
+                                if (!isUploadImg1 || !isUploadImg2) onClickPushData();
+                                else
+                                    Toast.makeText(getApplicationContext(),"Vui lòng chọn 2 tấm ảnh",Toast.LENGTH_SHORT);
                             }
                         })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("Không", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // Xử lý khi người dùng chọn No
@@ -218,6 +271,52 @@ public class PostRoomActivity extends AppCompatActivity {
                 Intent photoPicker = new Intent(Intent.ACTION_PICK);
                 photoPicker.setType("image/*");
                 activityResultLauncher2.launch(photoPicker);
+            }
+        });
+
+    }
+
+    public void getDataForSpinnerDistrict(){
+        districts.clear();
+        DatabaseReference databaseReferennceDistrict = FirebaseDatabase.getInstance().getReference();
+        databaseReferennceDistrict.child(path).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot childSnap : snapshot.getChildren()){
+                    String DistrictName = childSnap.child("name").getValue(String.class);
+                    districts.add(DistrictName);
+                }
+                ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(PostRoomActivity.this,android.R.layout.simple_spinner_item,districts);
+                spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerDistrict.setAdapter(spinnerAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void getDataForSpinnerCity(){
+        cities.clear();
+        DatabaseReference databaseReferennce = FirebaseDatabase.getInstance().getReference();
+        path = "city";
+        databaseReferennce.child(path).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot childSnap : snapshot.getChildren()){
+                    String CityName = childSnap.child("name").getValue(String.class);
+                    cities.add(CityName);
+                }
+                ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(PostRoomActivity.this,android.R.layout.simple_spinner_item,cities);
+                spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerCity.setAdapter(spinnerAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }
@@ -272,10 +371,10 @@ public class PostRoomActivity extends AppCompatActivity {
         String title_room = String.valueOf(edtTitleRoom.getText());
 //        long price_room = Long.parseLong(String.valueOf(edtPrice.getText()));
         long price_room = 0;
-        String city = "Hà Nội";
-        String district = "Nam Từ Liêm";
-        String detail = "Ngõ 352";
-        String ward = "Phương Canh";
+        String city = spinnerCity.getSelectedItem().toString();
+        String district = spinnerDistrict.getSelectedItem().toString();
+        String detail = edtAddress.getText().toString();
+        String ward = "";
         String address_combine = detail + ", " + ward + ", " + district + ", " + city;
 
         Addresse address = new Addresse(city, district, detail, ward, address_combine);
@@ -331,7 +430,7 @@ public class PostRoomActivity extends AppCompatActivity {
             isValid = false;
             radiobtnTro.setError("Vui lòng chọn loại phòng");
         }
-        DatabaseReference myRef = database.getReference("roomsTest/" + path);
+        DatabaseReference myRef = database.getReference("rooms/" + path);
 
         if (radiobtnPhongTrong.isChecked() || radiobtnDaChoThue.isChecked()) {
             if (radiobtnDaChoThue.isChecked()) {
