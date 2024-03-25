@@ -1,4 +1,4 @@
-package com.example.timphongtro;
+package com.example.timphongtro.Activity;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -25,13 +25,13 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.timphongtro.Database.Addresse;
-import com.example.timphongtro.Database.ExtensionRoom_class;
-import com.example.timphongtro.Database.ImagesRoomClass;
-import com.example.timphongtro.Database.Room;
-import com.example.timphongtro.Database.FurnitureClass;
-//import com.example.timphongtro.Database.Service_roomClass;
-import com.example.timphongtro.HomePage.MainActivity;
+import com.example.timphongtro.Entity.Address;
+import com.example.timphongtro.Entity.ExtensionRoom_class;
+import com.example.timphongtro.Entity.ImagesRoomClass;
+import com.example.timphongtro.Entity.Room;
+import com.example.timphongtro.Entity.FurnitureClass;
+//import com.example.timphongtro.Entity.Service_roomClass;
+import com.example.timphongtro.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -344,7 +344,7 @@ public class PostRoomActivity extends AppCompatActivity {
         String ward = "";
         String address_combine = detail + ", " + district + ", " + city;
 
-        Addresse address = new Addresse(city, district, detail, ward, address_combine);
+        Address address = new Address(city, district, detail, ward, address_combine);
         String area_room = edtArea.getText().toString();
         long deposit_room = 0;
         String gender_room = "";

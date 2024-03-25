@@ -1,4 +1,4 @@
-package com.example.timphongtro;
+package com.example.timphongtro.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.example.timphongtro.HomePage.MainActivity;
+import com.example.timphongtro.R;
 
 
 public class SplashScreen extends AppCompatActivity {

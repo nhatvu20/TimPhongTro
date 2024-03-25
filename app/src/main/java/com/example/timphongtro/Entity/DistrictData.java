@@ -1,4 +1,4 @@
-package com.example.timphongtro.Database;
+package com.example.timphongtro.Entity;
 
 public class DistrictData {
     String name, img_district;

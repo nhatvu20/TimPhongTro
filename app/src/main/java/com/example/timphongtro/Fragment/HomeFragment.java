@@ -1,7 +1,5 @@
-package com.example.timphongtro.HomePage;
+package com.example.timphongtro.Fragment;
 
-import android.app.AlertDialog;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -24,16 +22,14 @@ import android.widget.Toast;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
-import com.example.timphongtro.Database.DistrictAdapter;
-import com.example.timphongtro.Database.DistrictData;
-import com.example.timphongtro.Database.Room;
-import com.example.timphongtro.Database.RoomAdapter;
-import com.example.timphongtro.Database.RoomViewHolderData;
-import com.example.timphongtro.LoginActivity;
-import com.example.timphongtro.PostRoomActivity;
+import com.example.timphongtro.Activity.SearchActivity;
+import com.example.timphongtro.Activity.ShowMoreActivity;
+import com.example.timphongtro.Adapter.DistrictAdapter;
+import com.example.timphongtro.Entity.DistrictData;
+import com.example.timphongtro.Entity.Room;
+import com.example.timphongtro.Adapter.RoomAdapter;
+import com.example.timphongtro.Activity.LoginActivity;
 import com.example.timphongtro.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -42,7 +38,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
@@ -91,20 +86,13 @@ public class HomeFragment extends Fragment {
         TextView searchTextView = view.findViewById(R.id.searchEditText);
         searchTextView.setOnClickListener(v -> {
             FirebaseUser user = firebaseAuth.getCurrentUser();
-            if (user != null) {
                 Intent intent = new Intent(getContext(), SearchActivity.class);
                 startActivity(intent);
-            }
-            else {
-                Intent intent = new Intent(getContext(), LoginActivity.class);
-                startActivity(intent);
-            }
-
         });
 
         TextView showmore = view.findViewById(R.id.showmore);
         showmore.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), ShowMore.class);
+            Intent intent = new Intent(getContext(), ShowMoreActivity.class);
             startActivity(intent);
         });
 

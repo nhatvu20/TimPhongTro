@@ -1,4 +1,4 @@
-package com.example.timphongtro.Database;
+package com.example.timphongtro.Entity;
 
 import com.google.gson.Gson;
 
@@ -9,7 +9,7 @@ public class Room {
     private String id_room;
     private String title_room;
     private long price_room;
-    private Addresse address;
+    private Address address;
     private String area_room;//Diện tích
     private long deposit_room;//tiền cọc
     private String description_room;
@@ -37,7 +37,7 @@ public class Room {
     public Room() {
     }
 
-    public Room(String id_room, String title_room, long price_room, Addresse address, String area_room, long deposit_room, String description_room, String gender_room, int park_slot, int person_in_room, int status_room, int type_room, String phone, int floor, ImagesRoomClass images, ArrayList<FurnitureClass> furniture, ArrayList<ExtensionRoom_class> extension_room, long price_electric, long price_water, long price_internet) {
+    public Room(String id_room, String title_room, long price_room, Address address, String area_room, long deposit_room, String description_room, String gender_room, int park_slot, int person_in_room, int status_room, int type_room, String phone, int floor, ImagesRoomClass images, ArrayList<FurnitureClass> furniture, ArrayList<ExtensionRoom_class> extension_room, long price_electric, long price_water, long price_internet) {
         this.id_room = id_room;
         this.title_room = title_room;
         this.price_room = price_room;
@@ -108,11 +108,11 @@ public class Room {
         this.price_room = price_room;
     }
 
-    public Addresse getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(Addresse address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 
