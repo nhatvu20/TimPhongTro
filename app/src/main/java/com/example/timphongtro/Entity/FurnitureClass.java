@@ -1,13 +1,14 @@
-package com.example.timphongtro.Database;
+package com.example.timphongtro.Entity;
 
-public class ExtensionRoom_class {
+
+public class FurnitureClass {
     private String name;
     private String img;
 
-    public ExtensionRoom_class() {
+    public FurnitureClass( ) {
     }
 
-    public ExtensionRoom_class(String name, String img) {
+    public FurnitureClass(String name, String img) {
         this.name = name;
         this.img = img;
     }
@@ -28,5 +29,11 @@ public class ExtensionRoom_class {
         this.img = img;
     }
 
-
+    @Override
+    public String toString() {
+        return "FurnitureClass{" +
+                "name='" + name + '\'' +
+                ", img='" + img + '\'' +
+                '}';
+    }
 }

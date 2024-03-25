@@ -1,13 +1,13 @@
-package com.example.timphongtro.Database;
+package com.example.timphongtro.Entity;
 
-public class Addresse {
+public class Address {
     String city, district, detail,ward,address_combine;
 
-    Addresse(){
+    Address(){
 
     }
 
-    public Addresse(String city, String district, String detail, String ward, String address_combine) {
+    public Address(String city, String district, String detail, String ward, String address_combine) {
         this.city = city;
         this.district = district;
         this.detail = detail;
@@ -15,7 +15,7 @@ public class Addresse {
         this.address_combine = address_combine;
     }
 
-    public Addresse(String city, String district, String detail, String ward) {
+    public Address(String city, String district, String detail, String ward) {
         this.city = city;
         this.district = district;
         this.detail = detail;

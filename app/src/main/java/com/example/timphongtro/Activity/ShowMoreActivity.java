@@ -1,24 +1,16 @@
-package com.example.timphongtro.HomePage;
+package com.example.timphongtro.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.SearchView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.timphongtro.Database.Room;
-import com.example.timphongtro.Database.RoomAdapter;
-import com.example.timphongtro.Database.RoomViewHolderData;
-import com.example.timphongtro.Database.SearchAdapter;
-import com.example.timphongtro.Database.ShowmoreAdapter;
+import com.example.timphongtro.Entity.Room;
+import com.example.timphongtro.Adapter.ShowmoreAdapter;
 import com.example.timphongtro.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,57 +20,30 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class SearchActivity extends AppCompatActivity {
+public class ShowMoreActivity extends AppCompatActivity {
     RecyclerView roomrecyclerView;
     DatabaseReference roomdatabase;
-    SearchAdapter searchAdapter;
+    ShowmoreAdapter showmoreAdapter;
     ArrayList<Room> roomlist;
-    SearchView searchView;
-    String district;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
-
-        roomdatabase = FirebaseDatabase.getInstance().getReference("rooms");
-        roomlist = new ArrayList<>();
-        fetchroomrecyclerviewdatabse();
-
+        setContentView(R.layout.activity_show_more);
 
         ImageView backbutton = findViewById(R.id.backbutton);
         backbutton.setOnClickListener(v -> {
-            Intent intent = new Intent(SearchActivity.this, MainActivity.class);
+            Intent intent = new Intent(ShowMoreActivity.this, MainActivity.class);
             startActivity(intent);
-        });
-        district = "";
-        searchView = findViewById(R.id.search_room);
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            district = bundle.getString("District");
-            searchView.setQuery(district, true);
-        }
-        searchView.clearFocus();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                Toast.makeText(getApplicationContext(), district, Toast.LENGTH_SHORT).show();
-                searchList(newText);
-                return true;
-            }
         });
 
         roomrecyclerView = findViewById(R.id.showmorelist);
         roomrecyclerView.setHasFixedSize(true);
+        roomdatabase = FirebaseDatabase.getInstance().getReference("rooms");
         roomrecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        searchAdapter = new SearchAdapter(this, roomlist);
-        roomrecyclerView.setAdapter(searchAdapter);
-
+        roomlist = new ArrayList<>();
+        showmoreAdapter = new ShowmoreAdapter(this, roomlist);
+        roomrecyclerView.setAdapter(showmoreAdapter);
+        fetchroomrecyclerviewdatabse();
     }
 
     private void fetchroomrecyclerviewdatabse() {
@@ -103,12 +68,7 @@ public class SearchActivity extends AppCompatActivity {
                         }
                     }
                 }
-
-                if (!"".equals(searchView.getQuery().toString())) {
-                    searchList(searchView.getQuery().toString());
-                }
-
-                searchAdapter.notifyDataSetChanged();
+                showmoreAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -116,15 +76,5 @@ public class SearchActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    private void searchList(String text) {
-        ArrayList<Room> searchList = new ArrayList<>();
-        for (Room room : roomlist) {
-            if (room.getTitle_room().toLowerCase().contains(text.toLowerCase()) || room.getAddress().getDistrict().toLowerCase().contains(text.toLowerCase())) {
-                searchList.add(room);
-            }
-        }
-        searchAdapter.searchDataList(searchList);
     }
 }

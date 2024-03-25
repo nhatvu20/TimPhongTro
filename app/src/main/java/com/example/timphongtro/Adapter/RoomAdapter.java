@@ -1,6 +1,7 @@
-package com.example.timphongtro.Database;
+package com.example.timphongtro.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,20 +9,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.timphongtro.Activity.DetailRoomActivity;
+import com.example.timphongtro.Entity.Address;
+import com.example.timphongtro.Entity.ImagesRoomClass;
+import com.example.timphongtro.Entity.Room;
 import com.example.timphongtro.R;
 
 import java.util.ArrayList;
 
-public class ShowmoreAdapter extends RecyclerView.Adapter<ShowmoreAdapter.MyViewHolder> {
+public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> {
 
     Context context;
-
     ArrayList<Room> list;
+    int maxitemcount = 10;
 
-    public ShowmoreAdapter(Context context, ArrayList<Room> list) {
+    public RoomAdapter(Context context, ArrayList<Room> list) {
         this.context = context;
         this.list = list;
     }
@@ -44,21 +50,40 @@ public class ShowmoreAdapter extends RecyclerView.Adapter<ShowmoreAdapter.MyView
         ImagesRoomClass imagesRoomClass = room.getImages();
         Glide.with(context).load(imagesRoomClass.getImg1()).centerCrop().into(holder.img_post);
 
-        Addresse addresse = room.getAddress();
-        holder.city.setText(addresse.getCity());
-        holder.district.setText(addresse.getDistrict());
-        holder.detail.setText(addresse.getDetail());
+        Address address = room.getAddress();
+        holder.city.setText(address.getCity());
+        holder.district.setText(address.getDistrict());
+        holder.detail.setText(address.getDetail());
+        holder.cardViewRoom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent detailRoom = new Intent(context, DetailRoomActivity.class);
+//                detailRoom.putExtra("Title",list.get(holder.getAdapterPosition()).getTitle_room());
+//                detailRoom.putExtra("Price",String.valueOf(list.get(holder.getAdapterPosition()).getPrice_room()));
+//                detailRoom.putExtra("CombineAddress",list.get(holder.getAdapterPosition()).getAddress().getAddress_combine());
+//                detailRoom.putExtra("Phone",list.get(holder.getAdapterPosition()).getPhone());
+//                ImagesRoomClass images = list.get(holder.getAdapterPosition()).getImages();
+//                detailRoom.putExtra("Id_Room",list.get(holder.getAdapterPosition()).getId_room());
+//                detailRoom.putExtra("Image1",images.getImg1());
+//                detailRoom.putExtra("Image2",images.getImg2());
+                int typeRoom = list.get(holder.getAdapterPosition()).getType_room();
+                //Truyền object qua intent
+                detailRoom.putExtra("DataRoom",room.toString());
 
+                context.startActivity(detailRoom);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return Math.min(list.size(), maxitemcount);
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView people_room, price_room, area_room, city, district, detail, title_room;
+        CardView cardViewRoom;
         ImageView img_post;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -69,6 +94,7 @@ public class ShowmoreAdapter extends RecyclerView.Adapter<ShowmoreAdapter.MyView
             district = itemView.findViewById(R.id.DistrictName);
             detail = itemView.findViewById(R.id.DetailName);
             people_room = itemView.findViewById(R.id.Size);
+            cardViewRoom = itemView.findViewById(R.id.cardViewRoom);
             img_post = itemView.findViewById(R.id.img_post);
         }
     }

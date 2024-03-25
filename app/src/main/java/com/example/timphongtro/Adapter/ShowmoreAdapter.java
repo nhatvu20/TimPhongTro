@@ -1,4 +1,4 @@
-package com.example.timphongtro.Database;
+package com.example.timphongtro.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,17 +11,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.timphongtro.Entity.Address;
+import com.example.timphongtro.Entity.ImagesRoomClass;
+import com.example.timphongtro.Entity.Room;
 import com.example.timphongtro.R;
 
 import java.util.ArrayList;
 
-public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHolder> {
+public class ShowmoreAdapter extends RecyclerView.Adapter<ShowmoreAdapter.MyViewHolder> {
 
     Context context;
 
     ArrayList<Room> list;
 
-    public SearchAdapter(Context context, ArrayList<Room> list) {
+    public ShowmoreAdapter(Context context, ArrayList<Room> list) {
         this.context = context;
         this.list = list;
     }
@@ -44,10 +47,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
         ImagesRoomClass imagesRoomClass = room.getImages();
         Glide.with(context).load(imagesRoomClass.getImg1()).centerCrop().into(holder.img_post);
 
-        Addresse addresse = room.getAddress();
-        holder.city.setText(addresse.getCity());
-        holder.district.setText(addresse.getDistrict());
-        holder.detail.setText(addresse.getDetail());
+        Address address = room.getAddress();
+        holder.city.setText(address.getCity());
+        holder.district.setText(address.getDistrict());
+        holder.detail.setText(address.getDetail());
 
     }
 
@@ -56,10 +59,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
         return list.size();
     }
 
-    public void searchDataList(ArrayList<Room> searchList){
-        list = searchList;
-        notifyDataSetChanged();
-    }
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView people_room, price_room, area_room, city, district, detail, title_room;

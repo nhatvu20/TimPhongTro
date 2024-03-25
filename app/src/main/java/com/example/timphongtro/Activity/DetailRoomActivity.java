@@ -1,4 +1,4 @@
-package com.example.timphongtro;
+package com.example.timphongtro.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -6,7 +6,6 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.TargetApi;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -15,7 +14,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -25,12 +23,12 @@ import android.widget.Toast;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
-import com.example.timphongtro.Database.ExtensionAdapter;
-import com.example.timphongtro.Database.ExtensionRoom_class;
-import com.example.timphongtro.Database.FurnitureAdapter;
-import com.example.timphongtro.Database.FurnitureClass;
-import com.example.timphongtro.Database.Room;
-import com.example.timphongtro.HomePage.MainActivity;
+import com.example.timphongtro.Adapter.ExtensionAdapter;
+import com.example.timphongtro.Entity.ExtensionRoom_class;
+import com.example.timphongtro.Adapter.FurnitureAdapter;
+import com.example.timphongtro.Entity.FurnitureClass;
+import com.example.timphongtro.Entity.Room;
+import com.example.timphongtro.R;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;

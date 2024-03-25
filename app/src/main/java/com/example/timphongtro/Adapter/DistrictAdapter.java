@@ -1,4 +1,4 @@
-package com.example.timphongtro.Database;
+package com.example.timphongtro.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,7 +13,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.timphongtro.HomePage.SearchActivity;
+import com.example.timphongtro.Entity.DistrictData;
+import com.example.timphongtro.Activity.SearchActivity;
 import com.example.timphongtro.R;
 
 import java.util.ArrayList;

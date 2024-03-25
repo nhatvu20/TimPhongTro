@@ -1,4 +1,4 @@
-package com.example.timphongtro.HomePage;
+package com.example.timphongtro.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -16,8 +16,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.example.timphongtro.LoginActivity;
-import com.example.timphongtro.PostRoomActivity;
+import com.example.timphongtro.Fragment.HomeFragment;
+import com.example.timphongtro.Fragment.NotificationFragment;
+import com.example.timphongtro.Fragment.ProfileFragment;
+import com.example.timphongtro.Fragment.ServiceFragment;
 import com.example.timphongtro.R;
 import com.example.timphongtro.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
@@ -60,13 +62,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         binding.fab.setOnClickListener(v -> {
-            if (user != null) {
                 showBottomDialog();
-            }
-            else {
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
-            }
         });
     }
 

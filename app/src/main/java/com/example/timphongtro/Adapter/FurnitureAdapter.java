@@ -1,7 +1,6 @@
-package com.example.timphongtro.Database;
+package com.example.timphongtro.Adapter;
 
 import android.content.Context;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.timphongtro.Entity.FurnitureClass;
 import com.example.timphongtro.R;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.example.timphongtro;
+package com.example.timphongtro.Activity;
 
 import static android.widget.Toast.LENGTH_SHORT;
 
@@ -15,7 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.timphongtro.HomePage.MainActivity;
+import com.example.timphongtro.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;

@@ -1,12 +1,12 @@
-package com.example.timphongtro.Database;
+package com.example.timphongtro.Entity;
 
 public class RoomViewHolderData {
     String name, title_room;
     int price_room, people_room, area_room;
-    Addresse addresse;
+    Address address;
 
-    public Addresse getAddresse() {
-        return addresse;
+    public Address getAddresse() {
+        return address;
     }
 
     public String getName() {
