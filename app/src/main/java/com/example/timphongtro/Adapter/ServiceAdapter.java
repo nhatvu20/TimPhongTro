@@ -98,17 +98,16 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceV
     }
 
     public static class ServiceViewHolder extends RecyclerView.ViewHolder {
-
         TextView name, price;
         ImageView image;
         Button btn_add;
 
-        public ServiceViewHolder(View itemview) {
-            super(itemview);
-            name = itemview.findViewById(R.id.service_name);
-            price = itemview.findViewById(R.id.service_price);
-            image = itemview.findViewById(R.id.service_img);
-            btn_add = itemview.findViewById(R.id.btn_buynow);
+        public ServiceViewHolder(@NonNull View itemView) {
+            super(itemView);
+            name = itemView.findViewById(R.id.service_name);
+            price = itemView.findViewById(R.id.service_price);
+            image = itemView.findViewById(R.id.service_img);
+            btn_add = itemView.findViewById(R.id.btn_buynow);
         }
     }
 }

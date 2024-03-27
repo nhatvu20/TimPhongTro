@@ -60,7 +60,7 @@ public class ServiceFragment extends Fragment {
         giatla.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openServiceActivity("giala");
+                openServiceActivity("giatla");
             }
         });
 
@@ -80,7 +80,7 @@ public class ServiceFragment extends Fragment {
     }
 
     private void openServiceActivity(String item) {
-        Intent intent = new Intent(getActivity(), ServiceActivity.class);
+        Intent intent = new Intent(getContext(), ServiceActivity.class);
         intent.putExtra("item", item);
         startActivity(intent);
     }
