@@ -17,7 +17,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,8 +43,6 @@ public class DetailRoomActivity extends AppCompatActivity {
     ExtensionAdapter extensionAdapter;
     ImageView imageViewBack;
     Button btnCall;
-
-    LinearLayout linearUser;
     private static final int CALL_PHONE_PERMISSION_REQUEST_CODE = 1;
 
     private static final int codeL = 100;
@@ -53,14 +50,6 @@ public class DetailRoomActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_room);
-        linearUser = findViewById(R.id.linearUser);
-        linearUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent management = new Intent(DetailRoomActivity.this,ManagePostActivity.class);
-                startActivity(management);
-            }
-        });
         Bundle bundle = getIntent().getExtras();
         ImageSlider imageSlider = (ImageSlider) findViewById(R.id.ImageRoomPrd);
         ArrayList<SlideModel> slideModels = new ArrayList<>();

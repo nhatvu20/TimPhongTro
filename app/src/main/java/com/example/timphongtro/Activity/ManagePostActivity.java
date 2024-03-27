@@ -51,10 +51,13 @@ public class ManagePostActivity extends AppCompatActivity {
 //            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
 //            return insets;
 //        });
-        imageViewBack = findViewById(R.id.imageViewBack);
-        imageViewPost = findViewById(R.id.imageViewPost);
-        spinnerStatusRoom = findViewById(R.id.spinnerStatusRoom);
-        rcvMyPost = findViewById(R.id.rcvMyPost);
+
+
+//        Sửa
+//        imageViewBack = findViewById(R.id.imageViewBack);
+//        imageViewPost = findViewById(R.id.imageViewPost);
+//        spinnerStatusRoom = findViewById(R.id.spinnerStatusRoom);
+//        rcvMyPost = findViewById(R.id.rcvMyPost);
 
         imageViewBack.setOnClickListener(new View.OnClickListener() {
             @Override
