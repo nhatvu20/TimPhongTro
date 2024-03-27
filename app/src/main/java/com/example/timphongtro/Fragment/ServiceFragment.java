@@ -1,5 +1,6 @@
 package com.example.timphongtro.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.example.timphongtro.Activity.ServiceActivity;
 import com.example.timphongtro.R;
 
 public class ServiceFragment extends Fragment {
@@ -18,15 +20,10 @@ public class ServiceFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_service, container, false);
     }
 
-    public interface ServiceItemClickedListener{
-        void ServiceItemClicked(String servicename);
-    }
 
-    private ServiceItemClickedListener serviceItemClickedListener;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -43,50 +40,48 @@ public class ServiceFragment extends Fragment {
         chothuenoithat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (serviceItemClickedListener != null) {
-                    serviceItemClickedListener.ServiceItemClicked("chothuenoithat");
-                }
+                openServiceActivity("chothuenoithat");
             }
         });
+
         tuvanthietkephong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (serviceItemClickedListener != null) {
-                    serviceItemClickedListener.ServiceItemClicked("chothuenoithat");
-                }
+                openServiceActivity("tuvanthietkephong");
             }
         });
+
         suachuadiennuoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (serviceItemClickedListener != null) {
-                    serviceItemClickedListener.ServiceItemClicked("chothuenoithat");
-                }
+                openServiceActivity("suachuadiennuoc");
             }
         });
         giatla.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (serviceItemClickedListener != null) {
-                    serviceItemClickedListener.ServiceItemClicked("chothuenoithat");
-                }
+                openServiceActivity("giala");
             }
         });
+
         doibinhnuoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (serviceItemClickedListener != null) {
-                    serviceItemClickedListener.ServiceItemClicked("chothuenoithat");
-                }
+                openServiceActivity("doibinhnuoc");
             }
         });
+
         doibinhga.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (serviceItemClickedListener != null) {
-                    serviceItemClickedListener.ServiceItemClicked("chothuenoithat");
-                }
+                openServiceActivity("doibinhga");
             }
         });
+    }
+
+    private void openServiceActivity(String item) {
+        Intent intent = new Intent(getActivity(), ServiceActivity.class);
+        intent.putExtra("item", item);
+        startActivity(intent);
     }
 }
