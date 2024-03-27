@@ -51,6 +51,9 @@ public class ManagePostActivity extends AppCompatActivity {
 //            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
 //            return insets;
 //        });
+
+
+//        Sửa
         imageViewBack = findViewById(R.id.imageViewBack);
         imageViewPost = findViewById(R.id.imageViewPost);
         spinnerStatusRoom = findViewById(R.id.spinnerStatusRoom);
@@ -78,7 +81,7 @@ public class ManagePostActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerStatusRoom.setAdapter(adapter);
 
-        roomdatabase = FirebaseDatabase.getInstance().getReference("myRooms/");
+//        roomdatabase = FirebaseDatabase.getInstance().getReference("myRooms/");
 
         if (userCurrent != null) {
             roomlist = new ArrayList<>();
@@ -109,6 +112,47 @@ public class ManagePostActivity extends AppCompatActivity {
             manageRoomAdapter = new ManageRoomAdapter(roomlist, ManagePostActivity.this);
             rcvMyPost.setAdapter(manageRoomAdapter);
         }
+//        fetchroomrecyclerviewdatabse();
     }
 
+//    private void fetchroomrecyclerviewdatabse() {
+//        roomlist.clear();
+//        roomdatabase.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if (snapshot.exists()) {
+//                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+//                        if (dataSnapshot.getKey().equals("Tro") || dataSnapshot.getKey().equals("ChungCuMini")) {
+//                            // Lấy dữ liệu từ child "Tro"
+//                            if (dataSnapshot.getKey().equals("Tro") && dataSnapshot.exists()) {
+//                                for (DataSnapshot troSnapshot : dataSnapshot.getChildren()) {
+//                                    if (troSnapshot.exists()) {
+//                                        Room room = troSnapshot.getValue(Room.class);
+//                                        roomlist.add(room);
+//                                    }
+//                                }
+//                            }
+//                            // Lấy dữ liệu từ child "ChungCu"
+//                            else if (dataSnapshot.getKey().equals("ChungCuMini") && dataSnapshot.exists()) {
+//                                for (DataSnapshot chungCuSnapshot : dataSnapshot.getChildren()) {
+//                                    if (chungCuSnapshot.exists()) {
+//                                        Room room = chungCuSnapshot.getValue(Room.class);
+//                                        roomlist.add(room);
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                    manageRoomAdapter.notifyDataSetChanged();
+//                } else {
+//                    // Không có dữ liệu tồn tại
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                // Xử lý lỗi nếu có
+//            }
+//        });
+//    }
 }
