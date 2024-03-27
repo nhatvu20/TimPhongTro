@@ -54,10 +54,10 @@ public class ManagePostActivity extends AppCompatActivity {
 
 
 //        Sửa
-//        imageViewBack = findViewById(R.id.imageViewBack);
-//        imageViewPost = findViewById(R.id.imageViewPost);
-//        spinnerStatusRoom = findViewById(R.id.spinnerStatusRoom);
-//        rcvMyPost = findViewById(R.id.rcvMyPost);
+        imageViewBack = findViewById(R.id.imageViewBack);
+        imageViewPost = findViewById(R.id.imageViewPost);
+        spinnerStatusRoom = findViewById(R.id.spinnerStatusRoom);
+        rcvMyPost = findViewById(R.id.rcvMyPost);
 
         imageViewBack.setOnClickListener(new View.OnClickListener() {
             @Override

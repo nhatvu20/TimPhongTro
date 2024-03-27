@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +44,7 @@ public class DetailRoomActivity extends AppCompatActivity {
     ExtensionAdapter extensionAdapter;
     ImageView imageViewBack;
     Button btnCall;
+    LinearLayout userPost;
     private static final int CALL_PHONE_PERMISSION_REQUEST_CODE = 1;
 
     private static final int codeL = 100;
@@ -72,6 +74,14 @@ public class DetailRoomActivity extends AppCompatActivity {
         textviewDescriptionRoom = findViewById(R.id.textviewDescriptionRoom);
         imageViewBack = findViewById(R.id.imageViewBack);
         btnCall = findViewById(R.id.btnCall);
+        userPost = findViewById(R.id.userPost);
+        userPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mypost = new Intent(DetailRoomActivity.this,ManagePostActivity.class);
+                startActivity(mypost);
+            }
+        });
 
         if (bundle != null) {
             String roomString = bundle.getString("DataRoom");
