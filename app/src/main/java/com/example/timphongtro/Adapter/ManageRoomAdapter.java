@@ -34,7 +34,7 @@ public class ManageRoomAdapter extends RecyclerView.Adapter<ManageRoomAdapter.My
     @NonNull
     @Override
     public ManageRoomAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(context).inflate(R.layout.activity_manage_post,parent,false);
+        View v = LayoutInflater.from(context).inflate(R.layout.view_holder_manage_room,parent,false);
         return new ManageRoomAdapter.MyViewHolder(v);
     }
 
