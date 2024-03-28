@@ -22,7 +22,7 @@ import com.example.timphongtro.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class ProfileFragment extends Fragment { 
+public class ProfileFragment extends Fragment {
 
     private Button btnDangxuat;
     private FirebaseAuth mAuth;
@@ -49,10 +49,6 @@ public class ProfileFragment extends Fragment {
             }
 
             private void logout() {
-//                SharedPreferences preferences = requireContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-//                SharedPreferences.Editor editor = preferences.edit();
-//                editor.clear();
-//                editor.apply();
                 Toast.makeText(getActivity(),"Vào rồi",Toast.LENGTH_SHORT).show();
                 FirebaseAuth.getInstance().signOut();
 
