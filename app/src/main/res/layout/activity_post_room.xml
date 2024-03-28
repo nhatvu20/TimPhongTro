@@ -57,15 +57,45 @@
                     android:id="@+id/tvInforTypeRoom"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginBottom="10dp"
                     android:text="Thông tin phòng"
                     android:textColor="@color/orange"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="5dp"
+                    tools:paddingTop="5dp">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_house_color" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:background="@drawable/border_bottom"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="Thông tin cơ bản"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -109,6 +139,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -122,103 +153,100 @@
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/textViewCity"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textColor="@color/black"
-                        android:textSize="14sp"
-                        android:layout_marginLeft="10dp"
-                        android:textStyle="bold"
-                        android:text="Thành phố" />
-
-                    <Spinner
-                        android:id="@+id/spinnerCity"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:spinnerMode="dropdown"
-                        android:layout_weight="1" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/textViewDistrict"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textColor="@color/black"
-                        android:textSize="14sp"
-                        android:layout_marginLeft="10dp"
-                        android:textStyle="bold"
-                        android:text="Quận" />
-
-                    <Spinner
-                        android:id="@+id/spinnerDistrict"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:spinnerMode="dropdown"
-                        android:layout_weight="1" />
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"></LinearLayout>
-                </LinearLayout>
+                        android:orientation="vertical">
 
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/textViewDetail"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight="1"
-                        android:text="Địa chỉ chi tiết"
-                        android:textColor="@color/black"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="15dp"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:id="@+id/imageView4"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:src="@drawable/ic_location" />
-
-                        <EditText
-                            android:id="@+id/edtAddress"
+                        <TextView
+                            android:id="@+id/textViewCity"
                             android:layout_width="wrap_content"
-                            android:layout_height="50dp"
-                            android:layout_marginLeft="15dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
                             android:layout_weight="1"
-                            android:ems="10"
-                            android:hint="Nhập địa chỉ"
-                            android:inputType="text"
-                            android:text="Ngõ 10" />
+                            android:text="Thành phố"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <Spinner
+                            android:id="@+id/spinnerCity"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:spinnerMode="dropdown" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textViewDistrict"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="1"
+                            android:text="Quận"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <Spinner
+                            android:id="@+id/spinnerDistrict"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:spinnerMode="dropdown" />
 
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textViewDetail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="1"
+                            android:text="Địa chỉ chi tiết"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="15dp"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/imageView4"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/ic_location" />
+
+                            <EditText
+                                android:id="@+id/edtAddress"
+                                android:layout_width="wrap_content"
+                                android:layout_height="50dp"
+                                android:layout_marginLeft="15dp"
+                                android:layout_weight="1"
+                                android:ems="10"
+                                android:hint="Nhập địa chỉ"
+                                android:inputType="text"
+                                android:text="Ngõ 10" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
                 </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -229,8 +257,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="9dp"
-                        android:background="@drawable/border_grey"
+                        android:layout_marginStart="5dp"
                         android:gravity="center"
                         android:orientation="horizontal"
                         android:paddingLeft="10dp"
@@ -250,7 +277,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
+                            android:background="@drawable/border_bottom"
                             android:gravity="center"
+                            android:padding="5dp"
                             android:text="Tiền phòng"
                             android:textColor="@color/black"
                             android:textStyle="bold" />
@@ -259,6 +288,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -301,6 +331,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -350,17 +381,6 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/txvUploadImg"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:text="Ảnh phòng"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -380,10 +400,9 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="9dp"
+                                android:layout_marginStart="5dp"
                                 android:layout_marginBottom="10dp"
                                 android:layout_weight="1"
-                                android:background="@drawable/border_grey"
                                 android:gravity="center"
                                 android:orientation="horizontal"
                                 android:paddingTop="5dp"
@@ -400,8 +419,10 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="5dp"
+                                    android:background="@drawable/border_bottom"
                                     android:gravity="center"
-                                    android:text="Ảnh"
+                                    android:padding="5dp"
+                                    android:text="Ảnh phòng"
                                     android:textColor="@color/black"
                                     android:textStyle="bold" />
                             </LinearLayout>
@@ -421,7 +442,9 @@
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_height="280dp"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp"
                                 android:layout_weight="1"
                                 android:background="@drawable/border"
                                 android:orientation="vertical">
@@ -429,7 +452,7 @@
                                 <ImageView
                                     android:id="@+id/imageViewP1"
                                     android:layout_width="match_parent"
-                                    android:layout_height="250dp"
+                                    android:layout_height="match_parent"
                                     android:layout_weight="1"
                                     android:src="@drawable/ic_upload" />
 
@@ -484,8 +507,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="9dp"
-                        android:background="@drawable/border_grey"
+                        android:layout_marginStart="5dp"
                         android:gravity="center"
                         android:orientation="horizontal"
                         android:paddingLeft="10dp"
@@ -504,7 +526,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
+                            android:background="@drawable/border_bottom"
                             android:gravity="center"
+                            android:padding="5dp"
                             android:text="Giới tính"
                             android:textColor="@color/black"
                             android:textStyle="bold" />
@@ -513,7 +537,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
                         android:layout_marginTop="15dp"
+                        android:layout_marginRight="20dp"
                         android:layout_marginBottom="15dp"
                         android:orientation="horizontal">
 
@@ -550,8 +576,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="9dp"
-                        android:background="@drawable/border_grey"
+                        android:layout_marginStart="5dp"
                         android:gravity="center"
                         android:orientation="horizontal"
                         android:paddingLeft="10dp"
@@ -570,7 +595,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
+                            android:background="@drawable/border_bottom"
                             android:gravity="center"
+                            android:padding="5dp"
                             android:text="Loại phòng"
                             android:textColor="@color/black"
                             android:textStyle="bold" />
@@ -579,7 +606,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
                         android:layout_marginTop="20dp"
+                        android:layout_marginRight="20dp"
                         android:orientation="horizontal">
 
                         <RadioGroup
@@ -615,8 +644,38 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="5dp"
+                        tools:paddingTop="5dp">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_house_color" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:background="@drawable/border_bottom"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="Thông tin chi tiết"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -661,6 +720,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -704,6 +764,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -747,6 +808,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -790,6 +852,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -833,6 +896,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -883,9 +947,8 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="9dp"
+                    android:layout_marginStart="5dp"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/border_grey"
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:paddingLeft="10dp"
@@ -903,7 +966,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
+                        android:background="@drawable/border_bottom"
                         android:gravity="center"
+                        android:padding="5dp"
                         android:text="Tiện ích"
                         android:textColor="@color/black"
                         android:textStyle="bold" />
@@ -912,7 +977,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -1050,9 +1117,8 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="9dp"
+                    android:layout_marginStart="5dp"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/border_grey"
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:paddingLeft="10dp"
@@ -1071,7 +1137,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
+                        android:background="@drawable/border_bottom"
                         android:gravity="center"
+                        android:padding="5dp"
                         android:text="Nội thất"
                         android:textColor="@color/black"
                         android:textStyle="bold" />
@@ -1080,7 +1148,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -1229,10 +1299,9 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="9dp"
+                        android:layout_marginStart="5dp"
                         android:layout_marginTop="15dp"
                         android:layout_marginBottom="15dp"
-                        android:background="@drawable/border_grey"
                         android:gravity="center"
                         android:orientation="horizontal"
                         android:paddingLeft="10dp"
@@ -1241,15 +1310,17 @@
                         android:paddingBottom="5dp">
 
                         <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
                             android:src="@drawable/ic_status" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
+                            android:background="@drawable/border_bottom"
                             android:gravity="center"
+                            android:padding="5dp"
                             android:text="Tình trạng phòng"
                             android:textColor="@color/black"
                             android:textStyle="bold" />
@@ -1258,6 +1329,8 @@
                     <RadioGroup
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
                         android:orientation="horizontal">
 
                         <RadioButton
@@ -1300,7 +1373,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="10dp"
                     android:text="Thông tin dịch vụ"
                     android:textColor="@color/orange"
                     android:textSize="20sp"
@@ -1309,9 +1383,8 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="9dp"
+                    android:layout_marginStart="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/border_grey"
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:paddingTop="5dp"
@@ -1328,7 +1401,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
+                        android:background="@drawable/border_bottom"
                         android:gravity="center"
+                        android:padding="5dp"
                         android:text="Phí dịch vụ"
                         android:textColor="@color/black"
                         android:textStyle="bold" />
@@ -1348,7 +1423,7 @@
                     <!--                            -->
                     <!--                        </LinearLayout>-->
                     <LinearLayout
-                        android:layout_width="100dp"
+                        android:layout_width="120dp"
                         android:layout_height="match_parent"
                         android:background="@drawable/border_card"
                         android:gravity="center"
@@ -1401,7 +1476,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="100dp"
+                        android:layout_width="120dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
@@ -1453,7 +1528,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="100dp"
+                        android:layout_width="120dp"
                         android:layout_height="match_parent"
                         android:background="@drawable/border_card"
                         android:gravity="center"
