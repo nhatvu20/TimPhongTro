@@ -5,7 +5,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 
 public class Room {
-    private String id_own_post;
+
     private String id_room;
     private String title_room;
     private long price_room;
@@ -37,14 +37,7 @@ public class Room {
     public Room() {
     }
 
-    public Room(String id_own_post,String id_room, String title_room) {
-        this.id_own_post = id_own_post;
-        this.id_room = id_room;
-        this.title_room = title_room;
-    }
-
-    public Room(String id_own_post,String id_room, String title_room, long price_room, Address address, String area_room, long deposit_room, String description_room, String gender_room, int park_slot, int person_in_room, int status_room, int type_room, String phone, int floor, ImagesRoomClass images, ArrayList<FurnitureClass> furniture, ArrayList<ExtensionRoom_class> extension_room, long price_electric, long price_water, long price_internet) {
-        this.id_own_post = id_own_post;
+    public Room(String id_room, String title_room, long price_room, Address address, String area_room, long deposit_room, String description_room, String gender_room, int park_slot, int person_in_room, int status_room, int type_room, String phone, int floor, ImagesRoomClass images, ArrayList<FurnitureClass> furniture, ArrayList<ExtensionRoom_class> extension_room, long price_electric, long price_water, long price_internet) {
         this.id_room = id_room;
         this.title_room = title_room;
         this.price_room = price_room;
@@ -225,14 +218,6 @@ public class Room {
 
     public void setExtension_room(ArrayList<ExtensionRoom_class> extension_room) {
         this.extension_room = extension_room;
-    }
-
-    public String getId_own_post() {
-        return id_own_post;
-    }
-
-    public void setId_own_post(String id_own_post) {
-        this.id_own_post = id_own_post;
     }
 
     @Override

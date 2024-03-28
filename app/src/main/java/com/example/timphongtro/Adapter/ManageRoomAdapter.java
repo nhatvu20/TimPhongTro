@@ -100,8 +100,8 @@ public class ManageRoomAdapter extends RecyclerView.Adapter<ManageRoomAdapter.My
             people_room = itemView.findViewById(R.id.Size);
             cardViewRoom = itemView.findViewById(R.id.cardViewRoom);
             img_post = itemView.findViewById(R.id.img_post);
-            imageViewEdit = itemView.findViewById(R.id.imageViewEdit);
-            imageViewDelete = itemView.findViewById(R.id.imageViewDelete);
+//            imageViewEdit = itemView.findViewById(R.id.imageViewEdit);
+//            imageViewDelete = itemView.findViewById(R.id.imageViewDelete);
         }
     }
 }
