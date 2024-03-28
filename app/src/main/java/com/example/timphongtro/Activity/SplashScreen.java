@@ -11,7 +11,7 @@ import com.example.timphongtro.R;
 
 public class SplashScreen extends AppCompatActivity {
 
-    public static int SPLASH_TIMER = 3000;
+    public static int SPLASH_TIMER = 3000; 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

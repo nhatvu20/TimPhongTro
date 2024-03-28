@@ -1,22 +1,25 @@
 package com.example.timphongtro.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+ 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.timphongtro.Activity.DetailRoomActivity;
 import com.example.timphongtro.Entity.Address;
 import com.example.timphongtro.Entity.ImagesRoomClass;
 import com.example.timphongtro.Entity.Room;
 import com.example.timphongtro.R;
 
-import java.util.ArrayList;
+import java.util.ArrayList; 
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHolder> {
 
@@ -51,7 +54,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
         holder.city.setText(address.getCity());
         holder.district.setText(address.getDistrict());
         holder.detail.setText(address.getDetail());
-
+        holder.cardViewRoom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent detailRoom = new Intent(context, DetailRoomActivity.class);
+                detailRoom.putExtra("DataRoom", room.toString());
+                context.startActivity(detailRoom);
+            }
+        });
     }
 
     @Override
@@ -67,6 +77,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
 
         TextView people_room, price_room, area_room, city, district, detail, title_room;
         ImageView img_post;
+        CardView cardViewRoom;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             title_room = itemView.findViewById(R.id.PostTitle);
@@ -77,6 +88,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
             detail = itemView.findViewById(R.id.DetailName);
             people_room = itemView.findViewById(R.id.Size);
             img_post = itemView.findViewById(R.id.img_post);
+            cardViewRoom = itemView.findViewById(R.id.cardViewRoom);
         }
     }
 }

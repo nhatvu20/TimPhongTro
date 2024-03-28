@@ -1,6 +1,6 @@
 package com.example.timphongtro.Entity;
 
-
+ 
 public class FurnitureClass {
     private String name;
     private String img;
@@ -22,7 +22,7 @@ public class FurnitureClass {
     }
 
     public String getImg() {
-        return img;
+        return img; 
     }
 
     public void setImg(String img) {

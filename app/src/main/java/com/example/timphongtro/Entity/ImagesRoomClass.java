@@ -1,6 +1,6 @@
 package com.example.timphongtro.Entity;
 
-
+ 
 public class ImagesRoomClass {
     private String img1;
     private String img2;
@@ -25,7 +25,7 @@ public class ImagesRoomClass {
     }
 
     public String getImg3() {
-        return img3;
+        return img3; 
     }
 
     public void setImg3(String img3) {

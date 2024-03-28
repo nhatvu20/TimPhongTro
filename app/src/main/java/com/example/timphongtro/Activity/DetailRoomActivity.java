@@ -5,7 +5,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+ 
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -210,7 +210,7 @@ public class DetailRoomActivity extends AppCompatActivity {
         intent.setData(Uri.parse("tel:" + roomData.getPhone()));
 
         if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(intent);
+            startActivity(intent); 
         }
     }
 }

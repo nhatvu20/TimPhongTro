@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+ 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public class DistrictAdapter extends RecyclerView.Adapter<DistrictAdapter.MyViewHolder> {
 
-    Context context;
+    Context context; 
 
     ArrayList<DistrictData> list;
 

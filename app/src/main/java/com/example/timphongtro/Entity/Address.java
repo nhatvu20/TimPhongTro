@@ -1,9 +1,9 @@
 package com.example.timphongtro.Entity;
 
 public class Address {
-    String city, district, detail,ward,address_combine;
+    String city, district, detail, ward, address_combine;
 
-    Address(){
+    Address() {
 
     }
 
@@ -20,7 +20,13 @@ public class Address {
         this.district = district;
         this.detail = detail;
         this.ward = ward;
-        this.address_combine = detail+", "+district+", "+city;
+        this.address_combine = detail + ", " + district + ", " + city;
+    }
+
+    public Address(String city, String district) {
+        this.city = city;
+        this.district = district;
+        this.address_combine = district + ", " + city;
     }
 
     public void setCity(String city) {

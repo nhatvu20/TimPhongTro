@@ -3,24 +3,119 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/darkerwhite"
-    tools:context=".Fragment.ProfileFragment">
-
-    <TextView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/darkerwhite">
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Profile"
-        android:gravity="center"
-        android:textSize="30sp"
-        android:textColor="@color/white"/>
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/btnDangxuat"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginEnd="80dp"
-        android:text="@string/dangxuat"
-        tools:layout_editor_absoluteY="581dp"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/orange"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
+            <com.denzcoskun.imageslider.ImageSlider
+                android:id="@+id/ImageSlider"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                app:iss_auto_cycle="true"
+                app:iss_delay="1000"
+                app:iss_period="1000"
+                app:iss_title_background="@drawable/default_gradient"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </com.denzcoskun.imageslider.ImageSlider>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <RelativeLayout
+            android:id="@+id/searchbox"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_below="@+id/cardView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="-50dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/search_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_margin="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:layout_width="250dp"
+                        android:layout_height="30dp"
+                        android:id="@+id/txtviewInfo"
+                        tools:ignore="MissingConstraints"
+                        android:text="">
+                    </TextView>
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/txtviewProfile"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="50dp"-->
+    <!--        android:layout_marginStart="80dp"-->
+    <!--        android:layout_marginEnd="80dp"-->
+    <!--        android:background="@color/grey_font"-->
+
+    <!--        android:text=""-->
+    <!--        tools:layout_editor_absoluteY="581dp" />-->
+    <!--    <TextView-->
+    <!--        android:id="@+id/txtview"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="50dp"-->
+    <!--        android:layout_marginStart="80dp"-->
+    <!--        android:layout_marginEnd="80dp"-->
+    <!--        android:background="@color/grey_font"-->
+
+    <!--        android:text=""-->
+    <!--        tools:layout_editor_absoluteY="581dp" />-->
+
+        <Button
+            android:id="@+id/btnDangxuat"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginStart="80dp"
+            android:layout_marginEnd="80dp"
+            android:text="@string/dangxuat"
+            tools:layout_editor_absoluteY="581dp"/>
 </FrameLayout>

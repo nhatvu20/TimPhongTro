@@ -1,5 +1,5 @@
 package com.example.timphongtro.Entity;
-
+ 
 public class RoomViewHolderData {
     String name, title_room;
     int price_room, people_room, area_room;
@@ -22,7 +22,7 @@ public class RoomViewHolderData {
     }
 
     public int getArea_room() {
-        return area_room;
+        return area_room; 
     }
 
     public String getTitle_room() {
