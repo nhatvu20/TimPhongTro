@@ -22,7 +22,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView6" />
-
+ 
     <Button
         android:id="@+id/btnDangky"
         android:layout_width="300dp"

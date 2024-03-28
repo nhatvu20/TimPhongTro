@@ -22,7 +22,7 @@ public class RoomViewHolderData {
     }
 
     public int getArea_room() {
-        return area_room;
+        return area_room; 
     }
 
     public String getTitle_room() {

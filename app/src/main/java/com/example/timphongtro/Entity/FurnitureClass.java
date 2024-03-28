@@ -22,7 +22,7 @@ public class FurnitureClass {
     }
 
     public String getImg() {
-        return img;
+        return img; 
     }
 
     public void setImg(String img) {

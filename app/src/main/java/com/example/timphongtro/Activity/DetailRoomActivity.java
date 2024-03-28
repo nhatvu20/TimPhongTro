@@ -211,7 +211,7 @@ public class DetailRoomActivity extends AppCompatActivity {
         intent.setData(Uri.parse("tel:" + roomData.getPhone()));
 
         if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(intent);
+            startActivity(intent); 
         }
     }
 }

@@ -25,7 +25,7 @@ public class Room {
 
     private int floor;
     private long price_electric;
-    private long price_water;
+    private long price_water; 
     private long price_internet;
 
     private ImagesRoomClass images; //lưu ảnh và video cho bài viết

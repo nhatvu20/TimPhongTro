@@ -25,7 +25,7 @@ public class ImagesRoomClass {
     }
 
     public String getImg3() {
-        return img3;
+        return img3; 
     }
 
     public void setImg3(String img3) {

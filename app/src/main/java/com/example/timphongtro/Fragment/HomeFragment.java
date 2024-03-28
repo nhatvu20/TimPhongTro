@@ -24,7 +24,7 @@ import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.timphongtro.Activity.SearchActivity;
 import com.example.timphongtro.Activity.ShowMoreActivity;
-import com.example.timphongtro.Adapter.DistrictAdapter;
+import com.example.timphongtro.Adapter.DistrictAdapter; 
 import com.example.timphongtro.Entity.DistrictData;
 import com.example.timphongtro.Entity.Room;
 import com.example.timphongtro.Adapter.RoomAdapter;

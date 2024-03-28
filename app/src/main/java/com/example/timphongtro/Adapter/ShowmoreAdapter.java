@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class ShowmoreAdapter extends RecyclerView.Adapter<ShowmoreAdapter.MyViewHolder> {
 
-    Context context;
+    Context context; 
 
     ArrayList<Room> list;
 

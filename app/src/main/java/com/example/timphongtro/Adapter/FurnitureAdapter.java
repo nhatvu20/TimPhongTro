@@ -16,7 +16,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.timphongtro.Entity.FurnitureClass;
 import com.example.timphongtro.R;
 
-import java.util.ArrayList;
+import java.util.ArrayList; 
 
 public class FurnitureAdapter extends RecyclerView.Adapter<FurnitureAdapter.ViewHolderFurniture> {
     Context context;

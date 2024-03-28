@@ -25,7 +25,7 @@ public class Service_roomClass {
     }
 
     public String getImg() {
-        return img;
+        return img; 
     }
 
     public void setImg(String img) {

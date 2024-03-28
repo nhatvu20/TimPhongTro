@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public class DistrictAdapter extends RecyclerView.Adapter<DistrictAdapter.MyViewHolder> {
 
-    Context context;
+    Context context; 
 
     ArrayList<DistrictData> list;
 

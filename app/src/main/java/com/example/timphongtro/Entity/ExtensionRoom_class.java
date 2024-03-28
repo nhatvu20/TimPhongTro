@@ -17,7 +17,7 @@ public class ExtensionRoom_class {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name; 
     }
 
     public String getImg() {

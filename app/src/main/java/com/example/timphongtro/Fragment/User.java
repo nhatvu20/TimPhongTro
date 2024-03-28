@@ -22,7 +22,7 @@ public class User {
 
     public User(String email, String uid, ArrayList<Room> rooms) {
         this.email = email;
-        this.uid = uid;
+        this.uid = uid; 
         this.rooms = rooms;
     }
 

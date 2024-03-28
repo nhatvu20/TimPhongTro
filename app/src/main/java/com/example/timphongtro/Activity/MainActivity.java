@@ -13,7 +13,7 @@ import android.view.Gravity;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.LinearLayout; 
 import android.widget.Toast;
 
 import com.example.timphongtro.Fragment.HomeFragment;

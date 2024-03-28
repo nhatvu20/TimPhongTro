@@ -20,7 +20,7 @@ public class Address {
         this.district = district;
         this.detail = detail;
         this.ward = ward;
-        this.address_combine = detail+", "+district+", "+city;
+        this.address_combine = detail+", "+district+", "+city; 
     }
 
     public void setCity(String city) {

@@ -8,6 +8,6 @@ public class DistrictData {
     }
 
     public String getName() {
-        return name;
+        return name; 
     }
 }

@@ -16,7 +16,7 @@ import com.example.timphongtro.Entity.ImagesRoomClass;
 import com.example.timphongtro.Entity.Room;
 import com.example.timphongtro.R;
 
-import java.util.ArrayList;
+import java.util.ArrayList; 
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHolder> {
 
