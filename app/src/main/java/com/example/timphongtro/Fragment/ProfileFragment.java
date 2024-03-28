@@ -1,34 +1,24 @@
 package com.example.timphongtro.Fragment;
-
+ 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.Spinner;
-import android.widget.Toast;
 
-import com.example.timphongtro.Activity.LoginActivity;
 import com.example.timphongtro.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class ProfileFragment extends Fragment {
 
     private Button btnDangxuat;
     private FirebaseAuth mAuth;
-
-    private FirebaseUser mUser;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -76,8 +66,7 @@ public class ProfileFragment extends Fragment {
         }
 
         return inflater.inflate(R.layout.fragment_profile, container, false);
-
-
-//
     }
+
+
 }

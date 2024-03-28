@@ -1,5 +1,5 @@
 package com.example.timphongtro.Entity;
-
+ 
 public class RoomViewHolderData {
     String name, title_room;
     int price_room, people_room, area_room;

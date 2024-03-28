@@ -18,7 +18,7 @@ import com.example.timphongtro.Activity.PostRoomActivity;
 import com.example.timphongtro.Entity.Address;
 import com.example.timphongtro.Entity.ImagesRoomClass;
 import com.example.timphongtro.Entity.Room;
-import com.example.timphongtro.R; 
+import com.example.timphongtro.R;
 
 import java.util.ArrayList;
 

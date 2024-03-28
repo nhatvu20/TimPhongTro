@@ -1,5 +1,5 @@
 package com.example.timphongtro.Fragment;
-
+ 
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -134,7 +134,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void fetchroomrecyclerviewdatabse() {
-        spinnerlist.clear();
+        roomlist.clear();
         roomdatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

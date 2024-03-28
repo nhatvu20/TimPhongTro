@@ -5,7 +5,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+ 
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -44,8 +44,7 @@ public class DetailRoomActivity extends AppCompatActivity {
     ExtensionAdapter extensionAdapter;
     ImageView imageViewBack;
     Button btnCall;
-
-    LinearLayout linearUser;
+    LinearLayout userPost;
     private static final int CALL_PHONE_PERMISSION_REQUEST_CODE = 1;
 
     private static final int codeL = 100;
@@ -53,14 +52,6 @@ public class DetailRoomActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_room);
-        linearUser = findViewById(R.id.linearUser);
-        linearUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent management = new Intent(DetailRoomActivity.this,ManagePostActivity.class);
-                startActivity(management);
-            }
-        });
         Bundle bundle = getIntent().getExtras();
         ImageSlider imageSlider = (ImageSlider) findViewById(R.id.ImageRoomPrd);
         ArrayList<SlideModel> slideModels = new ArrayList<>();
@@ -83,6 +74,14 @@ public class DetailRoomActivity extends AppCompatActivity {
         textviewDescriptionRoom = findViewById(R.id.textviewDescriptionRoom);
         imageViewBack = findViewById(R.id.imageViewBack);
         btnCall = findViewById(R.id.btnCall);
+        userPost = findViewById(R.id.userPost);
+        userPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mypost = new Intent(DetailRoomActivity.this,ManagePostActivity.class);
+                startActivity(mypost);
+            }
+        });
 
         if (bundle != null) {
             String roomString = bundle.getString("DataRoom");

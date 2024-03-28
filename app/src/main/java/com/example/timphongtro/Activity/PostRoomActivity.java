@@ -6,7 +6,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
+ 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface; 
@@ -35,8 +35,6 @@ import com.example.timphongtro.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -400,11 +398,7 @@ public class PostRoomActivity extends AppCompatActivity {
             radiobtnTro.setError("Vui lòng chọn loại phòng");
         }
         DatabaseReference myRef = database.getReference("rooms/" + path);
-        FirebaseUser userCurrent = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference myPostRef = database.getReference("myRooms/");
-        if(userCurrent != null){
-            myPostRef = database.getReference("myRooms/"+userCurrent.getUid());
-        }
+
         if (radiobtnPhongTrong.isChecked() || radiobtnDaChoThue.isChecked()) {
             if (radiobtnDaChoThue.isChecked()) {
                 status_room = 1;
@@ -468,100 +462,68 @@ public class PostRoomActivity extends AppCompatActivity {
             isValid = false;
         }
 
-        int countfurnitures = 0;
+
         // Them noi that
         ArrayList<FurnitureClass> furnitures = new ArrayList<>();
         if (checkbox_air_condition.isChecked()) {
-            countfurnitures += 1;
             furnitures.add(new FurnitureClass(checkbox_air_condition.getText().toString(), "https://firebasestorage.googleapis.com/v0/b/my-application-67ef3.appspot.com/o/icon_png%2Fic-air-condittion.png?alt=media&token=85d235e6-f4f4-44b1-89f4-05bed51050a6"));
         }
         if (checkbox_heater.isChecked()) {
-            countfurnitures += 1;
             furnitures.add(new FurnitureClass(checkbox_heater.getText().toString(), "https://firebasestorage.googleapis.com/v0/b/my-application-67ef3.appspot.com/o/icon_png%2Fic-heater.png?alt=media&token=4c4871ff-ef6f-42bc-a480-3b60336b802c"));
         }
         if (checkbox_curtain.isChecked()) {
-            countfurnitures += 1;
             furnitures.add(new FurnitureClass(checkbox_curtain.getText().toString(), "https://firebasestorage.googleapis.com/v0/b/my-application-67ef3.appspot.com/o/icon_png%2Fic-curtain.png?alt=media&token=400eb929-952b-4051-acc2-a26db74251ac"));
         }
         if (checkboxfridge.isChecked()) {
-            countfurnitures += 1;
             furnitures.add(new FurnitureClass(checkboxfridge.getText().toString(),"https://firebasestorage.googleapis.com/v0/b/my-application-67ef3.appspot.com/o/icon_png%2Fic-fridge.png?alt=media&token=deb2cded-5a02-464e-8e93-2672d7bc9b89"));
         }
         if (checkboxbed.isChecked()) {
-            countfurnitures += 1;
             furnitures.add(new FurnitureClass(checkboxbed.getText().toString(), "https://firebasestorage.googleapis.com/v0/b/my-application-67ef3.appspot.com/o/icon_png%2Fic-bed.png?alt=media&token=9ed19798-ba14-4604-87d6-5f0224584f42"));
         }
         if (checkboxwardrobe.isChecked()) {
-            countfurnitures += 1;
             furnitures.add(new FurnitureClass(checkboxwardrobe.getText().toString(), "https://firebasestorage.googleapis.com/v0/b/my-application-67ef3.appspot.com/o/icon_png%2Fic-Wardrobe.png?alt=media&token=944da04f-03dd-4b8f-b627-27f1f8f11c9a"));
         }
         if (checkbox_washing_machine.isChecked()) {
-            countfurnitures += 1;
             furnitures.add(new FurnitureClass(checkbox_washing_machine.getText().toString(), "https://firebasestorage.googleapis.com/v0/b/my-application-67ef3.appspot.com/o/icon_png%2Fic-washing-machine.png?alt=media&token=ee166ffd-2cb6-4d76-85a8-0a587effb2af"));
         }
         if (checkboxsofa.isChecked()) {
-            countfurnitures += 1;
             furnitures.add(new FurnitureClass(checkboxsofa.getText().toString(), "https://firebasestorage.googleapis.com/v0/b/my-application-67ef3.appspot.com/o/icon_png%2Fic-sofa.png?alt=media&token=f9bba804-271b-4740-b28c-d7d89d083d6f"));
         }
 
         ImagesRoomClass images = new ImagesRoomClass(imageURL1, imageURL1, imageURL1, imageURL1, "");
-        int countextensions_room = 0;
+
         ArrayList<ExtensionRoom_class> extensions_room = new ArrayList<>();
         if (checkboxtoilet.isChecked()) {
-            countextensions_room+=1;
             extensions_room.add(new ExtensionRoom_class(checkboxtoilet.getText().toString(), "https://firebasestorage.googleapis.com/v0/b/my-application-67ef3.appspot.com/o/icon_png%2Fic-toilet.png?alt=media&token=426b6597-5dc4-4182-887e-fbeb37d5acc0"));
         }
         if (checkboxfloor.isChecked()) {
-            countextensions_room+=1;
             extensions_room.add(new ExtensionRoom_class(checkboxfloor.getText().toString(), "https://firebasestorage.googleapis.com/v0/b/my-application-67ef3.appspot.com/o/icon_png%2Fic-ladder.png?alt=media&token=96975838-2519-4637-87ef-1c966b0f5308"));
         }
         if (checkbox_time_flex.isChecked()) {
-            countextensions_room+=1;
             extensions_room.add(new ExtensionRoom_class(checkbox_time_flex.getText().toString(), "https://firebasestorage.googleapis.com/v0/b/my-application-67ef3.appspot.com/o/icon_png%2Fic-time-flex.png?alt=media&token=c3d87c64-086b-43c8-b896-4d2777c2e7e5"));
         }
         if (checkboxfingerprint.isChecked()) {
-            countextensions_room+=1;
             extensions_room.add(new ExtensionRoom_class(checkboxfingerprint.getText().toString(), "https://firebasestorage.googleapis.com/v0/b/my-application-67ef3.appspot.com/o/icon_png%2Fic-finger-print.png?alt=media&token=8dccd0ac-ff93-4d1d-9f44-6db70a315853"));
         }
         if (checkboxbacony.isChecked()) {
-            countextensions_room+=1;
             extensions_room.add(new ExtensionRoom_class(checkboxbacony.getText().toString(), "https://firebasestorage.googleapis.com/v0/b/my-application-67ef3.appspot.com/o/icon_png%2Fic-ladder.png?alt=media&token=96975838-2519-4637-87ef-1c966b0f5308"));
         }
         if (checkboxpet.isChecked()) {
-            countextensions_room+=1;
             extensions_room.add(new ExtensionRoom_class(checkboxpet.getText().toString(), "https://firebasestorage.googleapis.com/v0/b/my-application-67ef3.appspot.com/o/icon_png%2Fic-paw-pet.png?alt=media&token=8a649047-04d9-4421-a064-fca84b7f8f0d"));
         }
         if (checkbox_w_owner.isChecked()) {
-            countextensions_room+=1;
             extensions_room.add(new ExtensionRoom_class(checkbox_w_owner.getText().toString(), "https://firebasestorage.googleapis.com/v0/b/my-application-67ef3.appspot.com/o/icon_png%2Fic-user.png?alt=media&token=db7d94aa-1a03-42f3-834a-4a3aec4c3866"));
         }
-
-        if(countfurnitures == 0) {
-            isValid = false;
-            checkbox_air_condition.setError("Vui lòng chọn 1 món nội thất");
-        }
-        if (countextensions_room == 0) {
-            isValid = false;
-            checkboxtoilet.setError("Vui lòng chọn 1 tiện ích");
-        }
 //        saveImage();
-        if(isValid){
-            Toast.makeText(PostRoomActivity.this, "Vui lòng chọn đầy đủ các trường bao gồm ảnh", Toast.LENGTH_SHORT).show();
-            String id_own_post = "";
-            if (userCurrent != null) {
-                id_own_post = userCurrent.getUid();
-            }
-            Room room = new Room(id_own_post, id_room, title_room, price_room, address, area_room, deposit_room, description_room, gender_room, park_slot,
-                    person_in_room, status_room, type_room, phone, floor, images, furnitures, extensions_room,
-                    Long.parseLong(edtInternet.getText().toString()), Long.parseLong(edtWater.getText().toString()), Long.parseLong(edtInternet.getText().toString()));
-            myRef.child(id_room).setValue(room);
-            myPostRef.child(id_room).setValue(room);
+        Room room = new Room(id_room, title_room, price_room, address, area_room, deposit_room, description_room, gender_room, park_slot,
+                person_in_room, status_room, type_room, phone, floor, images, furnitures, extensions_room,
+                Long.parseLong(edtInternet.getText().toString()), Long.parseLong(edtWater.getText().toString()), Long.parseLong(edtInternet.getText().toString()));
+        myRef.child(id_room).setValue(room);
 //        setValue myRef.setValue(doi tuong, new DatabaseReference.Completionlistener )
 //        myRef.child("tạo id").setValue()
-            Toast.makeText(PostRoomActivity.this, "Đăng bài thành công", Toast.LENGTH_SHORT).show();
-            Intent main = new Intent(this, MainActivity.class);
-            startActivity(main);
-        }
+        Toast.makeText(PostRoomActivity.this, "Đăng bài thành công", Toast.LENGTH_SHORT);
+        Intent main = new Intent(this, MainActivity.class);
+        startActivity(main);
     }
 
     boolean isEmpty(EditText text) {

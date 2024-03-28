@@ -22,7 +22,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView5" />
- 
+
 
 
 
@@ -53,7 +53,6 @@
         app:layout_constraintTop_toBottomOf="@+id/btnDangnhap">
 
         <TextView
-            android:id="@+id/textviewQuenMK"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/forgotpassword"
@@ -98,14 +97,6 @@
             android:textSize="20sp" />
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@color/orange"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="wrap_content"
@@ -134,17 +125,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtemail" />
-
-    <Button
-        android:id="@+id/btnGGSignin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="50dp"
-        android:text="Google Signin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_dangky" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
