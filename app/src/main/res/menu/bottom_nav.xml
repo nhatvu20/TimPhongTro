@@ -13,7 +13,7 @@
 
     <item
         android:title="" />
- 
+
     <item
         android:id="@+id/notification"
         android:title="@string/bottom_notification"

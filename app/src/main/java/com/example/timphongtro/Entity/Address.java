@@ -4,7 +4,7 @@ public class Address {
     String city, district, detail,ward,address_combine;
 
     Address(){
-
+ 
     }
 
     public Address(String city, String district, String detail, String ward, String address_combine) {

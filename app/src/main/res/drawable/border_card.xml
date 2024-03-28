@@ -4,6 +4,6 @@
         <shape>
             <corners android:radius="50px"></corners>
             <stroke android:width="3px" android:color="@color/orange"></stroke>
-        </shape> 
+        </shape>
     </item>
 </selector>

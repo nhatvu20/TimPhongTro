@@ -5,7 +5,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+ 
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;

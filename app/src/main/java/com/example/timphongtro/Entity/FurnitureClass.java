@@ -1,6 +1,6 @@
 package com.example.timphongtro.Entity;
 
-
+ 
 public class FurnitureClass {
     private String name;
     private String img;
