@@ -50,6 +50,9 @@
             android:name=".Activity.PostRoomActivity"
             android:exported="true" />
         <activity
+            android:name=".Activity.ManagePostActivity"
+            android:exported="true" />
+        <activity
             android:name=".Activity.DetailRoomActivity"
             android:exported="true" />
         <activity

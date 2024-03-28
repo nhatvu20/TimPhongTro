@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
- 
+
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,7 +18,7 @@ import com.example.timphongtro.Activity.PostRoomActivity;
 import com.example.timphongtro.Entity.Address;
 import com.example.timphongtro.Entity.ImagesRoomClass;
 import com.example.timphongtro.Entity.Room;
-import com.example.timphongtro.R; 
+import com.example.timphongtro.R;
 
 import java.util.ArrayList;
 
@@ -100,8 +100,8 @@ public class ManageRoomAdapter extends RecyclerView.Adapter<ManageRoomAdapter.My
             people_room = itemView.findViewById(R.id.Size);
             cardViewRoom = itemView.findViewById(R.id.cardViewRoom);
             img_post = itemView.findViewById(R.id.img_post);
-//            imageViewEdit = itemView.findViewById(R.id.imageViewEdit);
-//            imageViewDelete = itemView.findViewById(R.id.imageViewDelete);
+            imageViewEdit = itemView.findViewById(R.id.imageViewEdit);
+            imageViewDelete = itemView.findViewById(R.id.imageViewDelete);
         }
     }
 }
