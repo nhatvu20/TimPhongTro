@@ -22,9 +22,9 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
-import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.timphongtro.Entity.Address;
 import com.example.timphongtro.Entity.ExtensionRoom_class;
 import com.example.timphongtro.Entity.ImagesRoomClass;
@@ -45,6 +45,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +54,7 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class PostRoomActivity extends AppCompatActivity {
+public class UpdatePostRoomActivity extends AppCompatActivity {
 
     ImageView btnBack;
     EditText edtTitleRoom, edtDeposit, edtPrice, edtInternet, edtElectric, edtWater, edtArea, edtPhone, edtFloor, edtPerson, edtDescriptionRoom, edtPark, edtAddress;
@@ -69,8 +70,6 @@ public class PostRoomActivity extends AppCompatActivity {
     //    String imageURL2;
     Uri uri;
     //    Uri uri2;
-    Spinner spinnerCity, spinnerDistrict, spinnerWard;
-
     boolean isUploadImg1;
     boolean isUploadImg2;
 
@@ -82,44 +81,32 @@ public class PostRoomActivity extends AppCompatActivity {
     ArrayList<ExtensionRoom_class> extensions_room;
     Address address;
 
+    Room roomData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_post_room);
-
+        setContentView(R.layout.activity_update_post_room);
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            String roomString = bundle.getString("DataRoom");
+            Gson gson = new Gson();
+            roomData = gson.fromJson(roomString, Room.class);
+            address = roomData.getAddress();
+        }
         initView();
 
-        isUploadImg1 = false;
         cities = new ArrayList<>();
         districts = new ArrayList<>();
 
-        getDataForSpinnerCity();
         path = "city/HaNoi/district";
-        spinnerCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedspinner = cities.get(position);
-                if (selectedspinner.equals("Hà Nội")) {
-                    path = "city/HaNoi/district";
-                } else if (selectedspinner.equals("Hồ Chí Minh")) {
-                    path = "city/HoChiMinh/district";
-                }
-                getDataForSpinnerDistrict();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        getDataForSpinnerDistrict();
 
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent main = new Intent(PostRoomActivity.this, MainActivity.class);
+                Intent main = new Intent(UpdatePostRoomActivity.this, MainActivity.class);
                 startActivity(main);
             }
         });
@@ -132,22 +119,30 @@ public class PostRoomActivity extends AppCompatActivity {
                     uploadPicture1.setImageURI(uri);
                     isUploadImg1 = true;
                 } else {
-                    isUploadImg1 = false;
-                    Toast.makeText(PostRoomActivity.this, "No image selected", Toast.LENGTH_LONG).show();
+                    //Không có else vì đã có sẵn 1 bức ảnh
+//                    isUploadImg1 = false;
+//                    Toast.makeText(UpdatePostRoomActivity.this, "No image selected", Toast.LENGTH_LONG).show();
                 }
             }
         });
         btn_create_room.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(PostRoomActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(UpdatePostRoomActivity.this);
                 builder.setTitle("Xác nhận") // Thiết lập tiêu đề của Dialog
                         .setMessage("Bạn có muốn đăng bài không?")
                         .setPositiveButton("Có", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                if (isUploadImg1) saveImage();
-                                else
+                                if (isUploadImg1) {
+                                    Uri uriTmp = uri;
+                                    if (containsSubstring(uriTmp.toString(), "https")) {
+                                        imageURL1 = uri.toString();
+                                        onClickPushData();
+                                    } else {
+                                        saveImage();
+                                    }
+                                } else
                                     Toast.makeText(getApplicationContext(), "Vui lòng chọn 1 tấm ảnh", Toast.LENGTH_LONG).show();
                             }
                         })
@@ -172,54 +167,9 @@ public class PostRoomActivity extends AppCompatActivity {
         });
     }
 
-    public void getDataForSpinnerDistrict() {
-        districts.clear();
-        DatabaseReference databaseReferennceDistrict = FirebaseDatabase.getInstance().getReference();
-        databaseReferennceDistrict.child(path).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot childSnap : snapshot.getChildren()) {
-                    String DistrictName = childSnap.child("name").getValue(String.class);
-                    districts.add(DistrictName);
-                }
-                ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(PostRoomActivity.this, android.R.layout.simple_spinner_item, districts);
-                spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerDistrict.setAdapter(spinnerAdapter);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    public void getDataForSpinnerCity() {
-        cities.clear();
-        DatabaseReference databaseReferennce = FirebaseDatabase.getInstance().getReference();
-        path = "city";
-        databaseReferennce.child(path).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot childSnap : snapshot.getChildren()) {
-                    String CityName = childSnap.child("name").getValue(String.class);
-                    cities.add(CityName);
-                }
-                ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(PostRoomActivity.this, android.R.layout.simple_spinner_item, cities);
-                spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerCity.setAdapter(spinnerAdapter);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
     public void saveImage() {
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("roomImgage").child(Objects.requireNonNull(uri.getLastPathSegment()));
-        AlertDialog.Builder builder = new AlertDialog.Builder(PostRoomActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(UpdatePostRoomActivity.this);
         builder.setCancelable(false);
         builder.setView(R.layout.progress_layout);
         AlertDialog dialog = builder.create();
@@ -244,13 +194,22 @@ public class PostRoomActivity extends AppCompatActivity {
 
     void onClickPushData() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        String id_room = UUID.randomUUID().toString();
         String title_room = String.valueOf(edtTitleRoom.getText());
-        String city = spinnerCity.getSelectedItem().toString();
-        String district = spinnerDistrict.getSelectedItem().toString();
-        String detail = edtAddress.getText().toString();
+
+        String id_room = "";
+        String city = "";
+        String district = "";
+        String detail = "";
         String ward = "";
         String address_combine = detail + ", " + district + ", " + city;
+        if (roomData != null) {
+            id_room = roomData.getId_room();
+            city = address.getCity();
+            district = address.getDistrict();
+            detail = address.getDetail();
+            ward = "";
+            address_combine = detail + ", " + district + ", " + city;
+        }
 
         if ("".equals(detail)) {
             address = new Address(city, district);
@@ -311,11 +270,6 @@ public class PostRoomActivity extends AppCompatActivity {
 
         DatabaseReference myRef = database.getReference("rooms/" + path);
         FirebaseUser userCurrent = FirebaseAuth.getInstance().getCurrentUser();
-//        DatabaseReference myPostRef = null;
-//
-//        if (userCurrent != null) {
-//            myPostRef = database.getReference("myRooms/" + userCurrent.getUid());
-//        }
 
         int status_room = 0;
         if (radiobtnPhongTrong.isChecked() || radiobtnDaChoThue.isChecked()) {
@@ -424,14 +378,11 @@ public class PostRoomActivity extends AppCompatActivity {
 
             //Xu ly cho firebase
             myRef.child(id_room).setValue(room);
-//            if (myPostRef != null) {
-//                myPostRef.child(id_room).setValue(room);
-//            }
-            Toast.makeText(PostRoomActivity.this, "Đăng thông tin phòng thành công", Toast.LENGTH_SHORT).show();
+            Toast.makeText(UpdatePostRoomActivity.this, "Cập nhật thông tin phòng thành công", Toast.LENGTH_SHORT).show();
             Intent main = new Intent(this, MainActivity.class);
             startActivity(main);
         } else {
-            Toast.makeText(PostRoomActivity.this, "Vui lòng nhập đầy đủ các trường dữ liệu", Toast.LENGTH_SHORT).show();
+            Toast.makeText(UpdatePostRoomActivity.this, "Vui lòng nhập đầy đủ các trường dữ liệu", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -491,58 +442,168 @@ public class PostRoomActivity extends AppCompatActivity {
         return TextUtils.isEmpty(str);
     }
 
+    public static boolean containsSubstring(String mainString, String substring) {
+        return mainString.contains(substring);
+    }
+
     void initView() {
-        btnBack = (ImageView) this.<View>findViewById(R.id.btnBack);
+        btnBack = (ImageView) findViewById(R.id.btnBack);
 
-        edtTitleRoom = (EditText) this.<View>findViewById(R.id.edtTitleRoom);
-        edtPrice = (EditText) this.<View>findViewById(R.id.edtPrice);
-        edtDeposit = (EditText) this.<View>findViewById(R.id.edtDeposit);
+        edtTitleRoom = (EditText) findViewById(R.id.edtTitleRoom);
+        edtPrice = (EditText) findViewById(R.id.edtPrice);
+        edtDeposit = (EditText) findViewById(R.id.edtDeposit);
 
-        edtInternet = (EditText) this.<View>findViewById(R.id.edtInternet);
-        edtElectric = (EditText) this.<View>findViewById(R.id.edtElectric);
-        edtWater = (EditText) this.<View>findViewById(R.id.edtWater);
+        edtInternet = (EditText) findViewById(R.id.edtInternet);
+        edtElectric = (EditText) findViewById(R.id.edtElectric);
+        edtWater = (EditText) findViewById(R.id.edtWater);
 
-        radiobtnChungCu = (RadioButton) this.<View>findViewById(R.id.radiobtnChungCu);
-        radiobtnTro = (RadioButton) this.<View>findViewById(R.id.radiobtnTro);
+        radiobtnChungCu = (RadioButton) findViewById(R.id.radiobtnChungCu);
+        radiobtnTro = (RadioButton) findViewById(R.id.radiobtnTro);
 
-        edtArea = (EditText) this.<View>findViewById(R.id.edtArea);
-        edtPhone = (EditText) this.<View>findViewById(R.id.edtPhone);
-        edtFloor = (EditText) this.<View>findViewById(R.id.edtFloor);
-        edtPerson = (EditText) this.<View>findViewById(R.id.edtPerson);
-        edtDescriptionRoom = (EditText) this.<View>findViewById(R.id.edtDescriptionRoom);
-        edtPark = (EditText) this.<View>findViewById(R.id.edtPark);
+        edtArea = (EditText) findViewById(R.id.edtArea);
+        edtPhone = (EditText) findViewById(R.id.edtPhone);
+        edtFloor = (EditText) findViewById(R.id.edtFloor);
+        edtPerson = (EditText) findViewById(R.id.edtPerson);
+        edtDescriptionRoom = (EditText) findViewById(R.id.edtDescriptionRoom);
+        edtPark = (EditText) findViewById(R.id.edtPark);
 
-        checkboxtoilet = (CheckBox) this.<View>findViewById(R.id.checkboxtoilet);
-        checkboxfloor = (CheckBox) this.<View>findViewById(R.id.checkboxfloor);
-        checkbox_time_flex = (CheckBox) this.<View>findViewById(R.id.checkbox_time_flex);
-        checkboxfingerprint = (CheckBox) this.<View>findViewById(R.id.checkboxfingerprint);
-        checkboxbacony = (CheckBox) this.<View>findViewById(R.id.checkboxbacony);
-        checkboxpet = (CheckBox) this.<View>findViewById(R.id.checkboxpet);
-        checkbox_w_owner = (CheckBox) this.<View>findViewById(R.id.checkbox_w_owner);
+        checkboxtoilet = (CheckBox) findViewById(R.id.checkboxtoilet);
+        checkboxfloor = (CheckBox) findViewById(R.id.checkboxfloor);
+        checkbox_time_flex = (CheckBox) findViewById(R.id.checkbox_time_flex);
+        checkboxfingerprint = (CheckBox) findViewById(R.id.checkboxfingerprint);
+        checkboxbacony = (CheckBox) findViewById(R.id.checkboxbacony);
+        checkboxpet = (CheckBox) findViewById(R.id.checkboxpet);
+        checkbox_w_owner = (CheckBox) findViewById(R.id.checkbox_w_owner);
 
-        checkbox_air_condition = (CheckBox) this.<View>findViewById(R.id.checkbox_air_condition);
-        checkbox_heater = (CheckBox) this.<View>findViewById(R.id.checkbox_heater);
-        checkbox_curtain = (CheckBox) this.<View>findViewById(R.id.checkbox_curtain);
-        checkboxfridge = (CheckBox) this.<View>findViewById(R.id.checkboxfridge);
-        checkboxbed = (CheckBox) this.<View>findViewById(R.id.checkboxbed);
-        checkboxwardrobe = (CheckBox) this.<View>findViewById(R.id.checkboxwardrobe);
-        checkbox_washing_machine = (CheckBox) this.<View>findViewById(R.id.checkbox_washing_machine);
-        checkboxsofa = (CheckBox) this.<View>findViewById(R.id.checkboxsofa);
+        checkbox_air_condition = (CheckBox) findViewById(R.id.checkbox_air_condition);
+        checkbox_heater = (CheckBox) findViewById(R.id.checkbox_heater);
+        checkbox_curtain = (CheckBox) findViewById(R.id.checkbox_curtain);
+        checkboxfridge = (CheckBox) findViewById(R.id.checkboxfridge);
+        checkboxbed = (CheckBox) findViewById(R.id.checkboxbed);
+        checkboxwardrobe = (CheckBox) findViewById(R.id.checkboxwardrobe);
+        checkbox_washing_machine = (CheckBox) findViewById(R.id.checkbox_washing_machine);
+        checkboxsofa = (CheckBox) findViewById(R.id.checkboxsofa);
 
-        checkboxNam = (CheckBox) this.<View>findViewById(R.id.checkboxNam);
-        checkboxNu = (CheckBox) this.<View>findViewById(R.id.checkboxNu);
+        checkboxNam = (CheckBox) findViewById(R.id.checkboxNam);
+        checkboxNu = (CheckBox) findViewById(R.id.checkboxNu);
 
-        radiobtnPhongTrong = (RadioButton) this.<View>findViewById(R.id.radiobtnPhongTrong);
-        radiobtnDaChoThue = (RadioButton) this.<View>findViewById(R.id.radiobtnDaChoThue);
+        radiobtnPhongTrong = (RadioButton) findViewById(R.id.radiobtnPhongTrong);
+        radiobtnDaChoThue = (RadioButton) findViewById(R.id.radiobtnDaChoThue);
 
-        btn_create_room = (Button) this.<View>findViewById(R.id.btn_create_room);
+        btn_create_room = (Button) findViewById(R.id.btn_create_room);
 
         uploadPicture1 = (ImageView) findViewById(R.id.imageViewP1);
-//        uploadPicture2 = (ImageView) findViewById(R.id  .imageViewP2);
-
-        spinnerCity = (Spinner) findViewById(R.id.spinnerCity);
-        spinnerDistrict = (Spinner) findViewById(R.id.spinnerDistrict);
 
         edtAddress = (EditText) findViewById(R.id.edtAddress);
+
+        initDataForUpdate();
+    }
+
+    private void initDataForUpdate() {
+        if (roomData != null) {
+            edtTitleRoom.setText(roomData.getTitle_room());
+            edtAddress.setText(address.getAddress_combine());
+            edtPrice.setText(String.valueOf(roomData.getPrice_room()));
+            edtDeposit.setText(String.valueOf(roomData.getDeposit_room()));
+
+            uri = Uri.parse(roomData.getImages().getImg1());
+            Glide.with(this)
+                    .load(uri)
+                    .into(uploadPicture1);
+
+            isUploadImg1 = true;
+
+            checkboxNam.setChecked(false);
+            checkboxNu.setChecked(false);
+            if ("Nam/Nữ".equals(roomData.getGender_room())) {
+                checkboxNam.setChecked(true);
+                checkboxNu.setChecked(true);
+            } else if ("Nam".equals(roomData.getGender_room())) {
+                checkboxNam.setChecked(true);
+            } else {
+                checkboxNu.setChecked(true);
+            }
+
+            if (roomData.getType_room() == 0) {
+                radiobtnTro.setChecked(true);
+            } else {
+                radiobtnChungCu.setChecked(true);
+            }
+
+            edtArea.setText(roomData.getArea_room());
+            edtPhone.setText(roomData.getPhone());
+            edtFloor.setText(String.valueOf(roomData.getFloor()));
+            edtPerson.setText(String.valueOf(roomData.getPerson_in_room()));
+            edtDescriptionRoom.setText(roomData.getDescription_room());
+            edtPark.setText(String.valueOf(roomData.getPark_slot()));
+
+            furnitures = roomData.getFurniture();
+            extensions_room = roomData.getExtension_room();
+
+            for (FurnitureClass furniture : furnitures) {
+                if (furniture != null) {
+                    if ("checkbox_air_condition".equals(furniture.getId())) {
+                        checkbox_air_condition.setChecked(true);
+                    }
+                    if ("checkbox_heater".equals(furniture.getId())) {
+                        checkbox_heater.setChecked(true);
+                    }
+                    if ("checkbox_curtain".equals(furniture.getId())) {
+                        checkbox_curtain.setChecked(true);
+                    }
+                    if ("checkboxfridge".equals(furniture.getId())) {
+                        checkboxfridge.setChecked(true);
+                    }
+                    if ("checkboxbed".equals(furniture.getId())) {
+                        checkboxbed.setChecked(true);
+                    }
+                    if ("checkboxwardrobe".equals(furniture.getId())) {
+                        checkboxwardrobe.setChecked(true);
+                    }
+                    if ("checkbox_washing_machine".equals(furniture.getId())) {
+                        checkbox_washing_machine.setChecked(true);
+                    }
+                    if ("checkboxsofa".equals(furniture.getId())) {
+                        checkboxsofa.setChecked(true);
+                    }
+                }
+            }
+
+            for (ExtensionRoom_class extensionRoom : extensions_room) {
+                if (extensionRoom != null) {
+                    if ("checkboxtoilet".equals(extensionRoom.getId())) {
+                        checkboxtoilet.setChecked(true);
+                    }
+                    if ("checkboxfloor".equals(extensionRoom.getId())) {
+                        checkboxfloor.setChecked(true);
+                    }
+                    if ("checkbox_time_flex".equals(extensionRoom.getId())) {
+                        checkbox_time_flex.setChecked(true);
+                    }
+                    if ("checkboxfingerprint".equals(extensionRoom.getId())) {
+                        checkboxfingerprint.setChecked(true);
+                    }
+                    if ("checkboxbacony".equals(extensionRoom.getId())) {
+                        checkboxbacony.setChecked(true);
+                    }
+                    if ("checkboxpet".equals(extensionRoom.getId())) {
+                        checkboxpet.setChecked(true);
+                    }
+                    if ("checkbox_w_owner".equals(extensionRoom.getId())) {
+                        checkbox_w_owner.setChecked(true);
+                    }
+                }
+            }
+
+            if (roomData.getStatus_room() == 0) {
+                radiobtnPhongTrong.setChecked(true);
+            } else {
+                radiobtnDaChoThue.setChecked(true);
+            }
+
+            edtInternet.setText(String.valueOf(roomData.getPrice_internet()));
+            edtElectric.setText(String.valueOf(roomData.getPrice_electric()));
+            edtWater.setText(String.valueOf(roomData.getPrice_water()));
+        }
     }
 }
