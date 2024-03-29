@@ -33,6 +33,7 @@ public class ServiceActivity extends AppCompatActivity {
     private ServiceAdapter serviceAdapter;
     private ArrayList<Service> serviceArrayList;
     private String item;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,23 +42,28 @@ public class ServiceActivity extends AppCompatActivity {
         cart_button = findViewById(R.id.button_cart);
         back_button = findViewById(R.id.imageView_back);
 
-        back_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ServiceActivity.this, MainActivity.class);
-            }
-        });
+        item = "";
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            item = bundle.getString("item");
+            back_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(ServiceActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
+            });
 
-        cart_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ServiceActivity.this, CartActivity.class);
-                startActivity(intent);
-            }
-        });
+            cart_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openServiceActivity(item);
+                }
+            });
 
-        UIprocess();
-        fetchservicefromDB();
+            UIprocess();
+            fetchservicefromDB();
+        }
     }
 
     private void UIprocess() {
@@ -72,30 +78,30 @@ public class ServiceActivity extends AppCompatActivity {
     }
 
     private void fetchservicefromDB() {
-        item = "";
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            item = bundle.getString("item");
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference databaseReference = database.getReference("service/" + item);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = database.getReference("service/" + item);
 
-            databaseReference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    serviceArrayList.clear();
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        Service product = dataSnapshot.getValue(Service.class);
-                        serviceArrayList.add(product);
-                    }
-                    serviceAdapter.notifyDataSetChanged();
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                serviceArrayList.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Service product = dataSnapshot.getValue(Service.class);
+                    serviceArrayList.add(product);
                 }
+                serviceAdapter.notifyDataSetChanged();
+            }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-                }
-            });
-        }
+            }
+        });
     }
 
+    private void openServiceActivity(String item) {
+        Intent intent = new Intent(ServiceActivity.this, CartActivity.class);
+        intent.putExtra("item", item);
+        startActivity(intent);
+    }
 }
