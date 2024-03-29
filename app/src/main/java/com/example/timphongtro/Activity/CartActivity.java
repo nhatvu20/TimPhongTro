@@ -55,7 +55,7 @@ public class CartActivity extends AppCompatActivity {
         imageView_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CartActivity.this, MainActivity.class);
+                Intent intent = new Intent(CartActivity.this, ServiceActivity.class);
                 startActivity(intent);
             }
         });
