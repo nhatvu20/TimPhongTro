@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.timphongtro.Activity.DetailRoomActivity;
-import com.example.timphongtro.Activity.PostRoomActivity;
+import com.example.timphongtro.Activity.UpdatePostRoomActivity;
 import com.example.timphongtro.Entity.Address;
 import com.example.timphongtro.Entity.ImagesRoomClass;
 import com.example.timphongtro.Entity.Room;
@@ -112,7 +112,7 @@ public class ManageRoomAdapter extends RecyclerView.Adapter<ManageRoomAdapter.My
                             setNegativeButton("Không", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    // Xử lý khi người dùng chọn No
+
                                 }
                             });
                     AlertDialog alertDialog = builder.create();
@@ -120,6 +120,14 @@ public class ManageRoomAdapter extends RecyclerView.Adapter<ManageRoomAdapter.My
                 }
             });
 
+            holder.imageViewEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent updateRoom = new Intent(context, UpdatePostRoomActivity.class);
+                    updateRoom.putExtra("DataRoom", room.toString());
+                    context.startActivity(updateRoom);
+                }
+            });
         }
     }
 
