@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.ServiceActivity">
+    tools:context=".Activity.CartActivity">
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
@@ -28,45 +28,75 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="Dịch vụ bán"
+            android:text="Giỏ hàng"
             android:textColor="@color/black"
             android:textSize="20sp" />
-
-        <ImageView
-            android:id="@+id/button_cart"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentEnd="true"
-            android:src="@drawable/ic_cart"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
     </RelativeLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout">
 
+
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcv_service"
+            android:id="@+id/rcvcart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-        </androidx.recyclerview.widget.RecyclerView>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="100dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rcv_service" />
+            app:layout_constraintTop_toBottomOf="@+id/rcvcart" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/textView_totalprice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:text="Total Price:"
+        app:layout_constraintBottom_toTopOf="@+id/button_checkout"
+        app:layout_constraintEnd_toStartOf="@+id/Total_price" />
+
+    <TextView
+        android:id="@+id/Total_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:textColor="@color/red"
+        android:textSize="20sp"
+        android:text="0"
+        app:layout_constraintBottom_toTopOf="@+id/button_checkout"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/button_checkout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Thanh toán"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
