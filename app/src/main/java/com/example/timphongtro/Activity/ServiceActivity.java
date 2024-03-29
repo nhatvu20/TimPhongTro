@@ -7,12 +7,16 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.timphongtro.Adapter.ServiceAdapter;
 import com.example.timphongtro.Entity.Service;
 import com.example.timphongtro.Fragment.HomeFragment;
+import com.example.timphongtro.Fragment.ServiceFragment;
 import com.example.timphongtro.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,7 +29,7 @@ import java.util.ArrayList;
 public class ServiceActivity extends AppCompatActivity {
 
     private RecyclerView rcv_service;
-    private ImageView cart_button;
+    private ImageView cart_button, back_button;
     private ServiceAdapter serviceAdapter;
     private ArrayList<Service> serviceArrayList;
     private String item;
@@ -35,11 +39,19 @@ public class ServiceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_service);
 
         cart_button = findViewById(R.id.button_cart);
+        back_button = findViewById(R.id.imageView_back);
+
+        back_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ServiceActivity.this, MainActivity.class);
+            }
+        });
 
         cart_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ServiceActivity.this, HomeFragment.class);
+                Intent intent = new Intent(ServiceActivity.this, CartActivity.class);
                 startActivity(intent);
             }
         });
@@ -85,4 +97,5 @@ public class ServiceActivity extends AppCompatActivity {
             });
         }
     }
+
 }
