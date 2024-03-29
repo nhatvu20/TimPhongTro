@@ -10,8 +10,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.example.timphongtro.Activity.CartActivity;
 import com.example.timphongtro.Activity.ServiceActivity;
 import com.example.timphongtro.R;
 
@@ -29,6 +31,7 @@ public class ServiceFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         LinearLayout chothuenoithat, tuvanthietkephong, suachuadiennuoc, giatla, doibinhnuoc, doibinhga;
+        ImageView button_cart;
 
         chothuenoithat = view.findViewById(R.id.chothuenoithat);
         tuvanthietkephong = view.findViewById(R.id.tuvanthietkephong);
@@ -36,6 +39,15 @@ public class ServiceFragment extends Fragment {
         giatla = view.findViewById(R.id.giatla);
         doibinhnuoc = view.findViewById(R.id.doibinhnuoc);
         doibinhga = view.findViewById(R.id.doibinhga);
+        button_cart = view.findViewById(R.id.button_cart);
+
+        button_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), CartActivity.class);
+                startActivity(intent);
+            }
+        });
 
         chothuenoithat.setOnClickListener(new View.OnClickListener() {
             @Override

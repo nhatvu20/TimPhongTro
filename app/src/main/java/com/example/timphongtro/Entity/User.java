@@ -1,4 +1,4 @@
-package com.example.timphongtro.Fragment;
+package com.example.timphongtro.Entity;
 
 import com.example.timphongtro.Entity.Room;
 

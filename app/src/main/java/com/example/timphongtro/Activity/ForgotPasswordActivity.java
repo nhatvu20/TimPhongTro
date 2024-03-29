@@ -1,4 +1,4 @@
-package com.example.timphongtro.Fragment;
+package com.example.timphongtro.Activity;
  
 import android.content.Intent;
 import android.os.Bundle;
