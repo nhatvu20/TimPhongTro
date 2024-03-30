@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
- 
+
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,7 +17,7 @@ import com.example.timphongtro.Activity.DetailRoomActivity;
 import com.example.timphongtro.Entity.Address;
 import com.example.timphongtro.Entity.ImagesRoomClass;
 import com.example.timphongtro.Entity.Room;
-import com.example.timphongtro.R; 
+import com.example.timphongtro.R;
 
 import java.util.ArrayList;
 
@@ -35,7 +35,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(context).inflate(R.layout.room_view_holder,parent,false);
+        View v = LayoutInflater.from(context).inflate(R.layout.room_view_holder, parent, false);
         return new MyViewHolder(v);
     }
 
@@ -68,7 +68,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
 //                detailRoom.putExtra("Image2",images.getImg2());
                 int typeRoom = list.get(holder.getAdapterPosition()).getType_room();
                 //Truyền object qua intent
-                detailRoom.putExtra("DataRoom",room.toString());
+                detailRoom.putExtra("DataRoom", room.toString());
 
                 context.startActivity(detailRoom);
             }
@@ -80,11 +80,12 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
         return Math.min(list.size(), maxitemcount);
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView people_room, price_room, area_room, city, district, detail, title_room;
         CardView cardViewRoom;
         ImageView img_post;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             title_room = itemView.findViewById(R.id.PostTitle);

@@ -36,7 +36,7 @@ public class CartActivity extends AppCompatActivity {
     private ArrayList<Service> cartList;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseUser user = firebaseAuth.getCurrentUser();
-    private String item;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,29 +46,21 @@ public class CartActivity extends AppCompatActivity {
         btn_checkout = findViewById(R.id.button_checkout);
         textView_total = findViewById(R.id.Total_price);
 
-            btn_checkout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    long totalprice = calculateTotalPrice(cartList);
-                    Toast.makeText(CartActivity.this, totalprice + " VNĐ has been paid!", Toast.LENGTH_SHORT).show();
-                }
-            });
-            imageView_back.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    item = "";
-                    Bundle bundle = getIntent().getExtras();
-                    if (bundle != null) {
-                        item = bundle.getString("item");
-                        openServiceActivity(item);
-                    } else {
-                        Intent intent = new Intent(CartActivity.this, MainActivity.class);
-                        startActivity(intent);
-                    }
-                }
-            });
-            UIproccess();
-            fetchproductfromDB();
+        btn_checkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                long totalprice = calculateTotalPrice(cartList);
+                Toast.makeText(CartActivity.this, totalprice + " VNĐ has been paid!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        imageView_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        UIproccess();
+        fetchproductfromDB();
     }
 
     private void UIproccess() {
@@ -115,11 +107,5 @@ public class CartActivity extends AppCompatActivity {
         }
 
         return totalPrice;
-    }
-
-    private void openServiceActivity(String item) {
-        Intent intent = new Intent(CartActivity.this, ServiceActivity.class);
-        intent.putExtra("item", item);
-        startActivity(intent);
     }
 }
