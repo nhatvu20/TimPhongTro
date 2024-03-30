@@ -7,11 +7,29 @@
     tools:context=".Activity.RegisterActivity">
 
     <EditText
+        android:id="@+id/txtname"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="80dp"
+        android:background="@drawable/border"
+        android:ems="10"
+        android:hint="@string/hoten"
+        android:inputType="text"
+        android:text=""
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+
+    <EditText
         android:id="@+id/txtemail"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginStart="80dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="80dp"
         android:background="@drawable/border"
         android:ems="10"
@@ -20,8 +38,9 @@
         android:text=""
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+        app:layout_constraintTop_toBottomOf="@+id/txtname" />
 
     <Button
         android:id="@+id/btnDangky"

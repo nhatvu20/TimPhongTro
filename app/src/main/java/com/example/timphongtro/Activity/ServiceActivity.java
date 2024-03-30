@@ -18,6 +18,8 @@ import com.example.timphongtro.Entity.Service;
 import com.example.timphongtro.Fragment.HomeFragment;
 import com.example.timphongtro.Fragment.ServiceFragment;
 import com.example.timphongtro.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,6 +34,8 @@ public class ServiceActivity extends AppCompatActivity {
     private ImageView cart_button, back_button;
     private ServiceAdapter serviceAdapter;
     private ArrayList<Service> serviceArrayList;
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    private FirebaseUser user = firebaseAuth.getCurrentUser();
     private String item;
 
     @Override
@@ -49,15 +53,19 @@ public class ServiceActivity extends AppCompatActivity {
             back_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(ServiceActivity.this, MainActivity.class);
-                    startActivity(intent);
+                    finish();
                 }
             });
 
             cart_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    openServiceActivity(item);
+                    if (user != null) {
+                        openServiceActivity(item);
+                    } else {
+                        Intent intent = new Intent(ServiceActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                    }
                 }
             });
 
@@ -101,7 +109,9 @@ public class ServiceActivity extends AppCompatActivity {
 
     private void openServiceActivity(String item) {
         Intent intent = new Intent(ServiceActivity.this, CartActivity.class);
+        Intent intent1 = new Intent(ServiceActivity.this, ServiceDetailActivity.class);
         intent.putExtra("item", item);
+        intent1.putExtra("item", item);
         startActivity(intent);
     }
 }

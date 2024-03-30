@@ -42,8 +42,7 @@ public class SearchActivity extends AppCompatActivity {
 
         ImageView backbutton = findViewById(R.id.backbutton);
         backbutton.setOnClickListener(v -> {
-            Intent intent = new Intent(SearchActivity.this, MainActivity.class);
-            startActivity(intent);
+            finish();
         });
         district = "";
         searchView = findViewById(R.id.search_room);
