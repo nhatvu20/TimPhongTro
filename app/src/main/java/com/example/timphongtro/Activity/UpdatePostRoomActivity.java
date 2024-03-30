@@ -105,9 +105,9 @@ public class UpdatePostRoomActivity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent main = new Intent(UpdatePostRoomActivity.this, MainActivity.class);
-                startActivity(main);
+//                Intent main = new Intent(UpdatePostRoomActivity.this, MainActivity.class);
+//                startActivity(main);
+                finish();
             }
         });
         ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {

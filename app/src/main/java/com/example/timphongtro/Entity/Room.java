@@ -37,7 +37,7 @@ public class Room {
     public Room() {
     }
 
-    public Room(String id_own_post,String id_room, String title_room, long price_room, Address address, String area_room, long deposit_room, String description_room, String gender_room, int park_slot, int person_in_room, int status_room, int type_room, String phone, int floor, ImagesRoomClass images, ArrayList<FurnitureClass> furniture, ArrayList<ExtensionRoom_class> extension_room, long price_electric, long price_water, long price_internet) {
+    public Room(String id_own_post, String id_room, String title_room, long price_room, Address address, String area_room, long deposit_room, String description_room, String gender_room, int park_slot, int person_in_room, int status_room, int type_room, String phone, int floor, ImagesRoomClass images, ArrayList<FurnitureClass> furniture, ArrayList<ExtensionRoom_class> extension_room, long price_electric, long price_water, long price_internet) {
         this.id_own_post = id_own_post;
         this.id_room = id_room;
         this.title_room = title_room;
