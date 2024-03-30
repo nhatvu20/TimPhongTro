@@ -46,10 +46,6 @@ public class CartActivity extends AppCompatActivity {
         btn_checkout = findViewById(R.id.button_checkout);
         textView_total = findViewById(R.id.Total_price);
 
-        item = "";
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            item = bundle.getString("item");
             btn_checkout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -60,12 +56,19 @@ public class CartActivity extends AppCompatActivity {
             imageView_back.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    openServiceActivity(item);
+                    item = "";
+                    Bundle bundle = getIntent().getExtras();
+                    if (bundle != null) {
+                        item = bundle.getString("item");
+                        openServiceActivity(item);
+                    } else {
+                        Intent intent = new Intent(CartActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
                 }
             });
             UIproccess();
             fetchproductfromDB();
-        }
     }
 
     private void UIproccess() {

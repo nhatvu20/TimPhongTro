@@ -14,11 +14,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.timphongtro.Activity.CartActivity;
+import com.example.timphongtro.Activity.LoginActivity;
 import com.example.timphongtro.Activity.ServiceActivity;
 import com.example.timphongtro.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class ServiceFragment extends Fragment {
 
+    private LinearLayout chothuenoithat, tuvanthietkephong, suachuadiennuoc, giatla, doibinhnuoc, doibinhga;
+    private ImageView button_cart;
+
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    private FirebaseUser user = firebaseAuth.getCurrentUser();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -30,8 +38,6 @@ public class ServiceFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        LinearLayout chothuenoithat, tuvanthietkephong, suachuadiennuoc, giatla, doibinhnuoc, doibinhga;
-        ImageView button_cart;
 
         chothuenoithat = view.findViewById(R.id.chothuenoithat);
         tuvanthietkephong = view.findViewById(R.id.tuvanthietkephong);
@@ -44,8 +50,14 @@ public class ServiceFragment extends Fragment {
         button_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), CartActivity.class);
+                Intent intent;
+                if (user != null){
+                    intent = new Intent(getContext(), CartActivity.class);
+                } else {
+                    intent = new Intent(getContext(), LoginActivity.class);
+                }
                 startActivity(intent);
+
             }
         });
 
