@@ -1,28 +1,38 @@
 package com.example.timphongtro.Adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.timphongtro.Activity.DetailRoomActivity;
-import com.example.timphongtro.Activity.PostRoomActivity;
+import com.example.timphongtro.Activity.UpdatePostRoomActivity;
 import com.example.timphongtro.Entity.Address;
 import com.example.timphongtro.Entity.ImagesRoomClass;
 import com.example.timphongtro.Entity.Room;
 import com.example.timphongtro.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class ManageRoomAdapter extends RecyclerView.Adapter<ManageRoomAdapter.MyViewHolder>{
+public class ManageRoomAdapter extends RecyclerView.Adapter<ManageRoomAdapter.MyViewHolder> {
     ArrayList<Room> list;
     Context context;
 
@@ -34,14 +44,14 @@ public class ManageRoomAdapter extends RecyclerView.Adapter<ManageRoomAdapter.My
     @NonNull
     @Override
     public ManageRoomAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(context).inflate(R.layout.view_holder_manage_room,parent,false);
+        View v = LayoutInflater.from(context).inflate(R.layout.view_holder_manage_room, parent, false);
         return new ManageRoomAdapter.MyViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ManageRoomAdapter.MyViewHolder holder, int position) {
         Room room = list.get(position);
-        if(room != null){
+        if (room != null) {
             holder.title_room.setText(room.getTitle_room());
             holder.price_room.setText(String.valueOf(room.getPrice_room()));
             holder.area_room.setText(String.valueOf(room.getArea_room()));
@@ -54,32 +64,76 @@ public class ManageRoomAdapter extends RecyclerView.Adapter<ManageRoomAdapter.My
             holder.city.setText(address.getCity());
             holder.district.setText(address.getDistrict());
             holder.detail.setText(address.getDetail());
-            holder.cardViewRoom.setOnClickListener(new View.OnClickListener() {
+            holder.constraintViewDetail.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent detailRoom = new Intent(context, PostRoomActivity.class);
-//                detailRoom.putExtra("Title",list.get(holder.getAdapterPosition()).getTitle_room());
-//                detailRoom.putExtra("Price",String.valueOf(list.get(holder.getAdapterPosition()).getPrice_room()));
-//                detailRoom.putExtra("CombineAddress",list.get(holder.getAdapterPosition()).getAddress().getAddress_combine());
-//                detailRoom.putExtra("Phone",list.get(holder.getAdapterPosition()).getPhone());
-//                ImagesRoomClass images = list.get(holder.getAdapterPosition()).getImages();
-//                detailRoom.putExtra("Id_Room",list.get(holder.getAdapterPosition()).getId_room());
-//                detailRoom.putExtra("Image1",images.getImg1());
-//                detailRoom.putExtra("Image2",images.getImg2());
-//                    int typeRoom = list.get(holder.getAdapterPosition()).getType_room();
-                    //Truyền object qua intent
-//                    detailRoom.putExtra("DataRoom", room.toString());
-
-//                    context.startActivity(detailRoom);
+                    Intent detailRoom = new Intent(context, DetailRoomActivity.class);
+                    detailRoom.putExtra("DataRoom", room.toString());
+                    context.startActivity(detailRoom);
                 }
             });
 
+            holder.imageViewDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("Xác nhận") // Thiết lập tiêu đề của Dialog
+                            .setMessage("Bạn chắc chắn muốn xóa không?")
+                            .setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    String path = "Tro";
+                                    int type_room = room.getType_room();
+                                    if (type_room == 1) {
+                                        path = "ChungCuMini";
+                                    }
+                                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                    DatabaseReference myRef = database.getReference("rooms/" + path + "/" + room.getId_room());
+                                    FirebaseUser userCurrent = FirebaseAuth.getInstance().getCurrentUser();
+//                                    DatabaseReference myPostRef = null;
+//
+//                                    myPostRef = database.getReference("myRooms/" + userCurrent.getUid() + "/" + room.getId_room());
+//                                    myPostRef.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                        @Override
+//                                        public void onComplete(@NonNull Task<Void> task) {
+////                                                Toast.makeText(context, "Xóa bài thành công", Toast.LENGTH_SHORT).show();
+//                                        }
+//                                    });
+                                    myRef.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            Toast.makeText(context, "Xóa bài thành công", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                            })
+                                    .
+
+                            setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                }
+            });
+
+            holder.imageViewEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent updateRoom = new Intent(context, UpdatePostRoomActivity.class);
+                    updateRoom.putExtra("DataRoom", room.toString());
+                    context.startActivity(updateRoom);
+                }
+            });
         }
     }
 
     @Override
     public int getItemCount() {
-        if(list == null) {
+        if (list == null) {
             return 0;
         }
         return list.size();
@@ -88,7 +142,9 @@ public class ManageRoomAdapter extends RecyclerView.Adapter<ManageRoomAdapter.My
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView people_room, price_room, area_room, city, district, detail, title_room;
         CardView cardViewRoom;
-        ImageView img_post,imageViewEdit,imageViewDelete;
+        ImageView img_post, imageViewEdit, imageViewDelete;
+        ConstraintLayout constraintViewDetail;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             title_room = itemView.findViewById(R.id.PostTitle);
@@ -102,6 +158,7 @@ public class ManageRoomAdapter extends RecyclerView.Adapter<ManageRoomAdapter.My
             img_post = itemView.findViewById(R.id.img_post);
             imageViewEdit = itemView.findViewById(R.id.imageViewEdit);
             imageViewDelete = itemView.findViewById(R.id.imageViewDelete);
+            constraintViewDetail = itemView.findViewById(R.id.constraintViewDetail);
         }
     }
 }

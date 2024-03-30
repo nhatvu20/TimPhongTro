@@ -1,5 +1,5 @@
 package com.example.timphongtro.Fragment;
- 
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -24,7 +24,7 @@ import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.timphongtro.Activity.SearchActivity;
 import com.example.timphongtro.Activity.ShowMoreActivity;
-import com.example.timphongtro.Adapter.DistrictAdapter; 
+import com.example.timphongtro.Adapter.DistrictAdapter;
 import com.example.timphongtro.Entity.DistrictData;
 import com.example.timphongtro.Entity.Room;
 import com.example.timphongtro.Adapter.RoomAdapter;
@@ -86,8 +86,8 @@ public class HomeFragment extends Fragment {
         TextView searchTextView = view.findViewById(R.id.searchEditText);
         searchTextView.setOnClickListener(v -> {
             FirebaseUser user = firebaseAuth.getCurrentUser();
-                Intent intent = new Intent(getContext(), SearchActivity.class);
-                startActivity(intent);
+            Intent intent = new Intent(getContext(), SearchActivity.class);
+            startActivity(intent);
         });
 
         TextView showmore = view.findViewById(R.id.showmore);
@@ -134,24 +134,34 @@ public class HomeFragment extends Fragment {
     }
 
     private void fetchroomrecyclerviewdatabse() {
-        roomlist.clear();
         roomdatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    if (dataSnapshot.getKey().equals("Tro") || dataSnapshot.getKey().equals("ChungCuMini")) {
-                        // Lấy dữ liệu từ child "Tro"
-                        if (dataSnapshot.getKey().equals("Tro")) {
-                            for (DataSnapshot troSnapshot : dataSnapshot.getChildren()) {
-                                Room room = troSnapshot.getValue(Room.class);
-                                roomlist.add(room);
+                roomlist.clear();
+                if(snapshot.exists()){
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        if (dataSnapshot.getKey().equals("Tro") || dataSnapshot.getKey().equals("ChungCuMini")) {
+                            // Lấy dữ liệu từ child "Tro"
+                            if (dataSnapshot.getKey().equals("Tro")) {
+                                for (DataSnapshot troSnapshot : dataSnapshot.getChildren()) {
+                                    Room room = troSnapshot.getValue(Room.class);
+                                    if (room != null) {
+                                        if (room.getStatus_room() != 1) {
+                                            roomlist.add(room);
+                                        }
+                                    }
+                                }
                             }
-                        }
-                        // Lấy dữ liệu từ child "ChungCu"
-                        else if (dataSnapshot.getKey().equals("ChungCuMini")) {
-                            for (DataSnapshot chungCuSnapshot : dataSnapshot.getChildren()) {
-                                Room room = chungCuSnapshot.getValue(Room.class);
-                                roomlist.add(room);
+                            // Lấy dữ liệu từ child "ChungCu"
+                            else if (dataSnapshot.getKey().equals("ChungCuMini")) {
+                                for (DataSnapshot chungCuSnapshot : dataSnapshot.getChildren()) {
+                                    Room room = chungCuSnapshot.getValue(Room.class);
+                                    if (room != null) {
+                                        if (room.getStatus_room() != 1) {
+                                            roomlist.add(room);
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -194,6 +204,7 @@ public class HomeFragment extends Fragment {
         spinnerdatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                spinnerlist.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     String spinnername = dataSnapshot.child("name").getValue(String.class);
                     spinnerlist.add(spinnername);

@@ -67,10 +67,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(binding.frameLayout.getId(), fragment);
-        fragmentTransaction.commit();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(binding.frameLayout.getId(), fragment);
+            fragmentTransaction.commit();
     }
 
     //Hiển thị khay dưới khi bấm dấu cộng
