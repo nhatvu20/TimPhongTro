@@ -549,7 +549,7 @@
 
                         <CheckBox
                             android:id="@+id/checkboxNam"
-                            android:layout_width="100dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="20dp"
                             android:layout_weight="1"
@@ -564,7 +564,7 @@
 
                         <CheckBox
                             android:id="@+id/checkboxNu"
-                            android:layout_width="100dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/border_change_state_btn"
@@ -622,7 +622,7 @@
 
                             <RadioButton
                                 android:id="@+id/radiobtnChungCu"
-                                android:layout_width="100dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="20dp"
                                 android:layout_weight="1"
@@ -634,7 +634,7 @@
 
                             <RadioButton
                                 android:id="@+id/radiobtnTro"
-                                android:layout_width="100dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:background="@drawable/border_change_state_btn"
@@ -891,7 +891,7 @@
                             <EditText
                                 android:id="@+id/edtDescriptionRoom"
                                 android:layout_width="wrap_content"
-                                android:layout_height="100dp"
+                                android:layout_height="match_parent"
                                 android:layout_marginLeft="15dp"
                                 android:layout_weight="1"
                                 android:ems="10"
@@ -999,7 +999,7 @@
 
                         <CheckBox
                             android:id="@+id/checkboxtoilet"
-                            android:layout_width="120dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="20dp"
                             android:layout_weight="1"
@@ -1013,7 +1013,7 @@
 
                         <CheckBox
                             android:id="@+id/checkboxfloor"
-                            android:layout_width="120dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/border_change_state_btn"
@@ -1033,7 +1033,7 @@
 
                         <CheckBox
                             android:id="@+id/checkbox_time_flex"
-                            android:layout_width="120dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="20dp"
                             android:layout_weight="1"
@@ -1047,7 +1047,7 @@
 
                         <CheckBox
                             android:id="@+id/checkboxfingerprint"
-                            android:layout_width="120dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/border_change_state_btn"
@@ -1067,7 +1067,7 @@
 
                         <CheckBox
                             android:id="@+id/checkboxbacony"
-                            android:layout_width="120dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="20dp"
                             android:layout_weight="1"
@@ -1081,7 +1081,7 @@
 
                         <CheckBox
                             android:id="@+id/checkboxpet"
-                            android:layout_width="120dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/border_change_state_btn"
@@ -1101,7 +1101,7 @@
 
                         <CheckBox
                             android:id="@+id/checkbox_w_owner"
-                            android:layout_width="120dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/border_change_state_btn"
@@ -1170,7 +1170,7 @@
 
                         <CheckBox
                             android:id="@+id/checkbox_air_condition"
-                            android:layout_width="120dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="20dp"
                             android:layout_weight="1"
@@ -1184,7 +1184,7 @@
 
                         <CheckBox
                             android:id="@+id/checkbox_heater"
-                            android:layout_width="120dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/border_change_state_btn"
@@ -1204,7 +1204,7 @@
 
                         <CheckBox
                             android:id="@+id/checkbox_curtain"
-                            android:layout_width="120dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="20dp"
                             android:layout_weight="1"
@@ -1218,7 +1218,7 @@
 
                         <CheckBox
                             android:id="@+id/checkboxfridge"
-                            android:layout_width="120dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/border_change_state_btn"
@@ -1238,7 +1238,7 @@
 
                         <CheckBox
                             android:id="@+id/checkboxbed"
-                            android:layout_width="120dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="20dp"
                             android:layout_weight="1"
@@ -1252,7 +1252,7 @@
 
                         <CheckBox
                             android:id="@+id/checkboxwardrobe"
-                            android:layout_width="120dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/border_change_state_btn"
@@ -1272,7 +1272,7 @@
 
                         <CheckBox
                             android:id="@+id/checkbox_washing_machine"
-                            android:layout_width="120dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="20dp"
                             android:layout_weight="1"
@@ -1286,7 +1286,7 @@
 
                         <CheckBox
                             android:id="@+id/checkboxsofa"
-                            android:layout_width="120dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/border_change_state_btn"
@@ -1344,7 +1344,7 @@
 
                         <RadioButton
                             android:id="@+id/radiobtnPhongTrong"
-                            android:layout_width="100dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="20dp"
                             android:layout_weight="1"
@@ -1357,7 +1357,7 @@
 
                         <RadioButton
                             android:id="@+id/radiobtnDaChoThue"
-                            android:layout_width="100dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/border_change_state_btn"
