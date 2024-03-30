@@ -3,11 +3,13 @@ package com.example.timphongtro.Entity;
 import com.example.timphongtro.Entity.Room;
 
 import java.util.ArrayList;
- 
+
 public class User {
     private String email;
 
     private String uid;
+
+    private String name;
 
     private ArrayList<Room> rooms;
 
@@ -20,10 +22,19 @@ public class User {
     }
 
 
-    public User(String email, String uid, ArrayList<Room> rooms) {
+    public User(String email, String uid, String name, ArrayList<Room> rooms) {
         this.email = email;
-        this.uid = uid; 
+        this.uid = uid;
+        this.name = name;
         this.rooms = rooms;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getUid() {
