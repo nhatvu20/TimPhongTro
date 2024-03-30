@@ -11,7 +11,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     private TextView textviewDangky;
-    private LinearLayout layout_forgotpassword;
+    private TextView txtViewForgotPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         txtpassword = (EditText) findViewById(R.id.txtpassword);
         textviewDangky = (TextView) findViewById(R.id.textviewDangky);
         btnDangnhap = (Button) findViewById(R.id.btnDangnhap);
-        layout_forgotpassword = (LinearLayout) findViewById(R.id.layout_forgotpassword);
+        txtViewForgotPassword = (TextView) findViewById(R.id.txtViewForgotPassword);
 
         btnDangnhap.setOnClickListener(new View.OnClickListener() {
 
@@ -85,6 +84,13 @@ public class LoginActivity extends AppCompatActivity {
 
             private void Dangky() {
                 Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(i);
+            }
+        });
+        txtViewForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
                 startActivity(i);
             }
         });

@@ -24,4 +24,8 @@
     <string name="textview_dangky">Chưa có tài khoản?</string>
     <string name="dangxuat">Đăng xuất</string>
     <string name="txtviewdangnhap">Đã có tài khoản?</string>
+    <string name="lichhen">Lịch hẹn xem phòng</string>
+    <string name="quanlyphong">Quản lý phòng</string>
+    <string name="chinhsuataikhoan">Chỉnh sửa tài khoản</string>
+    <string name="capnhat">Cập nhật</string>
 </resources>
