@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
- 
+
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,12 +19,10 @@ import com.example.timphongtro.Entity.ImagesRoomClass;
 import com.example.timphongtro.Entity.Room;
 import com.example.timphongtro.R;
 
-import java.util.ArrayList; 
+import java.util.ArrayList;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHolder> {
-
     Context context;
-
     ArrayList<Room> list;
 
     public SearchAdapter(Context context, ArrayList<Room> list) {
@@ -35,7 +33,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(context).inflate(R.layout.room_view_holder,parent,false);
+        View v = LayoutInflater.from(context).inflate(R.layout.room_view_holder, parent, false);
         return new MyViewHolder(v);
     }
 
@@ -69,15 +67,17 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
         return list.size();
     }
 
-    public void searchDataList(ArrayList<Room> searchList){
+    public void searchDataList(ArrayList<Room> searchList) {
         list = searchList;
         notifyDataSetChanged();
     }
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView people_room, price_room, area_room, city, district, detail, title_room;
         ImageView img_post;
         CardView cardViewRoom;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             title_room = itemView.findViewById(R.id.PostTitle);

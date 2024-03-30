@@ -1,11 +1,13 @@
 package com.example.timphongtro.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.timphongtro.Activity.DetailRoomActivity;
+import com.example.timphongtro.Activity.ServiceDetailActivity;
 import com.example.timphongtro.Entity.Service;
 import com.example.timphongtro.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -49,7 +53,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceV
         Service service = serviceList.get(position);
         holder.name.setText(service.getTitle());
         holder.price.setText(service.getPrice() + " VNĐ");
-        Glide.with(context).load(service.getImg()).centerCrop().into(holder.image);
+        Glide.with(context).load(service.getImg1()).centerCrop().into(holder.image);
 
         holder.btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +80,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceV
                         if (!serviceExists) {
                             DatabaseReference newServiceRef = serviceRef.push();
                             newServiceRef.child("title").setValue(service.getTitle());
-                            newServiceRef.child("img").setValue(service.getImg());
+                            newServiceRef.child("img1").setValue(service.getImg1());
                             newServiceRef.child("price").setValue(service.getPrice());
                             newServiceRef.child("amount").setValue(1);
                         }
@@ -90,6 +94,16 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceV
                 });
             }
         });
+
+        holder.cardService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent detailRoom = new Intent(context, ServiceDetailActivity.class);
+                detailRoom.putExtra("ServiceData", service.toString());
+                detailRoom.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(detailRoom);
+            }
+        });
     }
 
     @Override
@@ -101,6 +115,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceV
         TextView name, price;
         ImageView image;
         Button btn_add;
+        LinearLayout cardService;
 
         public ServiceViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -108,6 +123,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceV
             price = itemView.findViewById(R.id.service_price);
             image = itemView.findViewById(R.id.service_img);
             btn_add = itemView.findViewById(R.id.btn_buynow);
+            cardService = itemView.findViewById(R.id.cardService);
         }
     }
 }

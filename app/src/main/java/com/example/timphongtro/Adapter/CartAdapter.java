@@ -53,7 +53,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.name.setText(service.getTitle());
         holder.price.setText(service.getPrice() + " VNĐ");
         holder.amount.setText(String.valueOf(service.getAmount()));
-        Glide.with(context).load(service.getImg()).centerCrop().into(holder.image);
+        Glide.with(context).load(service.getImg1()).centerCrop().into(holder.image);
 
         holder.btn_remove.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -33,8 +33,7 @@ public class ShowMoreActivity extends AppCompatActivity {
 
         ImageView backbutton = findViewById(R.id.backbutton);
         backbutton.setOnClickListener(v -> {
-            Intent intent = new Intent(ShowMoreActivity.this, MainActivity.class);
-            startActivity(intent);
+            finish();
         });
 
         roomrecyclerView = findViewById(R.id.showmorelist);
