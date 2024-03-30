@@ -1,16 +1,18 @@
 package com.example.timphongtro.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
- 
+
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,10 +31,14 @@ import com.example.timphongtro.Entity.ExtensionRoom_class;
 import com.example.timphongtro.Adapter.FurnitureAdapter;
 import com.example.timphongtro.Entity.FurnitureClass;
 import com.example.timphongtro.Entity.Room;
-import com.example.timphongtro.Fragment.ProfileFragment;
 import com.example.timphongtro.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -45,14 +51,21 @@ public class DetailRoomActivity extends AppCompatActivity {
     RecyclerView recycleviewExtension;
     FurnitureAdapter furnitureAdapter;
     ExtensionAdapter extensionAdapter;
-    ImageView imageViewBack;
+    ImageView imageViewBack, imageViewLove;
     Button btnCall;
     LinearLayout userPost;
 
     FirebaseUser user;
+
     private static final int CALL_PHONE_PERMISSION_REQUEST_CODE = 1;
 
     private static final int codeL = 100;
+
+    FirebaseDatabase database;
+    DatabaseReference myLovePostRef;
+    DatabaseReference roomRef;
+    boolean isLove;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,8 +73,9 @@ public class DetailRoomActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         ImageSlider imageSlider = (ImageSlider) findViewById(R.id.ImageRoomPrd);
         ArrayList<SlideModel> slideModels = new ArrayList<>();
-
+        database = FirebaseDatabase.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
+
         textViewTypeRoom = (TextView) findViewById(R.id.textViewTypeRoom);
         textViewTitle = (TextView) findViewById(R.id.textViewTitle);
         textViewPrice = (TextView) findViewById(R.id.textViewPrice);
@@ -79,17 +93,18 @@ public class DetailRoomActivity extends AppCompatActivity {
         textViewElectric = findViewById(R.id.textViewElectric);
         textviewDescriptionRoom = findViewById(R.id.textviewDescriptionRoom);
         imageViewBack = findViewById(R.id.imageViewBack);
+        imageViewLove = findViewById(R.id.imageViewLove);
         btnCall = findViewById(R.id.btnCall);
         userPost = findViewById(R.id.userPost);
+
         userPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (user != null) {
                     //Sau phai sua cho nay thanh view User
-                    Intent mypost = new Intent(DetailRoomActivity.this,ManagePostActivity.class);
+                    Intent mypost = new Intent(DetailRoomActivity.this, ManagePostActivity.class);
                     startActivity(mypost);
-                }
-                else {
+                } else {
                     Intent intent = new Intent(DetailRoomActivity.this, LoginActivity.class);
                     startActivity(intent);
                 }
@@ -154,6 +169,74 @@ public class DetailRoomActivity extends AppCompatActivity {
                 }
             });
 
+//            Drawable drawable = ContextCompat.getDrawable(DetailRoomActivity.this, R.drawable.ic_area);
+//            imageViewLove.setImageDrawable(drawable);
+
+            myLovePostRef = null;
+            if (user != null) {
+                myLovePostRef = database.getReference("LovePost/" + user.getUid());
+                String typeRoom = "ChungCuMini/";
+                if (roomData.getType_room() == 0) {
+                    typeRoom = "Tro/";
+                }
+                roomRef = database.getReference("rooms/" + typeRoom + roomData.getId_room());
+
+            }
+            //check khi vao room detail
+            isLove = false;
+            roomRef.child("userLovePost").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.hasChild(user.getUid())) {
+                        imageViewLove.setImageResource(R.drawable.ic_love_fill);
+                    } else {
+                        imageViewLove.setImageResource(R.drawable.ic_heart_thin_icon);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+            //Chua tim thi Them tim
+            //day du lieu len
+            imageViewLove.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    isLove = true; //flag đánh dấu xem đã thực hiện xong chưa
+//                        imageViewLove.setImageResource(R.drawable.ic_love_fill);
+                    if (user != null) {
+                        roomRef.child("userLovePost").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if (isLove) {
+                                    if (snapshot.hasChild(user.getUid())) {
+                                        roomRef.child("userLovePost").child(user.getUid()).removeValue();
+                                        //nem room vao bang LovePost
+                                        myLovePostRef.child(roomData.getId_room()).removeValue();
+                                        isLove = false;
+                                    } else {
+                                        roomRef.child("userLovePost").child(user.getUid()).setValue(true);
+                                        //nem room vao bang LovePost
+                                        myLovePostRef.child(roomData.getId_room()).setValue(roomData);
+                                        isLove = false;
+                                    }
+                                    //nem id hien tai vao bang room
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                    }
+                }
+            });
+
+
             btnCall.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -168,7 +251,7 @@ public class DetailRoomActivity extends AppCompatActivity {
                         } else {
                             // Quyền gọi điện thoại đã được cấp
                             // Tiến hành thực hiện cuộc gọi điện thoại
-                            Toast.makeText(getApplicationContext(),roomData.getPhone(),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), roomData.getPhone(), Toast.LENGTH_SHORT).show();
                             makePhoneCall();
                         }
                     }
@@ -178,7 +261,7 @@ public class DetailRoomActivity extends AppCompatActivity {
             textViewPhone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getApplicationContext(),"Lưu vào Clip board",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Lưu vào Clip board", Toast.LENGTH_SHORT).show();
                     ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
 
                     // Tạo một đối tượng ClipData để chứa văn bản cần sao chép
@@ -210,8 +293,9 @@ public class DetailRoomActivity extends AppCompatActivity {
             imageViewBack.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent main = new Intent(DetailRoomActivity.this,MainActivity.class);
-                    startActivity(main);
+//                    Intent main = new Intent(DetailRoomActivity.this, MainActivity.class);
+//                    startActivity(main);
+                    finish();
                 }
             });
 
@@ -224,7 +308,7 @@ public class DetailRoomActivity extends AppCompatActivity {
         intent.setData(Uri.parse("tel:" + roomData.getPhone()));
 
         if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(intent); 
+            startActivity(intent);
         }
     }
 }
