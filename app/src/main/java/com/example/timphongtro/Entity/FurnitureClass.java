@@ -1,16 +1,26 @@
 package com.example.timphongtro.Entity;
 
- 
+
 public class FurnitureClass {
     private String name;
     private String img;
+    private String id;
 
-    public FurnitureClass( ) {
+    public FurnitureClass() {
     }
 
-    public FurnitureClass(String name, String img) {
+    public FurnitureClass(String id, String name, String img) {
+        this.id = id;
         this.name = name;
         this.img = img;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -22,7 +32,7 @@ public class FurnitureClass {
     }
 
     public String getImg() {
-        return img; 
+        return img;
     }
 
     public void setImg(String img) {

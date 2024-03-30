@@ -29,7 +29,10 @@ import com.example.timphongtro.Entity.ExtensionRoom_class;
 import com.example.timphongtro.Adapter.FurnitureAdapter;
 import com.example.timphongtro.Entity.FurnitureClass;
 import com.example.timphongtro.Entity.Room;
+import com.example.timphongtro.Fragment.ProfileFragment;
 import com.example.timphongtro.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -45,6 +48,8 @@ public class DetailRoomActivity extends AppCompatActivity {
     ImageView imageViewBack;
     Button btnCall;
     LinearLayout userPost;
+
+    FirebaseUser user;
     private static final int CALL_PHONE_PERMISSION_REQUEST_CODE = 1;
 
     private static final int codeL = 100;
@@ -56,6 +61,7 @@ public class DetailRoomActivity extends AppCompatActivity {
         ImageSlider imageSlider = (ImageSlider) findViewById(R.id.ImageRoomPrd);
         ArrayList<SlideModel> slideModels = new ArrayList<>();
 
+        user = FirebaseAuth.getInstance().getCurrentUser();
         textViewTypeRoom = (TextView) findViewById(R.id.textViewTypeRoom);
         textViewTitle = (TextView) findViewById(R.id.textViewTitle);
         textViewPrice = (TextView) findViewById(R.id.textViewPrice);
@@ -78,8 +84,16 @@ public class DetailRoomActivity extends AppCompatActivity {
         userPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent mypost = new Intent(DetailRoomActivity.this,ManagePostActivity.class);
-                startActivity(mypost);
+                if (user != null) {
+                    //Sau phai sua cho nay thanh view User
+                    Intent mypost = new Intent(DetailRoomActivity.this,ManagePostActivity.class);
+                    startActivity(mypost);
+                }
+                else {
+                    Intent intent = new Intent(DetailRoomActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
+
             }
         });
 
