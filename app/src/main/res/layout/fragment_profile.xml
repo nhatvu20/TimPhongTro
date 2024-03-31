@@ -63,6 +63,14 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/profile_image"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/a"
+                        app:civ_border_color="#FF000000"
+                        app:civ_border_width="2dp" />
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
@@ -80,82 +88,103 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </RelativeLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cardView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/cartView"
-        app:layout_constraintTop_toTopOf="parent">
-
-
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cardView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="250dp"
+            android:layout_marginTop="120dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:orientation="horizontal">
+            app:layout_constraintTop_toTopOf="@id/searchbox">
 
-            <TextView
-                android:id="@+id/quanlyphong"
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:padding="15dp"
-                android:text="@string/quanlyphong"
-                android:textSize="20sp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:drawableStart="@drawable/ic_quanlyphong"
-                android:drawablePadding="10dp"
-                android:gravity="center_vertical"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="350dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:orientation="horizontal">
+                app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/lichhen"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:padding="15dp"
-                android:text="@string/lichhen"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="@+id/quanlyphong"
-                app:layout_constraintTop_toBottomOf="@+id/quanlyphong"
-                android:drawableStart="@drawable/ic_lichhen"
-                android:drawablePadding="10dp"
-                android:gravity="center_vertical"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="450dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/dangxuat"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:padding="15dp"
-                android:text="@string/dangxuat"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lichhen"
-                android:drawableStart="@drawable/ic_dangxuat"
-                android:drawablePadding="10dp"
-                android:gravity="center_vertical"/>
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/btnquanlyphong"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:drawableStart="@drawable/ic_quanlyphong"
+                        android:drawablePadding="10dp"
+                        android:gravity="center_vertical"
+                        android:padding="15dp"
+                        android:text="@string/quanlyphong"
+                        android:textSize="20sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/btnlichhen"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:drawableStart="@drawable/ic_lichhen"
+                        android:drawablePadding="10dp"
+                        android:gravity="center_vertical"
+                        android:padding="15dp"
+                        android:text="@string/lichhen"
+                        android:textSize="20sp"
+                        app:layout_constraintStart_toStartOf="@+id/btnquanlyphong"
+                        app:layout_constraintTop_toBottomOf="@+id/btnquanlyphong" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/btnyeuthich"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:drawableStart="@drawable/ic_lichhen"
+                        android:drawablePadding="10dp"
+                        android:gravity="center_vertical"
+                        android:padding="15dp"
+                        android:text="Phòng yêu thích"
+                        android:textSize="20sp"
+                        app:layout_constraintStart_toStartOf="@+id/btnquanlyphong"
+                        app:layout_constraintTop_toBottomOf="@+id/btnquanlyphong" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/btndangxuat"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:drawableStart="@drawable/ic_dangxuat"
+                        android:drawablePadding="10dp"
+                        android:gravity="center_vertical"
+                        android:padding="15dp"
+                        android:text="@string/dangxuat"
+                        android:textSize="20sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/btnyeuthich" />
+                </LinearLayout>
+
+            </LinearLayout>
 
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
