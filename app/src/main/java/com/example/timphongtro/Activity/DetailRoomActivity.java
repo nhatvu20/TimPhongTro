@@ -7,17 +7,26 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -41,7 +50,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -54,7 +66,7 @@ public class DetailRoomActivity extends AppCompatActivity {
     FurnitureAdapter furnitureAdapter;
     ExtensionAdapter extensionAdapter;
     ImageView imageViewBack, imageViewLove;
-    Button btnCall;
+    Button btnCall, btnBookRoom;
     LinearLayout userPost;
 
     FirebaseUser user;
@@ -70,6 +82,8 @@ public class DetailRoomActivity extends AppCompatActivity {
     DatabaseReference roomRef;
     DatabaseReference userOwnPostRef;
     boolean isLove;
+    Calendar myCalender;
+    TextView edtTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +114,7 @@ public class DetailRoomActivity extends AppCompatActivity {
         imageViewBack = findViewById(R.id.imageViewBack);
         imageViewLove = findViewById(R.id.imageViewLove);
         btnCall = findViewById(R.id.btnCall);
+        btnBookRoom = findViewById(R.id.btnBookRoom);
         userPost = findViewById(R.id.userPost);
         textViewNameUser = findViewById(R.id.textViewNameUser);
         profile_image = findViewById(R.id.profile_image);
@@ -282,6 +297,13 @@ public class DetailRoomActivity extends AppCompatActivity {
                 }
             });
 
+            btnBookRoom.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showBottomDialog();
+                }
+            });
+
             textViewPhone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -335,4 +357,55 @@ public class DetailRoomActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
+
+    private void showBottomDialog() {
+
+        final Dialog dialog = new Dialog(DetailRoomActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        dialog.setContentView(R.layout.dialog_book_room);
+
+        ImageView cancelButton = dialog.findViewById(R.id.cancelButton);
+
+        cancelButton.setOnClickListener(v -> dialog.dismiss());
+
+
+        edtTime = dialog.findViewById(R.id.edtTime);
+        myCalender = Calendar.getInstance();
+        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                myCalender.set(Calendar.YEAR, year);
+                myCalender.set(Calendar.MONTH, month);
+                myCalender.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel();
+            }
+        };
+
+        edtTime.setOnClickListener(v -> {
+            new DatePickerDialog(DetailRoomActivity.this, date, myCalender.get(Calendar.YEAR), myCalender.get(Calendar.MONTH), myCalender.get(Calendar.DAY_OF_MONTH)).show();
+        });
+
+//        edtTime.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                dialog.dismiss();
+//                new DatePickerDialog(DetailRoomActivity.this, date, myCalender.get(Calendar.YEAR), myCalender.get(Calendar.MONTH), myCalender.get(Calendar.DAY_OF_MONTH)).show();
+//            }
+//        });
+
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+        dialog.setCancelable(true);
+    }
+
+    private void updateLabel() {
+        String myFormat = "MM/dd/yy EEEE";
+        SimpleDateFormat dateFormat = new SimpleDateFormat(myFormat, Locale.US);
+        edtTime.setText(dateFormat.format(myCalender.getTime()));
+    }
+
 }

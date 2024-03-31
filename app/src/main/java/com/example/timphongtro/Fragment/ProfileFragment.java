@@ -17,6 +17,7 @@ import com.example.timphongtro.Activity.DetailRoomActivity;
 import com.example.timphongtro.Activity.InformationActivity;
 import com.example.timphongtro.Activity.LoginActivity;
 import com.example.timphongtro.Activity.ManagePostActivity;
+import com.example.timphongtro.Activity.MyLovePostActivity;
 import com.example.timphongtro.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -51,13 +52,14 @@ public class ProfileFragment extends Fragment {
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         Spinner spinner;
 
-        TextView btndangxuat, btnquanlyphong, btnlichhen;
+        TextView btndangxuat, btnquanlyphong, btnlichhen, btnyeuthich;
 
         txtViewInfo = view.findViewById(R.id.txtviewInfo);
 
         btndangxuat = view.findViewById(R.id.btndangxuat);
         btnquanlyphong = view.findViewById(R.id.btnquanlyphong);
         btnlichhen = view.findViewById(R.id.btnlichhen);
+        btnyeuthich = view.findViewById(R.id.btnyeuthich);
 
 
         btndangxuat.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +82,14 @@ public class ProfileFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     startActivity(intent);
                 }
+            }
+        });
+
+        btnyeuthich.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent lovepost = new Intent(getActivity(), MyLovePostActivity.class);
+                startActivity(lovepost);
             }
         });
 

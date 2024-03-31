@@ -423,13 +423,21 @@ public class PostRoomActivity extends AppCompatActivity {
                     Long.parseLong(edtInternet.getText().toString()), Long.parseLong(edtWater.getText().toString()), Long.parseLong(edtInternet.getText().toString()));
 
             //Xu ly cho firebase
-            myRef.child(id_room).setValue(room);
-//            if (myPostRef != null) {
-//                myPostRef.child(id_room).setValue(room);
-//            }
-            Toast.makeText(PostRoomActivity.this, "Đăng thông tin phòng thành công", Toast.LENGTH_SHORT).show();
-            Intent main = new Intent(this, MainActivity.class);
-            startActivity(main);
+            myRef.child(id_room).setValue(room).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    Toast.makeText(PostRoomActivity.this, "Đăng thông tin phòng thành công", Toast.LENGTH_SHORT).show();
+                    Intent main = new Intent(PostRoomActivity.this, MainActivity.class);
+                    startActivity(main);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(PostRoomActivity.this, "Đăng thông tin phòng thất bại", Toast.LENGTH_SHORT).show();
+                }
+            });
+//            Intent main = new Intent(this, MainActivity.class);
+//            startActivity(main);
         } else {
             Toast.makeText(PostRoomActivity.this, "Vui lòng nhập đầy đủ các trường dữ liệu", Toast.LENGTH_SHORT).show();
         }
