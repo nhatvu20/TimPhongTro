@@ -43,10 +43,12 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class DetailRoomActivity extends AppCompatActivity {
     Room roomData;
     TextView textViewTitle, textViewPrice, textViewCombine_address, textViewPhone, textViewTypeRoom, textViewFloor, textViewArea, textViewDeposit, textViewPersonInRoom, textViewGender,
-            textViewWater, textViewInternet, textViewElectric, textviewDescriptionRoom;
+            textViewWater, textViewInternet, textViewElectric, textviewDescriptionRoom, textViewNameUser;
     RecyclerView recycleviewFuniture;
     RecyclerView recycleviewExtension;
     FurnitureAdapter furnitureAdapter;
@@ -57,6 +59,8 @@ public class DetailRoomActivity extends AppCompatActivity {
 
     FirebaseUser user;
 
+    CircleImageView profile_image;
+
     private static final int CALL_PHONE_PERMISSION_REQUEST_CODE = 1;
 
     private static final int codeL = 100;
@@ -64,6 +68,7 @@ public class DetailRoomActivity extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference myLovePostRef;
     DatabaseReference roomRef;
+    DatabaseReference userOwnPostRef;
     boolean isLove;
 
     @Override
@@ -76,18 +81,18 @@ public class DetailRoomActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
 
-        textViewTypeRoom = (TextView) findViewById(R.id.textViewTypeRoom);
-        textViewTitle = (TextView) findViewById(R.id.textViewTitle);
-        textViewPrice = (TextView) findViewById(R.id.textViewPrice);
-        textViewCombine_address = (TextView) findViewById(R.id.textViewCombine_address);
-        textViewPhone = (TextView) findViewById(R.id.textViewPhone);
-        textViewFloor = (TextView) findViewById(R.id.textViewFloor);
-        textViewArea = (TextView) findViewById(R.id.textViewArea);
-        textViewDeposit = (TextView) findViewById(R.id.textViewDeposit);
-        textViewPersonInRoom = (TextView) findViewById(R.id.textViewPersonInRoom);
-        textViewGender = (TextView) findViewById(R.id.textViewGender);
-        recycleviewFuniture = (RecyclerView) findViewById(R.id.recycleviewFuniture);
-        recycleviewExtension = (RecyclerView) findViewById(R.id.recycleviewExtension);
+        textViewTypeRoom = findViewById(R.id.textViewTypeRoom);
+        textViewTitle = findViewById(R.id.textViewTitle);
+        textViewPrice = findViewById(R.id.textViewPrice);
+        textViewCombine_address = findViewById(R.id.textViewCombine_address);
+        textViewPhone = findViewById(R.id.textViewPhone);
+        textViewFloor = findViewById(R.id.textViewFloor);
+        textViewArea = findViewById(R.id.textViewArea);
+        textViewDeposit = findViewById(R.id.textViewDeposit);
+        textViewPersonInRoom = findViewById(R.id.textViewPersonInRoom);
+        textViewGender = findViewById(R.id.textViewGender);
+        recycleviewFuniture = findViewById(R.id.recycleviewFuniture);
+        recycleviewExtension = findViewById(R.id.recycleviewExtension);
         textViewWater = findViewById(R.id.textViewWater);
         textViewInternet = findViewById(R.id.textViewInternet);
         textViewElectric = findViewById(R.id.textViewElectric);
@@ -96,19 +101,20 @@ public class DetailRoomActivity extends AppCompatActivity {
         imageViewLove = findViewById(R.id.imageViewLove);
         btnCall = findViewById(R.id.btnCall);
         userPost = findViewById(R.id.userPost);
+        textViewNameUser = findViewById(R.id.textViewNameUser);
+        profile_image = findViewById(R.id.profile_image);
 
         userPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (user != null) {
-                    //Sau phai sua cho nay thanh view User
-                    Intent mypost = new Intent(DetailRoomActivity.this, ManagePostActivity.class);
-                    startActivity(mypost);
-                } else {
-                    Intent intent = new Intent(DetailRoomActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                }
-
+//                if (user != null) {
+//                    //Sau phai sua cho nay thanh view User
+//                    Intent mypost = new Intent(DetailRoomActivity.this, ManagePostActivity.class);
+//                    startActivity(mypost);
+//                } else {
+//                    Intent intent = new Intent(DetailRoomActivity.this, LoginActivity.class);
+//                    startActivity(intent);
+//                }
             }
         });
 
@@ -175,12 +181,30 @@ public class DetailRoomActivity extends AppCompatActivity {
             myLovePostRef = null;
             if (user != null) {
                 myLovePostRef = database.getReference("LovePost/" + user.getUid());
+
+                userOwnPostRef = database.getReference("users/" + user.getUid());
                 String typeRoom = "ChungCuMini/";
                 if (roomData.getType_room() == 0) {
                     typeRoom = "Tro/";
                 }
                 roomRef = database.getReference("rooms/" + typeRoom + roomData.getId_room());
 
+                userOwnPostRef.child("name").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            String name = snapshot.getValue(String.class);
+                            textViewNameUser.setText(name);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+//                userOwnPostRef.child("avatar")
             }
             //check khi vao room detail
             isLove = false;

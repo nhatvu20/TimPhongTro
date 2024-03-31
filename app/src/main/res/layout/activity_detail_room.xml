@@ -643,6 +643,7 @@
                             android:drawablePadding="5dp"
                             android:gravity="center_vertical"
                             android:text="Chi tiết"
+                            android:textColor="@color/black"
                             android:textStyle="bold" />
 
                         <TextView
