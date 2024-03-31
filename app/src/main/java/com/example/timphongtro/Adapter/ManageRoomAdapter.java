@@ -89,6 +89,7 @@ public class ManageRoomAdapter extends RecyclerView.Adapter<ManageRoomAdapter.My
                                     }
                                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                                     DatabaseReference myRef = database.getReference("rooms/" + path + "/" + room.getId_room());
+                                    DatabaseReference myLovePostRef = null;
                                     FirebaseUser userCurrent = FirebaseAuth.getInstance().getCurrentUser();
 //                                    DatabaseReference myPostRef = null;
 //
@@ -105,6 +106,7 @@ public class ManageRoomAdapter extends RecyclerView.Adapter<ManageRoomAdapter.My
                                             Toast.makeText(context, "Xóa bài thành công", Toast.LENGTH_SHORT).show();
                                         }
                                     });
+                                    myLovePostRef = database.getReference("LovePost/" + room.getId_own_post() + "/" + room.getId_room() );
                                 }
                             })
                                     .

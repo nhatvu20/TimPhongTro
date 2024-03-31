@@ -643,6 +643,7 @@
                             android:drawablePadding="5dp"
                             android:gravity="center_vertical"
                             android:text="Chi tiết"
+                            android:textColor="@color/black"
                             android:textStyle="bold" />
 
                         <TextView
@@ -699,7 +700,7 @@
             android:layout_weight="1"
 
             android:backgroundTint="@color/orange"
-            android:text="Xem phòng"
+            android:text="Đặt lịch xem phòng"
             app:cornerRadius="10dp" />
 
     </LinearLayout>
