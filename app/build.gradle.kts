@@ -37,6 +37,9 @@ android {
 }
 
 dependencies {
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 //    implementation("com.google.firebase:firebase-messaging:9.2.0")
     implementation("com.google.firebase:firebase-auth:22.3.1")
     implementation("com.google.firebase:firebase-core:21.1.1")
@@ -49,13 +52,11 @@ dependencies {
     implementation("com.google.firebase:firebase-database:20.3.1")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.activity:activity:1.8.2")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation ("com.github.denzcoskun:ImageSlideshow:0.1.2") // Auto Image Slider
     implementation ("androidx.cardview:cardview:1.0.0") // Cardview
     implementation ("com.github.bumptech.glide:glide:4.16.0") //Load ảnh từ firebase về
     implementation ("com.google.firebase:firebase-storage:20.3.0")
     implementation ("com.google.code.gson:gson:2.10.1") // ép String về JSON
     implementation ("de.hdodenhof:circleimageview:3.1.0")
+    implementation ("com.facebook.shimmer:shimmer:0.5.0")
 }

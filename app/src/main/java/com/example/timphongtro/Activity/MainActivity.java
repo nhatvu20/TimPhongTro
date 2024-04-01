@@ -97,8 +97,13 @@ public class MainActivity extends AppCompatActivity {
 
         contract.setOnClickListener(v -> {
             dialog.dismiss();
-                Intent post = new Intent(this, PostRoomActivity.class);
+            if (user != null) {
+                Intent post = new Intent(MainActivity.this, PostRoomActivity.class);
                 startActivity(post);
+            } else {
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
         });
 
         cancelButton.setOnClickListener(v -> dialog.dismiss());

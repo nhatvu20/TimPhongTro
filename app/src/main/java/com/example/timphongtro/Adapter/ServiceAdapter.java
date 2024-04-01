@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.timphongtro.Activity.DetailRoomActivity;
+import com.example.timphongtro.Activity.LoginActivity;
 import com.example.timphongtro.Activity.ServiceDetailActivity;
 import com.example.timphongtro.Entity.Service;
 import com.example.timphongtro.R;
@@ -33,6 +34,8 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceV
 
     private ArrayList<Service> serviceList, cartItemList;
     private Context context;
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    private FirebaseUser user = firebaseAuth.getCurrentUser();
 
     public ServiceAdapter(Context context, ArrayList<Service> serviceList) {
         this.context = context;
@@ -58,9 +61,8 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceV
         holder.btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cartItemList.add(service);
-                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    cartItemList.add(service);
                 String userID = user.getUid();
                 DatabaseReference serviceRef = FirebaseDatabase.getInstance().getReference("users").child(userID).child("cart");
 
@@ -92,16 +94,21 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceV
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                     }
                 });
-            }
+            } else {
+                    Intent intent = new Intent(context, LoginActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+        }
         });
 
         holder.cardService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent detailRoom = new Intent(context, ServiceDetailActivity.class);
-                detailRoom.putExtra("ServiceData", service.toString());
-                detailRoom.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(detailRoom);
+                Intent intent = new Intent(context, ServiceDetailActivity.class);
+                intent.putExtra("ServiceData", service.toString());
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
             }
         });
     }

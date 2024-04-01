@@ -22,7 +22,9 @@ import android.widget.Toast;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.example.timphongtro.Activity.PostRoomActivity;
 import com.example.timphongtro.Activity.SearchActivity;
+import com.example.timphongtro.Activity.ServiceActivity;
 import com.example.timphongtro.Activity.ShowMoreActivity;
 import com.example.timphongtro.Adapter.DistrictAdapter;
 import com.example.timphongtro.Entity.DistrictData;
@@ -30,6 +32,7 @@ import com.example.timphongtro.Entity.Room;
 import com.example.timphongtro.Adapter.RoomAdapter;
 import com.example.timphongtro.Activity.LoginActivity;
 import com.example.timphongtro.R;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -45,6 +48,7 @@ import java.util.ArrayList;
 public class HomeFragment extends Fragment {
     String path = "/HaNoi";
     RecyclerView districtrecyclerView, roomrecyclerView;
+    ShimmerFrameLayout districtShimmer, roomShimmer;
     DatabaseReference districtdatabase, roomdatabase, spinnerdatabase;
     DistrictAdapter districtAdapter;
     RoomAdapter roomAdapter;
@@ -55,6 +59,7 @@ public class HomeFragment extends Fragment {
     ArrayAdapter<String> spinneradapter;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    FirebaseUser user = firebaseAuth.getCurrentUser();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -96,15 +101,52 @@ public class HomeFragment extends Fragment {
             startActivity(intent);
         });
 
-        LinearLayout find_tro = view.findViewById(R.id.find_tro);
-        LinearLayout find_chungcu = view.findViewById(R.id.find_chungcu);
+        LinearLayout tin_dang_cho_thue = view.findViewById(R.id.tin_dang_cho_thue);
+        LinearLayout tim_phong = view.findViewById(R.id.find_room);
+        LinearLayout doi_binh_ga = view.findViewById(R.id.doi_binh_ga);
+        LinearLayout doi_binh_nuoc = view.findViewById(R.id.doi_binh_nuoc);
+        LinearLayout giatla = view.findViewById(R.id.giat_la);
+        LinearLayout sua_chua_dien_nuoc = view.findViewById(R.id.sua_chua_dien_nuoc);
+        LinearLayout tu_van_thiet_ke_phong = view.findViewById(R.id.tu_van_thiet_ke_phong);
+        LinearLayout cho_thue_noi_that = view.findViewById(R.id.cho_thue_noi_that);
 
-        find_tro.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "In Developing...", Toast.LENGTH_SHORT).show();
+        districtShimmer = view.findViewById(R.id.district_shimmer);
+        roomShimmer = view.findViewById(R.id.room_shimmer);
+
+        tim_phong.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), SearchActivity.class);
+            startActivity(intent);
         });
 
-        find_chungcu.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "In Developing...", Toast.LENGTH_SHORT).show();
+        tin_dang_cho_thue.setOnClickListener(v -> {
+            Intent intent;
+            if (user != null) {
+                intent = new Intent(getContext(), PostRoomActivity.class);
+            } else {
+                intent = new Intent(getContext(), LoginActivity.class);
+            }
+            startActivity(intent);
+        });
+        doi_binh_ga.setOnClickListener(v -> {
+            openServiceActivity("doibinhga");
+        });
+
+        doi_binh_nuoc.setOnClickListener(v -> {
+            openServiceActivity("doibinhnuoc");
+        });
+        giatla.setOnClickListener(v -> {
+            openServiceActivity("giatla");
+        });
+
+        sua_chua_dien_nuoc.setOnClickListener(v -> {
+            openServiceActivity("suachuadiennuoc");
+        });
+        tu_van_thiet_ke_phong.setOnClickListener(v -> {
+            openServiceActivity("tuvanthietkephong");
+        });
+
+        cho_thue_noi_that.setOnClickListener(v -> {
+            openServiceActivity("chothuenoithat");
         });
 
         //Lấy dữ liệu từ database truyền vào spinner
@@ -114,6 +156,7 @@ public class HomeFragment extends Fragment {
         fetchspinnerdatabase();
 
         //Lấy dữ liệu từ database truyền vào districtrecyclerview
+        districtShimmer.startShimmer();
         districtrecyclerView = view.findViewById(R.id.LocationExplore);
         districtrecyclerView.setHasFixedSize(true);
         districtrecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
@@ -123,6 +166,7 @@ public class HomeFragment extends Fragment {
         fetchcityrecyclerviewdatabase();
 
         //Lấy dữ liệu từ database truyền vào roomrecyclerview
+        roomShimmer.startShimmer();
         roomrecyclerView = view.findViewById(R.id.RoomrecyclerView);
         roomrecyclerView.setHasFixedSize(true);
         roomdatabase = FirebaseDatabase.getInstance().getReference("rooms");
@@ -138,7 +182,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 roomlist.clear();
-                if(snapshot.exists()){
+                if (snapshot.exists()) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         if (dataSnapshot.getKey().equals("Tro") || dataSnapshot.getKey().equals("ChungCuMini")) {
                             // Lấy dữ liệu từ child "Tro"
@@ -166,6 +210,8 @@ public class HomeFragment extends Fragment {
                         }
                     }
                 }
+                roomShimmer.stopShimmer();
+                roomShimmer.setVisibility(View.GONE);
                 roomAdapter.notifyDataSetChanged();
             }
 
@@ -177,6 +223,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void fetchcityrecyclerviewdatabase() {
+
         districtdatabase = FirebaseDatabase.getInstance().getReference("city" + path);
         districtdatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -190,6 +237,8 @@ public class HomeFragment extends Fragment {
                         }
                     }
                 }
+                districtShimmer.stopShimmer();
+                districtShimmer.setVisibility(View.GONE);
                 districtAdapter.notifyDataSetChanged();
             }
 
@@ -237,6 +286,12 @@ public class HomeFragment extends Fragment {
 
             }
         });
+    }
+
+    private void openServiceActivity(String item) {
+        Intent intent = new Intent(getContext(), ServiceActivity.class);
+        intent.putExtra("item", item);
+        startActivity(intent);
     }
 
 }
