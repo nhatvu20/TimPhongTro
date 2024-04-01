@@ -22,6 +22,7 @@ import com.example.timphongtro.Fragment.ProfileFragment;
 import com.example.timphongtro.Fragment.ServiceFragment;
 import com.example.timphongtro.R;
 import com.example.timphongtro.databinding.ActivityMainBinding;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Hiển thị khay dưới khi bấm dấu cộng
     private void showBottomDialog() {
-        final Dialog dialog = new Dialog(this);
+        final BottomSheetDialog dialog = new BottomSheetDialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.bottom_dialog);
 
@@ -97,8 +98,14 @@ public class MainActivity extends AppCompatActivity {
 
         contract.setOnClickListener(v -> {
             dialog.dismiss();
-                Intent post = new Intent(this, PostRoomActivity.class);
-                startActivity(post);
+                if(user != null) {
+                    Intent post = new Intent(this, PostRoomActivity.class);
+                    startActivity(post);
+                }else {
+                    Intent login = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(login);
+                    Toast.makeText(MainActivity.this,"Bạn phải đăng nhập để sử dụng chức năng này",Toast.LENGTH_SHORT).show();
+                }
         });
 
         cancelButton.setOnClickListener(v -> dialog.dismiss());

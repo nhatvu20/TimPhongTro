@@ -41,6 +41,7 @@ import com.example.timphongtro.Adapter.FurnitureAdapter;
 import com.example.timphongtro.Entity.FurnitureClass;
 import com.example.timphongtro.Entity.Room;
 import com.example.timphongtro.R;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -193,43 +194,13 @@ public class DetailRoomActivity extends AppCompatActivity {
 //            Drawable drawable = ContextCompat.getDrawable(DetailRoomActivity.this, R.drawable.ic_area);
 //            imageViewLove.setImageDrawable(drawable);
 
-            myLovePostRef = null;
-            if (user != null) {
-                myLovePostRef = database.getReference("LovePost/" + user.getUid());
-
-                userOwnPostRef = database.getReference("users/" + user.getUid());
-                String typeRoom = "ChungCuMini/";
-                if (roomData.getType_room() == 0) {
-                    typeRoom = "Tro/";
-                }
-                roomRef = database.getReference("rooms/" + typeRoom + roomData.getId_room());
-
-                userOwnPostRef.child("name").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()) {
-                            String name = snapshot.getValue(String.class);
-                            textViewNameUser.setText(name);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
-//                userOwnPostRef.child("avatar")
-            }
-            //check khi vao room detail
-            isLove = false;
-            roomRef.child("userLovePost").addValueEventListener(new ValueEventListener() {
+            userOwnPostRef = database.getReference("users/" + roomData.getId_own_post());
+            userOwnPostRef.child("name").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.hasChild(user.getUid())) {
-                        imageViewLove.setImageResource(R.drawable.ic_love_fill);
-                    } else {
-                        imageViewLove.setImageResource(R.drawable.ic_heart_thin_icon);
+                    if (snapshot.exists()) {
+                        String name = snapshot.getValue(String.class);
+                        textViewNameUser.setText(name);
                     }
                 }
 
@@ -239,41 +210,81 @@ public class DetailRoomActivity extends AppCompatActivity {
                 }
             });
 
-            //Chua tim thi Them tim
-            //day du lieu len
-            imageViewLove.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    isLove = true; //flag đánh dấu xem đã thực hiện xong chưa
-//                        imageViewLove.setImageResource(R.drawable.ic_love_fill);
-                    if (user != null) {
-                        roomRef.child("userLovePost").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                if (isLove) {
-                                    if (snapshot.hasChild(user.getUid())) {
-                                        roomRef.child("userLovePost").child(user.getUid()).removeValue();
-                                        //nem room vao bang LovePost
-                                        myLovePostRef.child(roomData.getId_room()).removeValue();
-                                        isLove = false;
-                                    } else {
-                                        roomRef.child("userLovePost").child(user.getUid()).setValue(true);
-                                        //nem room vao bang LovePost
-                                        myLovePostRef.child(roomData.getId_room()).setValue(roomData);
-                                        isLove = false;
-                                    }
-                                    //nem id hien tai vao bang room
-                                }
-                            }
+//                userOwnPostRef.child("avatar")
+            myLovePostRef = null;
+            if (user != null) {
+                myLovePostRef = database.getReference("LovePost/" + user.getUid());
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-                    }
+                String typeRoom = "ChungCuMini/";
+                if (roomData.getType_room() == 0) {
+                    typeRoom = "Tro/";
                 }
-            });
+                roomRef = database.getReference("rooms/" + typeRoom + roomData.getId_room());
+                //check khi vao room detail
+                isLove = false;
+                roomRef.child("userLovePost").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            if (snapshot.hasChild(user.getUid())) {
+                                imageViewLove.setImageResource(R.drawable.ic_love_fill);
+                            } else {
+                                imageViewLove.setImageResource(R.drawable.ic_heart_thin_icon);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+                //Chua tim thi Them tim
+                //day du lieu len
+                imageViewLove.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        isLove = true; //flag đánh dấu xem đã thực hiện xong chưa
+//                        imageViewLove.setImageResource(R.drawable.ic_love_fill);
+                        if (user != null) {
+                            roomRef.child("userLovePost").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (isLove) {
+                                        if (snapshot.hasChild(user.getUid())) {
+                                            roomRef.child("userLovePost").child(user.getUid()).removeValue();
+                                            //nem room vao bang LovePost
+                                            myLovePostRef.child(roomData.getId_room()).removeValue();
+                                            isLove = false;
+                                        } else {
+                                            roomRef.child("userLovePost").child(user.getUid()).setValue(true);
+                                            //nem room vao bang LovePost
+                                            myLovePostRef.child(roomData.getId_room()).setValue(roomData);
+                                            isLove = false;
+                                        }
+                                        //nem id hien tai vao bang room
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        }
+                    }
+                });
+            } else {
+                imageViewLove.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent login = new Intent(DetailRoomActivity.this, LoginActivity.class);
+                        startActivity(login);
+                        Toast.makeText(DetailRoomActivity.this,"Bạn phải đăng nhập để sử dụng chức năng này",Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
 
 
             btnCall.setOnClickListener(new View.OnClickListener() {
@@ -300,7 +311,13 @@ public class DetailRoomActivity extends AppCompatActivity {
             btnBookRoom.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showBottomDialog();
+                    if (user != null) {
+                        showBottomDialog();
+                    }else {
+                        Intent login = new Intent(DetailRoomActivity.this, LoginActivity.class);
+                        startActivity(login);
+                        Toast.makeText(DetailRoomActivity.this,"Bạn phải đăng nhập để sử dụng chức năng này",Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
 
@@ -360,7 +377,7 @@ public class DetailRoomActivity extends AppCompatActivity {
 
     private void showBottomDialog() {
 
-        final Dialog dialog = new Dialog(DetailRoomActivity.this);
+        final BottomSheetDialog dialog = new BottomSheetDialog(DetailRoomActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         dialog.setContentView(R.layout.dialog_book_room);
