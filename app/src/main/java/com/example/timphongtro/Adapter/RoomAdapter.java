@@ -38,7 +38,6 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
     int maxitemcount = 10;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     FirebaseUser user = firebaseAuth.getCurrentUser();
-    String userID = user.getUid();
     Room room;
 
 
@@ -72,6 +71,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
         holder.cardViewRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String userID = user.getUid();
                 Intent detailRoom = new Intent(context, DetailRoomActivity.class);
                 int typeRoom = list.get(holder.getAdapterPosition()).getType_room();
                 detailRoom.putExtra("DataRoom", room.toString());
@@ -84,7 +84,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
 
     private void RecentlyRead(String userID, MyViewHolder holder) {
         room = list.get(holder.getAdapterPosition());
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users/" + userID + "/history");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("History/" + userID);
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.timphongtro.Activity.DetailRoomActivity;
+import com.example.timphongtro.Activity.HistoryActivity;
 import com.example.timphongtro.Activity.InformationActivity;
 import com.example.timphongtro.Activity.LoginActivity;
 import com.example.timphongtro.Activity.ManagePostActivity;
@@ -52,22 +53,31 @@ public class ProfileFragment extends Fragment {
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         Spinner spinner;
 
-        TextView btndangxuat, btnquanlyphong, btnlichhen, btnyeuthich;
+        TextView btndangxuat, btnquanlyphong, btnlichhen, btnyeuthich, btnlichsu;
 
         txtViewInfo = view.findViewById(R.id.txtviewInfo);
 
         btndangxuat = view.findViewById(R.id.btndangxuat);
         btnquanlyphong = view.findViewById(R.id.btnquanlyphong);
         btnlichhen = view.findViewById(R.id.btnlichhen);
+        btnlichsu = view.findViewById(R.id.btnlichsu);
         btnyeuthich = view.findViewById(R.id.btnyeuthich);
 
 
+        btnlichsu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), HistoryActivity.class);
+                startActivity(intent);
+            }
+        });
         btndangxuat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mAuth.signOut();
                 Intent i = new Intent(getActivity(), LoginActivity.class);
                 startActivity(i);
+                getActivity().finish();
             }
         });
 

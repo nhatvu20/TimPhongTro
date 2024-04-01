@@ -33,7 +33,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseUser user = firebaseAuth.getCurrentUser();
     private String userID = user.getUid();
-    private DatabaseReference cartRef = FirebaseDatabase.getInstance().getReference("users").child(userID).child("cart");
+    private DatabaseReference cartRef = FirebaseDatabase.getInstance().getReference("Cart/" + userID);
 
     public CartAdapter(Context context, ArrayList<Service> cartList) {
         this.context = context;

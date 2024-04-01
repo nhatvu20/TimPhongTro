@@ -75,9 +75,8 @@ public class CartActivity extends AppCompatActivity {
     }
 
     private void fetchproductfromDB() {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
         String userID = user.getUid();
-        DatabaseReference databaseReference = database.getReference("users").child(userID).child("cart");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Cart/" + userID);
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override

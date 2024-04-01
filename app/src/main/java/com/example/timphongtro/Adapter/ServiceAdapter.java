@@ -64,7 +64,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceV
                 if (user != null) {
                     cartItemList.add(service);
                 String userID = user.getUid();
-                DatabaseReference serviceRef = FirebaseDatabase.getInstance().getReference("users").child(userID).child("cart");
+                DatabaseReference serviceRef = FirebaseDatabase.getInstance().getReference("Cart/" + userID);
 
                 serviceRef.orderByChild("title").equalTo(service.getTitle()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
