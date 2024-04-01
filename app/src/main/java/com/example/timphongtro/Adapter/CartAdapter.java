@@ -144,9 +144,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             super(itemview);
             plus = itemview.findViewById(R.id.textView_plus);
             minus = itemview.findViewById(R.id.textView_minus);
-            name = itemview.findViewById(R.id.Flowername);
+            name = itemview.findViewById(R.id.Cartname);
             price = itemview.findViewById(R.id.Price);
-            image = itemview.findViewById(R.id.Flowerimage);
+            image = itemview.findViewById(R.id.Cartimage);
             btn_remove = itemview.findViewById(R.id.button_remove);
             amount = itemview.findViewById(R.id.editText_amount);
         }
