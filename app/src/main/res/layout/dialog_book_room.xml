@@ -119,7 +119,7 @@
                         android:src="@drawable/ic_phone" />
 
                     <EditText
-                        android:id="@+id/edtTitleRoom"
+                        android:id="@+id/edtPhone"
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
                         android:layout_marginLeft="15dp"
@@ -163,7 +163,7 @@
                         android:src="@drawable/ic_pencil" />
 
                     <EditText
-                        android:id="@+id/edtDescriptionRoom"
+                        android:id="@+id/edtNote"
                         android:layout_width="wrap_content"
                         android:layout_height="100dp"
                         android:layout_marginLeft="15dp"
@@ -242,11 +242,15 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnConfirm"
-
+                    style="@style/Widget.Material3.Button"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:layout_weight="1"
-                    android:background="@drawable/border_radius_slider"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    app:strokeColor="@color/orange"
                     android:text="Xác nhận" />
             </LinearLayout>
 

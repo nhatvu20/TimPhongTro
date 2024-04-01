@@ -20,6 +20,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,8 +41,10 @@ import com.example.timphongtro.Entity.ExtensionRoom_class;
 import com.example.timphongtro.Adapter.FurnitureAdapter;
 import com.example.timphongtro.Entity.FurnitureClass;
 import com.example.timphongtro.Entity.Room;
+import com.example.timphongtro.Entity.ScheduleVisitRoomClass;
 import com.example.timphongtro.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -55,6 +58,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -82,9 +87,13 @@ public class DetailRoomActivity extends AppCompatActivity {
     DatabaseReference myLovePostRef;
     DatabaseReference roomRef;
     DatabaseReference userOwnPostRef;
+    DatabaseReference scheduleVisitRoomref;
     boolean isLove;
     Calendar myCalender;
     TextView edtTime;
+
+    MaterialButton btnConfirm,btnCancel;
+    EditText edtYourName, edtPhone, edtNote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -281,7 +290,7 @@ public class DetailRoomActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent login = new Intent(DetailRoomActivity.this, LoginActivity.class);
                         startActivity(login);
-                        Toast.makeText(DetailRoomActivity.this,"Bạn phải đăng nhập để sử dụng chức năng này",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DetailRoomActivity.this, "Bạn phải đăng nhập để sử dụng chức năng này", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -313,10 +322,10 @@ public class DetailRoomActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     if (user != null) {
                         showBottomDialog();
-                    }else {
+                    } else {
                         Intent login = new Intent(DetailRoomActivity.this, LoginActivity.class);
                         startActivity(login);
-                        Toast.makeText(DetailRoomActivity.this,"Bạn phải đăng nhập để sử dụng chức năng này",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DetailRoomActivity.this, "Bạn phải đăng nhập để sử dụng chức năng này", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -385,10 +394,13 @@ public class DetailRoomActivity extends AppCompatActivity {
         ImageView cancelButton = dialog.findViewById(R.id.cancelButton);
 
         cancelButton.setOnClickListener(v -> dialog.dismiss());
-
+        edtYourName = dialog.findViewById(R.id.edtYourName);
+        edtPhone = dialog.findViewById(R.id.edtPhone);
+        edtNote = dialog.findViewById(R.id.edtNote);
 
         edtTime = dialog.findViewById(R.id.edtTime);
         myCalender = Calendar.getInstance();
+
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -403,13 +415,27 @@ public class DetailRoomActivity extends AppCompatActivity {
             new DatePickerDialog(DetailRoomActivity.this, date, myCalender.get(Calendar.YEAR), myCalender.get(Calendar.MONTH), myCalender.get(Calendar.DAY_OF_MONTH)).show();
         });
 
-//        edtTime.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                dialog.dismiss();
-//                new DatePickerDialog(DetailRoomActivity.this, date, myCalender.get(Calendar.YEAR), myCalender.get(Calendar.MONTH), myCalender.get(Calendar.DAY_OF_MONTH)).show();
-//            }
-//        });
+
+        btnConfirm = dialog.findViewById(R.id.btnConfirm);
+        scheduleVisitRoomref = null;
+        if (user != null) {
+            scheduleVisitRoomref = database.getReference("scheduleVisitRoom/" + roomData.getId_room());
+
+            btnConfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    scheduleVisitRoom();
+                }
+            });
+        }
+
+        btnCancel = dialog.findViewById(R.id.btnCancel);
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
 
         dialog.show();
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -423,6 +449,44 @@ public class DetailRoomActivity extends AppCompatActivity {
         String myFormat = "MM/dd/yy EEEE";
         SimpleDateFormat dateFormat = new SimpleDateFormat(myFormat, Locale.US);
         edtTime.setText(dateFormat.format(myCalender.getTime()));
+    }
+
+    private void scheduleVisitRoom() {
+        boolean isValid = true;
+        if (TextUtils.isEmpty(edtYourName.getText().toString())) {
+            edtYourName.setError("Vui lòng nhập tên");
+            isValid = false;
+        }
+        if (TextUtils.isEmpty(edtTime.getText().toString())) {
+            edtTime.setError("Vui lòng chọn ngày hẹn");
+            isValid = false;
+        }
+        String phone = "";
+        if (TextUtils.isEmpty(edtPhone.getText().toString())) {
+            edtPhone.setError("Vui lòng nhập số điện thoại");
+            isValid = false;
+        } else {
+            String regex = "^\\d{10}$";
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(edtPhone.getText().toString());
+            if (matcher.matches()) {
+                phone = edtPhone.getText().toString();
+            } else {
+                edtPhone.setError("Vui lòng nhập đúng định dạng số điện thoại");
+                isValid = false;
+            }
+        }
+
+        if (isValid) {
+            ScheduleVisitRoomClass schedule = new ScheduleVisitRoomClass(edtYourName.getText().toString(), phone, edtNote.getText().toString(), edtTime.getText().toString(),roomData.getId_own_post(), user.getUid(),"0",roomData.getId_room()); // status create
+            if (user != null) {
+                scheduleVisitRoomref.child(user.getUid()).setValue(schedule);
+            }
+        } else {
+            Toast.makeText(getApplicationContext(), "Vui lòng nhập đầy đủ các trường yêu cầu", Toast.LENGTH_LONG).show();
+        }
+
+
     }
 
 }
