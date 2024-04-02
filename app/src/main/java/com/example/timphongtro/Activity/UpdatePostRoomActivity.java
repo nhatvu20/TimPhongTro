@@ -377,9 +377,9 @@ public class UpdatePostRoomActivity extends AppCompatActivity {
             id_own_post = userCurrent.getUid();
         }
         if (isValid) {
-            Room room = new Room(id_own_post, id_room, title_room, price_room, address, area_room, deposit_room, description_room, gender_room, park_slot,
-                    person_in_room, status_room, type_room, phone, floor, images, furnitures, extensions_room,
-                    Long.parseLong(edtInternet.getText().toString()), Long.parseLong(edtWater.getText().toString()), Long.parseLong(edtInternet.getText().toString()));
+//            Room room = new Room(id_own_post, id_room, title_room, price_room, address, area_room, deposit_room, description_room, gender_room, park_slot,
+//                    person_in_room, status_room, type_room, phone, floor, images, furnitures, extensions_room,
+//                    Long.parseLong(edtInternet.getText().toString()), Long.parseLong(edtWater.getText().toString()), Long.parseLong(edtInternet.getText().toString()));
             HashMap<String, Object> updates = new HashMap<>();
             updates.put("id_own_post", id_own_post);
             updates.put("id_room", id_room);

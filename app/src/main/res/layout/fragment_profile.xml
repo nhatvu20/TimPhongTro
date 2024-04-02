@@ -58,18 +58,16 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:text="Phạm Huy Hoàng"
                         android:textSize="20sp"
                         tools:ignore="MissingConstraints">
 
                     </TextView>
 
                     <TextView
-                        android:id="@+id/txtviewNumber"
+                        android:id="@+id/txtviewEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:text="0987654321"
                         android:textSize="20sp"
                         tools:ignore="MissingConstraints">
 
