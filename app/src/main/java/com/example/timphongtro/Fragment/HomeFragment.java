@@ -47,6 +47,7 @@ import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
     String path = "/HaNoi";
+    String selectedspinner = "Hà Nội";
     RecyclerView districtrecyclerView, roomrecyclerView;
     ShimmerFrameLayout districtShimmer, roomShimmer;
     DatabaseReference districtdatabase, roomdatabase, spinnerdatabase;
@@ -169,7 +170,6 @@ public class HomeFragment extends Fragment {
         roomShimmer.startShimmer();
         roomrecyclerView = view.findViewById(R.id.RoomrecyclerView);
         roomrecyclerView.setHasFixedSize(true);
-        roomdatabase = FirebaseDatabase.getInstance().getReference("rooms");
         roomrecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         roomlist = new ArrayList<>();
         roomAdapter = new RoomAdapter(getContext(), roomlist);
@@ -178,33 +178,19 @@ public class HomeFragment extends Fragment {
     }
 
     private void fetchroomrecyclerviewdatabse() {
+        roomdatabase = FirebaseDatabase.getInstance().getReference("rooms");
         roomdatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 roomlist.clear();
                 if (snapshot.exists()) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        if (dataSnapshot.getKey().equals("Tro") || dataSnapshot.getKey().equals("ChungCuMini")) {
-                            // Lấy dữ liệu từ child "Tro"
-                            if (dataSnapshot.getKey().equals("Tro")) {
-                                for (DataSnapshot troSnapshot : dataSnapshot.getChildren()) {
-                                    Room room = troSnapshot.getValue(Room.class);
-                                    if (room != null) {
-                                        if (room.getStatus_room() != 1) {
-                                            roomlist.add(room);
-                                        }
-                                    }
-                                }
-                            }
-                            // Lấy dữ liệu từ child "ChungCu"
-                            else if (dataSnapshot.getKey().equals("ChungCuMini")) {
-                                for (DataSnapshot chungCuSnapshot : dataSnapshot.getChildren()) {
-                                    Room room = chungCuSnapshot.getValue(Room.class);
-                                    if (room != null) {
-                                        if (room.getStatus_room() != 1) {
-                                            roomlist.add(room);
-                                        }
-                                    }
+                        String key = dataSnapshot.getKey();
+                        if (key.equals("Tro") || key.equals("ChungCuMini")) {
+                            for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                                Room room = childSnapshot.getValue(Room.class);
+                                if (room != null && room.getAddress().getCity().equals(selectedspinner)) {
+                                    roomlist.add(room);
                                 }
                             }
                         }
@@ -265,13 +251,14 @@ public class HomeFragment extends Fragment {
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        String selectedspinner = spinnerlist.get(position);
+                        selectedspinner = spinnerlist.get(position);
                         if (selectedspinner.equals("Hà Nội")) {
                             path = "/HaNoi";
                         } else if (selectedspinner.equals("Hồ Chí Minh")) {
                             path = "/HoChiMinh";
                         }
                         fetchcityrecyclerviewdatabase();
+                        fetchroomrecyclerviewdatabse();
                     }
 
                     @Override
