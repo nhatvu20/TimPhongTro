@@ -50,9 +50,10 @@ public class ProfileFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         mUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        TextView btndangxuat, btnquanlyphong, btnlichhen, btnyeuthich, btnlichsu;
+        TextView btndangxuat, btnquanlyphong, btnlichhen, btnyeuthich, btnlichsu,txtviewEmail;
 
         txtViewInfo = view.findViewById(R.id.txtviewInfo);
+        txtviewEmail = view.findViewById(R.id.txtviewEmail);
 
         btndangxuat = view.findViewById(R.id.btndangxuat);
         btnquanlyphong = view.findViewById(R.id.btnquanlyphong);
@@ -130,6 +131,7 @@ public class ProfileFragment extends Fragment {
             // Người dùng đã đăng nhập, bạn có thể lấy thông tin người dùng từ currentUser
             String uid = currentUser.getUid();
             String email = currentUser.getEmail();
+            txtviewEmail.setText(email);
             //     String name =
             //Chuyen qua chuc nang do
             //Neu dang la Form Ca nhan thi se cho truong Email nao vao textView de Hien thi
