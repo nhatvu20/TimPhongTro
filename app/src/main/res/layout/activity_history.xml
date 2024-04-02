@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.ServiceActivity">
+    tools:context=".Activity.HistoryActivity">
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
@@ -28,16 +28,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="Dịch vụ bán"
-            android:textColor="@color/white"
+            android:text="Lịch sử"
+            android:textColor="@color/black"
             android:textSize="20sp" />
 
         <ImageView
-            android:id="@+id/button_cart"
+            android:id="@+id/button_clear"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentEnd="true"
-            android:src="@drawable/ic_cart"
+            android:src="@drawable/ic_recyclebin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,7 +45,7 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcv_service"
+        android:id="@+id/rcv_history"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"

@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -43,6 +44,8 @@ public class CartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cart);
 
         imageView_back = findViewById(R.id.imageView_back);
+        imageView_back.setColorFilter(ContextCompat.getColor(this, R.color.white));
+
         btn_checkout = findViewById(R.id.button_checkout);
         textView_total = findViewById(R.id.Total_price);
 
@@ -75,9 +78,8 @@ public class CartActivity extends AppCompatActivity {
     }
 
     private void fetchproductfromDB() {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
         String userID = user.getUid();
-        DatabaseReference databaseReference = database.getReference("users").child(userID).child("cart");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Cart/" + userID);
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
