@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -46,6 +47,7 @@ public class ServiceFragment extends Fragment {
         doibinhnuoc = view.findViewById(R.id.doibinhnuoc);
         doibinhga = view.findViewById(R.id.doibinhga);
         button_cart = view.findViewById(R.id.button_cart);
+        button_cart.setColorFilter(ContextCompat.getColor(getContext(), R.color.white));
 
         button_cart.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -258,8 +258,8 @@ public class HomeFragment extends Fragment {
                     String spinnername = dataSnapshot.child("name").getValue(String.class);
                     spinnerlist.add(spinnername);
                 }
-                spinneradapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, spinnerlist);
-                spinneradapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinneradapter = new ArrayAdapter<>(requireContext(), R.layout.spinner_style, spinnerlist);
+                spinneradapter.setDropDownViewResource(R.layout.spinner_dropdown);
                 spinner.setAdapter(spinneradapter);
 
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

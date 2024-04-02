@@ -14,11 +14,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/cardService"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:gravity="center"
@@ -59,16 +60,16 @@
                 android:text="Giá tiền"
                 android:textColor="@color/red" />
 
-        </LinearLayout>
+            <Button
+                android:id="@+id/btn_buynow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/border_radius_slider"
+                android:textColor="@color/white"
+                android:text="Thêm vào giỏ hàng" />
 
-        <Button
-            android:id="@+id/btn_buynow"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@drawable/border_radius_slider"
-            android:textColor="@color/white"
-            android:text="Thêm vào giỏ hàng" />
+        </LinearLayout>
 
     </LinearLayout>
 

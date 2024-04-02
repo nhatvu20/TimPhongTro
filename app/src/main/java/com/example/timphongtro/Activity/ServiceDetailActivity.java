@@ -84,20 +84,23 @@ public class ServiceDetailActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         boolean serviceExists = false;
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            snapshot.getKey();
-                            int currentAmount = snapshot.child("amount").getValue(Integer.class);
+                            String key = snapshot.getKey();
+                            int currentAmount = snapshot.getValue(Service.class).getAmount();
                             int updatedAmount = currentAmount + 1;
-                            snapshot.getRef().child("amount").setValue(updatedAmount);
+
+                            Service updatedService = snapshot.getValue(Service.class);
+                            updatedService.setAmount(updatedAmount);
+
+                            snapshot.getRef().setValue(updatedService);
                             serviceExists = true;
                             break;
                         }
 
                         if (!serviceExists) {
                             DatabaseReference newServiceRef = serviceRef.push();
-                            newServiceRef.child("title").setValue(service.getTitle());
-                            newServiceRef.child("img1").setValue(service.getImg1());
-                            newServiceRef.child("price").setValue(service.getPrice());
-                            newServiceRef.child("amount").setValue(1);
+
+                            service.setAmount(1);
+                            newServiceRef.setValue(service);
                         }
 
                         Toast.makeText(ServiceDetailActivity.this, service.getTitle() + " added!", Toast.LENGTH_SHORT).show();
