@@ -92,7 +92,7 @@ public class DetailRoomActivity extends AppCompatActivity {
     Calendar myCalender;
     TextView edtTime;
 
-    MaterialButton btnConfirm,btnCancel;
+    MaterialButton btnConfirm, btnCancel;
     EditText edtYourName, edtPhone, edtNote;
 
     @Override
@@ -231,24 +231,25 @@ public class DetailRoomActivity extends AppCompatActivity {
                 roomRef = database.getReference("rooms/" + typeRoom + roomData.getId_room());
                 //check khi vao room detail
                 isLove = false;
-                roomRef.child("userLovePost").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()) {
-                            if (snapshot.hasChild(user.getUid())) {
-                                imageViewLove.setImageResource(R.drawable.ic_love_fill);
-                            } else {
-                                imageViewLove.setImageResource(R.drawable.ic_heart_thin_icon);
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
+//                roomRef.child("userLovePost").addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                        if (snapshot.exists()) {
+//                            if (snapshot.hasChild(user.getUid())) {
+//                                imageViewLove.setImageResource(R.drawable.ic_love_fill);
+//                            } else {
+//                                imageViewLove.setImageResource(R.drawable.ic_heart_thin_icon);
+//                            }
+//                        }
+//
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                    }
+//                });
+                checkLoveRoom();
                 //Chua tim thi Them tim
                 //day du lieu len
                 imageViewLove.setOnClickListener(new View.OnClickListener() {
@@ -266,11 +267,12 @@ public class DetailRoomActivity extends AppCompatActivity {
                                             //nem room vao bang LovePost
                                             myLovePostRef.child(roomData.getId_room()).removeValue();
                                             isLove = false;
+                                            imageViewLove.setImageResource(R.drawable.ic_heart_thin_icon);
                                         } else {
                                             roomRef.child("userLovePost").child(user.getUid()).setValue(true);
-                                            //nem room vao bang LovePost
                                             myLovePostRef.child(roomData.getId_room()).setValue(roomData);
                                             isLove = false;
+                                            imageViewLove.setImageResource(R.drawable.ic_love_fill);
                                         }
                                         //nem id hien tai vao bang room
                                     }
@@ -478,7 +480,7 @@ public class DetailRoomActivity extends AppCompatActivity {
         }
 
         if (isValid) {
-            ScheduleVisitRoomClass schedule = new ScheduleVisitRoomClass(edtYourName.getText().toString(), phone, edtNote.getText().toString(), edtTime.getText().toString(),roomData.getId_own_post(), user.getUid(),"0",roomData.getId_room()); // status create
+            ScheduleVisitRoomClass schedule = new ScheduleVisitRoomClass(edtYourName.getText().toString(), phone, edtNote.getText().toString(), edtTime.getText().toString(), roomData.getId_own_post(), user.getUid(), "0", roomData.getId_room()); // status create
             if (user != null) {
                 scheduleVisitRoomref.child(user.getUid()).setValue(schedule);
             }
@@ -487,6 +489,27 @@ public class DetailRoomActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    private void checkLoveRoom() {
+        roomRef.child("userLovePost").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    if (snapshot.hasChild(user.getUid())) {
+                        imageViewLove.setImageResource(R.drawable.ic_love_fill);
+                    } else {
+                        imageViewLove.setImageResource(R.drawable.ic_heart_thin_icon);
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
 }
