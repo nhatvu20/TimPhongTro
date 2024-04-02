@@ -21,6 +21,8 @@ public class User {
         this.rooms = rooms;
     }
 
+    public User() {
+    }
 
     public User(String email, String uid, String name, ArrayList<Room> rooms) {
         this.email = email;
