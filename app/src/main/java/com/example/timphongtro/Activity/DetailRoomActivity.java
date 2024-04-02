@@ -172,11 +172,11 @@ public class DetailRoomActivity extends AppCompatActivity {
 
 
             slideModels.add(new SlideModel(roomData.getImages().getImg1(), ScaleTypes.FIT));
-            slideModels.add(new SlideModel(roomData.getImages().getImg2(), ScaleTypes.FIT));
-            slideModels.add(new SlideModel(roomData.getImages().getImg3(), ScaleTypes.FIT));
-            slideModels.add(new SlideModel(roomData.getImages().getImg4(), ScaleTypes.FIT));
+            // slideModels.add(new SlideModel(roomData.getImages().getImg2(), ScaleTypes.FIT));
+            // slideModels.add(new SlideModel(roomData.getImages().getImg3(), ScaleTypes.FIT));
+            // slideModels.add(new SlideModel(roomData.getImages().getImg4(), ScaleTypes.FIT));
 
-            imageSlider.setImageList(slideModels, ScaleTypes.FIT);
+            imageSlider.setImageList(slideModels, ScaleTypes.CENTER_CROP);
 
             ArrayList<FurnitureClass> furnitures = roomData.getFurniture();
 

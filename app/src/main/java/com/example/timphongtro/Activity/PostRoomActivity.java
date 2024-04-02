@@ -47,6 +47,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -420,7 +421,7 @@ public class PostRoomActivity extends AppCompatActivity {
         if (isValid) {
             Room room = new Room(id_own_post, id_room, title_room, price_room, address, area_room, deposit_room, description_room, gender_room, park_slot,
                     person_in_room, status_room, type_room, phone, floor, images, furnitures, extensions_room,
-                    Long.parseLong(edtInternet.getText().toString()), Long.parseLong(edtWater.getText().toString()), Long.parseLong(edtInternet.getText().toString()));
+                    Long.parseLong(edtElectric.getText().toString()), Long.parseLong(edtWater.getText().toString()), Long.parseLong(edtInternet.getText().toString()));
 
             //Xu ly cho firebase
             myRef.child(id_room).setValue(room).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -436,8 +437,8 @@ public class PostRoomActivity extends AppCompatActivity {
                     Toast.makeText(PostRoomActivity.this, "Đăng thông tin phòng thất bại", Toast.LENGTH_SHORT).show();
                 }
             });
-//            Intent main = new Intent(this, MainActivity.class);
-//            startActivity(main);
+            Intent main = new Intent(this, MainActivity.class);
+            startActivity(main);
         } else {
             Toast.makeText(PostRoomActivity.this, "Vui lòng nhập đầy đủ các trường dữ liệu", Toast.LENGTH_SHORT).show();
         }

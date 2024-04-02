@@ -68,7 +68,6 @@ public class MyLovePostActivity extends AppCompatActivity {
             myLovePostRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    roomsLove.clear();
                     if (snapshot.exists()) {
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 //                            lay phong trong yeu thich
@@ -77,7 +76,7 @@ public class MyLovePostActivity extends AppCompatActivity {
                             roomdatabase.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshotRoom) {
-//                                    roomsLove.clear();
+                                    roomsLove.clear();
                                     if (snapshotRoom.exists()) {
                                         for (DataSnapshot dataSnapshot : snapshotRoom.getChildren()) {
                                             if (dataSnapshot.getKey().equals("Tro") || dataSnapshot.getKey().equals("ChungCuMini")) {
