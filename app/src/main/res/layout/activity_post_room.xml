@@ -1009,7 +1009,7 @@
                             android:drawableStart="@drawable/ic_toilet"
                             android:gravity="center"
                             android:padding="10dp"
-                            android:text="Vệ sinh khép kín"
+                            android:text="VS khép kín"
                             android:textStyle="bold" />
 
                         <CheckBox

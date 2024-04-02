@@ -48,6 +48,7 @@ import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -82,11 +83,15 @@ public class UpdatePostRoomActivity extends AppCompatActivity {
     Address address;
 
     Room roomData;
+    DatabaseReference myRef, myRefUpdate;
+    ArrayList<HashMap<String, Object>> userLovePost;
+    boolean isHasMyLovePost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_post_room);
+        isHasMyLovePost = false;
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             String roomString = bundle.getString("DataRoom");
@@ -268,7 +273,7 @@ public class UpdatePostRoomActivity extends AppCompatActivity {
             radiobtnTro.setError("Vui lòng chọn loại phòng");
         }
 
-        DatabaseReference myRef = database.getReference("rooms/" + path);
+        myRefUpdate = database.getReference("rooms/" + path);
         FirebaseUser userCurrent = FirebaseAuth.getInstance().getCurrentUser();
 
         int status_room = 0;
@@ -335,15 +340,15 @@ public class UpdatePostRoomActivity extends AppCompatActivity {
             park_slot = Integer.parseInt(edtPark.getText().toString());
         }
 
-        if(isEmpty(edtElectric) || isEmpty(edtInternet) || isEmpty(edtWater)){
+        if (isEmpty(edtElectric) || isEmpty(edtInternet) || isEmpty(edtWater)) {
             isValid = false;
             if (isEmpty(edtInternet)) {
                 edtInternet.setError("Vui lòng nhập giá Internet");
             }
-            if(isEmpty(edtElectric)) {
+            if (isEmpty(edtElectric)) {
                 edtElectric.setError("Vui lòng nhập giá điện");
             }
-            if(isEmpty(edtWater)) {
+            if (isEmpty(edtWater)) {
                 edtWater.setError("Vui lòng nhập giá nước");
             }
         }
@@ -375,12 +380,65 @@ public class UpdatePostRoomActivity extends AppCompatActivity {
             Room room = new Room(id_own_post, id_room, title_room, price_room, address, area_room, deposit_room, description_room, gender_room, park_slot,
                     person_in_room, status_room, type_room, phone, floor, images, furnitures, extensions_room,
                     Long.parseLong(edtInternet.getText().toString()), Long.parseLong(edtWater.getText().toString()), Long.parseLong(edtInternet.getText().toString()));
+            HashMap<String, Object> updates = new HashMap<>();
+            updates.put("id_own_post", id_own_post);
+            updates.put("id_room", id_room);
+            updates.put("title_room", title_room);
+            updates.put("price_room", price_room);
+            updates.put("address", address);
+            updates.put("area_room", area_room);
+            updates.put("deposit_room", deposit_room);
+            updates.put("description_room", description_room);
+            updates.put("gender_room", gender_room);
+            updates.put("park_slot", park_slot);
+            updates.put("person_in_room", person_in_room);
+            updates.put("status_room", status_room);
+            updates.put("type_room", type_room);
+            updates.put("phone", phone);
+            updates.put("floor", floor);
+            updates.put("images", images);
+            updates.put("furnitures", furnitures);
+            updates.put("extensions_room", extensions_room);
+            updates.put("price_electric", Long.parseLong(edtInternet.getText().toString()));
+            updates.put("price_water", Long.parseLong(edtWater.getText().toString()));
+            updates.put("price_internet", Long.parseLong(edtInternet.getText().toString()));
+            if (isHasMyLovePost) {
+                for (HashMap<String, Object> hashMap : userLovePost) {
+                    // Xử lý từng phần tử trong mảng HashMap
+                    updates.put("userLovePost", hashMap);
+                    myRefUpdate.child(id_room).updateChildren(updates).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(UpdatePostRoomActivity.this, "Cập nhật thông tin phòng thành công", Toast.LENGTH_SHORT).show();
+                            Intent main = new Intent(UpdatePostRoomActivity.this, MainActivity.class);
+                            startActivity(main);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(UpdatePostRoomActivity.this, "Cập nhật thông tin phòng thất bại", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
 
             //Xu ly cho firebase
-            myRef.child(id_room).setValue(room);
-            Toast.makeText(UpdatePostRoomActivity.this, "Cập nhật thông tin phòng thành công", Toast.LENGTH_SHORT).show();
-            Intent main = new Intent(this, MainActivity.class);
-            startActivity(main);
+//            myRefUpdate.child(id_room).setValue(room);
+//            myRefUpdate.child(id_room).updateChildren(updates).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                @Override
+//                public void onSuccess(Void unused) {
+//                    Toast.makeText(UpdatePostRoomActivity.this, "Cập nhật thông tin phòng thành công", Toast.LENGTH_SHORT).show();
+//                    Intent main = new Intent(UpdatePostRoomActivity.this, MainActivity.class);
+//                    startActivity(main);
+//                }
+//            }).addOnFailureListener(new OnFailureListener() {
+//                @Override
+//                public void onFailure(@NonNull Exception e) {
+//                    Toast.makeText(UpdatePostRoomActivity.this, "Cập nhật thông tin phòng thất bại", Toast.LENGTH_SHORT).show();
+//                }
+//            });
+
+
         } else {
             Toast.makeText(UpdatePostRoomActivity.this, "Vui lòng nhập đầy đủ các trường dữ liệu", Toast.LENGTH_SHORT).show();
         }
@@ -604,6 +662,37 @@ public class UpdatePostRoomActivity extends AppCompatActivity {
             edtInternet.setText(String.valueOf(roomData.getPrice_internet()));
             edtElectric.setText(String.valueOf(roomData.getPrice_electric()));
             edtWater.setText(String.valueOf(roomData.getPrice_water()));
+            String path = "Tro";
+            if (radiobtnChungCu.isChecked() || radiobtnTro.isChecked()) {
+                if (radiobtnChungCu.isChecked()) {
+                    path = "ChungCuMini";
+                }
+            } else {
+                radiobtnTro.setError("Vui lòng chọn loại phòng");
+            }
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            myRef = database.getReference("rooms/" + path + "/" + roomData.getId_room());
+            userLovePost = new ArrayList<>();
+            myRef.child("userLovePost").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // Kiểm tra xem nút có tồn tại không
+                    if (dataSnapshot.exists()) {
+                        // Lấy dữ liệu mảng HashMap từ DataSnapshot
+
+//                        for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                        HashMap<String, Object> hashMap = (HashMap<String, Object>) dataSnapshot.getValue();
+                        isHasMyLovePost = true;
+                        userLovePost.add(hashMap);
+//                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    // Xử lý khi có lỗi xảy ra trong quá trình đọc dữ liệu từ Firebase
+                }
+            });
         }
     }
 }
