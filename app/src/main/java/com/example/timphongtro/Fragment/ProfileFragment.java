@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.timphongtro.Activity.DetailRoomActivity;
+import com.example.timphongtro.Activity.HistoryActivity;
 import com.example.timphongtro.Activity.InformationActivity;
 import com.example.timphongtro.Activity.LoginActivity;
 import com.example.timphongtro.Activity.ManagePostActivity;
@@ -33,14 +34,12 @@ public class ProfileFragment extends Fragment {
     private FirebaseUser mUser;
     FirebaseDatabase database;
     private String name;
-
     DatabaseReference userRef;
     private TextView txtViewInfo;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false);
 
     }
@@ -50,24 +49,32 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
         mUser = FirebaseAuth.getInstance().getCurrentUser();
-        Spinner spinner;
 
-        TextView btndangxuat, btnquanlyphong, btnlichhen, btnyeuthich;
+        TextView btndangxuat, btnquanlyphong, btnlichhen, btnyeuthich, btnlichsu;
 
         txtViewInfo = view.findViewById(R.id.txtviewInfo);
 
         btndangxuat = view.findViewById(R.id.btndangxuat);
         btnquanlyphong = view.findViewById(R.id.btnquanlyphong);
         btnlichhen = view.findViewById(R.id.btnlichhen);
+        btnlichsu = view.findViewById(R.id.btnlichsu);
         btnyeuthich = view.findViewById(R.id.btnyeuthich);
 
 
+        btnlichsu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), HistoryActivity.class);
+                startActivity(intent);
+            }
+        });
         btndangxuat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mAuth.signOut();
                 Intent i = new Intent(getActivity(), LoginActivity.class);
                 startActivity(i);
+                getActivity().finish();
             }
         });
 

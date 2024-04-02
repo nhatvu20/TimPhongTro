@@ -26,6 +26,9 @@
         android:theme="@style/Theme.TimPhongTro"
         tools:targetApi="31">
         <activity
+            android:name=".Activity.HistoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.MyLovePostActivity"
             android:exported="false" />
         <activity

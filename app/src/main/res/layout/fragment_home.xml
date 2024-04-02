@@ -64,7 +64,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/constraintLayout2"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="40dp"
                         android:layout_margin="10dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -97,8 +97,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:background="@drawable/spinner_border"
-                            android:elevation="2dp"
-                            android:paddingStart="5dp"
+                            android:dropDownVerticalOffset="40dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/searchEditText"
                             app:layout_constraintTop_toTopOf="parent">

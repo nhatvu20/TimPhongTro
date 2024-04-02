@@ -64,27 +64,30 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceV
                 if (user != null) {
                     cartItemList.add(service);
                 String userID = user.getUid();
-                DatabaseReference serviceRef = FirebaseDatabase.getInstance().getReference("users").child(userID).child("cart");
+                DatabaseReference serviceRef = FirebaseDatabase.getInstance().getReference("Cart/" + userID);
 
                 serviceRef.orderByChild("title").equalTo(service.getTitle()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         boolean serviceExists = false;
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            snapshot.getKey();
-                            int currentAmount = snapshot.child("amount").getValue(Integer.class);
+                            String key = snapshot.getKey();
+                            int currentAmount = snapshot.getValue(Service.class).getAmount();
                             int updatedAmount = currentAmount + 1;
-                            snapshot.getRef().child("amount").setValue(updatedAmount);
+
+                            Service updatedService = snapshot.getValue(Service.class);
+                            updatedService.setAmount(updatedAmount);
+
+                            snapshot.getRef().setValue(updatedService);
                             serviceExists = true;
                             break;
                         }
 
                         if (!serviceExists) {
                             DatabaseReference newServiceRef = serviceRef.push();
-                            newServiceRef.child("title").setValue(service.getTitle());
-                            newServiceRef.child("img1").setValue(service.getImg1());
-                            newServiceRef.child("price").setValue(service.getPrice());
-                            newServiceRef.child("amount").setValue(1);
+
+                            service.setAmount(1);
+                            newServiceRef.setValue(service);
                         }
 
                         Toast.makeText(context, service.getTitle() + " added!", Toast.LENGTH_SHORT).show();

@@ -33,7 +33,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseUser user = firebaseAuth.getCurrentUser();
     private String userID = user.getUid();
-    private DatabaseReference cartRef = FirebaseDatabase.getInstance().getReference("users").child(userID).child("cart");
+    private DatabaseReference cartRef = FirebaseDatabase.getInstance().getReference("Cart/" + userID);
 
     public CartAdapter(Context context, ArrayList<Service> cartList) {
         this.context = context;
@@ -89,10 +89,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     }
 
     private void removeCartItem(Service service) {
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        String userID = user.getUid();
-
         cartRef.orderByChild("title").equalTo(service.getTitle()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -109,10 +105,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     }
 
     private void updateCartItem(Service service) {
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        String userID = user.getUid();
-
         cartRef.orderByChild("title").equalTo(service.getTitle()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
