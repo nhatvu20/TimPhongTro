@@ -34,14 +34,12 @@ public class ProfileFragment extends Fragment {
     private FirebaseUser mUser;
     FirebaseDatabase database;
     private String name;
-
     DatabaseReference userRef;
     private TextView txtViewInfo;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false);
 
     }
@@ -51,7 +49,6 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
         mUser = FirebaseAuth.getInstance().getCurrentUser();
-        Spinner spinner;
 
         TextView btndangxuat, btnquanlyphong, btnlichhen, btnyeuthich, btnlichsu;
 
