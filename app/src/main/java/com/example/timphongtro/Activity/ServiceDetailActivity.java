@@ -77,7 +77,7 @@ public class ServiceDetailActivity extends AppCompatActivity {
                 FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 String userID = user.getUid();
-                DatabaseReference serviceRef = FirebaseDatabase.getInstance().getReference("users").child(userID).child("cart");
+                DatabaseReference serviceRef = FirebaseDatabase.getInstance().getInstance().getReference("Cart/" + userID);
 
                 serviceRef.orderByChild("title").equalTo(service.getTitle()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override

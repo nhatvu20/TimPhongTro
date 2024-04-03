@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -46,6 +47,9 @@ public class HistoryActivity extends AppCompatActivity {
         ImageView imageViewBack = findViewById(R.id.imageView_back);
         ImageView button_clear = findViewById(R.id.button_clear);
 
+        imageViewBack.setColorFilter(ContextCompat.getColor(this, R.color.white));
+        button_clear.setColorFilter(ContextCompat.getColor(this, R.color.white));
+
         button_clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,13 +82,13 @@ public class HistoryActivity extends AppCompatActivity {
                 finish();
             }
         });
+
         rcvHistory = findViewById(R.id.rcv_history);
         roomArrayList = new ArrayList<>();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HistoryActivity.this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         rcvHistory.setLayoutManager(linearLayoutManager);
 
-        if (user != null) {
             myHistoryRef = database.getReference("History/" + user.getUid());
             myHistoryRef.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -96,9 +100,16 @@ public class HistoryActivity extends AppCompatActivity {
                             roomArrayList.add(roomCur);
                         }
                         Collections.reverse(roomArrayList);
-
                     }
                     roomAdapter.notifyDataSetChanged();
+
+                    if (roomArrayList.isEmpty()) {
+                        rcvHistory.setVisibility(View.GONE);
+                        findViewById(R.id.nohistory).setVisibility(View.VISIBLE);
+                    } else {
+                        rcvHistory.setVisibility(View.VISIBLE);
+                        findViewById(R.id.nohistory).setVisibility(View.GONE);
+                    }
                 }
 
                 @Override
@@ -107,8 +118,6 @@ public class HistoryActivity extends AppCompatActivity {
                 }
             });
 
-
-        }
         roomAdapter = new RoomAdapter(HistoryActivity.this, roomArrayList);
         rcvHistory.setAdapter(roomAdapter);
     }
