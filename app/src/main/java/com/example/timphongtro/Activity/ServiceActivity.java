@@ -43,7 +43,6 @@ public class ServiceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service);
-
         cart_button = findViewById(R.id.button_cart);
         back_button = findViewById(R.id.imageView_back);
         back_button.setColorFilter(ContextCompat.getColor(this, R.color.white));

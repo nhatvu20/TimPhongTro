@@ -34,6 +34,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class ManageRoomAdapter extends RecyclerView.Adapter<ManageRoomAdapter.MyViewHolder> {
@@ -54,10 +55,12 @@ public class ManageRoomAdapter extends RecyclerView.Adapter<ManageRoomAdapter.My
 
     @Override
     public void onBindViewHolder(@NonNull ManageRoomAdapter.MyViewHolder holder, int position) {
+        DecimalFormat decimalFormat = new DecimalFormat("#,###.###");
+        decimalFormat.setDecimalSeparatorAlwaysShown(false);
         Room room = list.get(position);
         if (room != null) {
             holder.title_room.setText(room.getTitle_room());
-            holder.price_room.setText(String.valueOf(room.getPrice_room()));
+            holder.price_room.setText(decimalFormat.format(room.getPrice_room()));
             holder.area_room.setText(String.valueOf(room.getArea_room()));
             holder.people_room.setText(String.valueOf(room.getPerson_in_room()));
 

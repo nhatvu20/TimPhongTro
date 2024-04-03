@@ -17,7 +17,7 @@
     <item
         android:id="@+id/notification"
         android:title="@string/bottom_notification"
-        android:icon="@drawable/ic_thongbao"/>
+        android:icon="@drawable/ic_heart_thin_icon"/>
 
     <item
         android:id="@+id/profile"

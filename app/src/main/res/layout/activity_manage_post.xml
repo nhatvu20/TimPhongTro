@@ -55,18 +55,35 @@
             android:layout_marginRight="10dp"
             android:orientation="vertical">
 
-            <TextView
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Trạng thái"
-                android:textColor="@color/orange"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:layout_height="match_parent">
 
-            <Spinner
-                android:id="@+id/spinnerStatusRoom"
-                android:layout_width="match_parent"
-                android:layout_height="50dp" />
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Phòng trống" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Đã cho thuê" />
+
+            </com.google.android.material.tabs.TabLayout>
+
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Trạng thái"-->
+<!--                android:textColor="@color/orange"-->
+<!--                android:textSize="16sp"-->
+<!--                android:textStyle="bold" />-->
+
+<!--            <Spinner-->
+<!--                android:id="@+id/spinnerStatusRoom"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="50dp" />-->
         </LinearLayout>
 
         <ScrollView

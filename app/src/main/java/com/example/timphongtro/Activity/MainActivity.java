@@ -49,7 +49,14 @@ public class MainActivity extends AppCompatActivity {
             } else if (item.getItemId() == R.id.service) {
                 replaceFragment(new ServiceFragment());
             } else if (item.getItemId() == R.id.notification) {
-                replaceFragment(new NotificationFragment());
+                if (user != null) {
+                    replaceFragment(new NotificationFragment());
+                }
+                else {
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    Toast.makeText(MainActivity.this,"Vui lòng đăng nhập để sử dụng chức năng này", Toast.LENGTH_SHORT).show();
+                }
             } else if (item.getItemId() == R.id.profile) {
                 if (user != null) {
                     replaceFragment(new ProfileFragment());
@@ -57,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 else {
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
+                    Toast.makeText(MainActivity.this,"Vui lòng đăng nhập để sử dụng chức năng này", Toast.LENGTH_SHORT).show();
                 }
             }
             return true;

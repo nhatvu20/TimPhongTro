@@ -23,13 +23,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
 
     private ArrayList<Service> cartList;
     private Context context;
-
+    private DecimalFormat decimalFormat;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseUser user = firebaseAuth.getCurrentUser();
     private String userID = user.getUid();
@@ -51,7 +52,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     public void onBindViewHolder(@NonNull CartAdapter.CartViewHolder holder, int position) {
         Service service = cartList.get(position);
         holder.name.setText(service.getTitle());
-        holder.price.setText(service.getPrice() + " VNĐ");
+        decimalFormat = new DecimalFormat("#,###.###");
+        decimalFormat.setDecimalSeparatorAlwaysShown(false);
+        holder.price.setText(decimalFormat.format(service.getPrice()) + " VNĐ");
         holder.amount.setText(String.valueOf(service.getAmount()));
         Glide.with(context).load(service.getImg1()).centerCrop().into(holder.image);
 

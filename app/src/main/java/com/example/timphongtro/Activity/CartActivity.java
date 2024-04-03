@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class CartActivity extends AppCompatActivity {
@@ -37,9 +38,11 @@ public class CartActivity extends AppCompatActivity {
     private ArrayList<Service> cartList;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseUser user = firebaseAuth.getCurrentUser();
-
+    private DecimalFormat decimalFormat;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        decimalFormat = new DecimalFormat("#,###.###");
+        decimalFormat.setDecimalSeparatorAlwaysShown(false);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
@@ -53,7 +56,7 @@ public class CartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 long totalprice = calculateTotalPrice(cartList);
-                Toast.makeText(CartActivity.this, totalprice + " VNĐ has been paid!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CartActivity.this, decimalFormat.format(totalprice) + " VNĐ has been paid!", Toast.LENGTH_SHORT).show();
             }
         });
         imageView_back.setOnClickListener(new View.OnClickListener() {
@@ -100,7 +103,7 @@ public class CartActivity extends AppCompatActivity {
                 }
 
                 long totalPrice = calculateTotalPrice(cartList);
-                textView_total.setText(totalPrice + " VNĐ");
+                textView_total.setText(decimalFormat.format(totalPrice) + " VNĐ");
             }
 
             @Override

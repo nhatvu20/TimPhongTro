@@ -21,6 +21,7 @@ import com.example.timphongtro.Adapter.ManageRoomAdapter;
 import com.example.timphongtro.Adapter.RoomAdapter;
 import com.example.timphongtro.Entity.Room;
 import com.example.timphongtro.R;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -33,7 +34,7 @@ import java.util.ArrayList;
 
 public class ManagePostActivity extends AppCompatActivity {
     ImageView imageViewBack, imageViewPost;
-    Spinner spinnerStatusRoom;
+    //    Spinner spinnerStatusRoom;
     RecyclerView rcvMyPost;
     ArrayList<Room> roomlist;
 
@@ -41,6 +42,7 @@ public class ManagePostActivity extends AppCompatActivity {
     ManageRoomAdapter manageRoomAdapter;
 
     FirebaseUser userCurrent;
+    TabLayout tabLayout;
     int statusRoomInt; //da cho thue la 1 ; chua cho thue la 0
 
     @Override
@@ -58,8 +60,9 @@ public class ManagePostActivity extends AppCompatActivity {
 //        Sửa
         imageViewBack = findViewById(R.id.imageViewBack);
         imageViewPost = findViewById(R.id.imageViewPost);
-        spinnerStatusRoom = findViewById(R.id.spinnerStatusRoom);
+//        spinnerStatusRoom = findViewById(R.id.spinnerStatusRoom);
         rcvMyPost = findViewById(R.id.rcvMyPost);
+        tabLayout = findViewById(R.id.tabLayout);
 
         imageViewBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,10 +80,11 @@ public class ManagePostActivity extends AppCompatActivity {
         });
         userCurrent = FirebaseAuth.getInstance().getCurrentUser();
 
-        String[] data = {"Phòng trống", "Đã cho thuê"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, data);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerStatusRoom.setAdapter(adapter);
+
+//        String[] data = {"Phòng trống", "Đã cho thuê"};
+//        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, data);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinnerStatusRoom.setAdapter(adapter);
 
 //        roomdatabase = FirebaseDatabase.getInstance().getReference("myRooms/");
 
@@ -94,27 +98,53 @@ public class ManagePostActivity extends AppCompatActivity {
             manageRoomAdapter = new ManageRoomAdapter(roomlist, ManagePostActivity.this);
             rcvMyPost.setAdapter(manageRoomAdapter);
         }
-
-        spinnerStatusRoom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        statusRoomInt = 0;
+        fecthRoomData_statusRoom();
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String statusRoom = parent.getItemAtPosition(position).toString();
-                if ("Phòng trống".equals(statusRoom)) {
-                    statusRoomInt = 0;
-                } else if ("Đã cho thuê".equals(statusRoom)) {
-                    statusRoomInt = 1;
-                } else {
-                    statusRoomInt = 0;
+            public void onTabSelected(TabLayout.Tab tab) {
+                int position = tab.getPosition();
+                switch (position) {
+                    case 0:
+                        statusRoomInt = 0;
+                        break;
+                    case 1:
+                        statusRoomInt = 1;
+                        break;
                 }
-
                 fecthRoomData_statusRoom();
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
 
             }
         });
+//        spinnerStatusRoom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                String statusRoom = parent.getItemAtPosition(position).toString();
+//                if ("Phòng trống".equals(statusRoom)) {
+//                    statusRoomInt = 0;
+//                } else if ("Đã cho thuê".equals(statusRoom)) {
+//                    statusRoomInt = 1;
+//                } else {
+//                    statusRoomInt = 0;
+//                }
+//
+//                fecthRoomData_statusRoom();
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
 
     }
 
@@ -131,7 +161,7 @@ public class ManagePostActivity extends AppCompatActivity {
                                 for (DataSnapshot troSnapshot : dataSnapshot.getChildren()) {
                                     if (troSnapshot.exists()) {
                                         Room room = troSnapshot.getValue(Room.class);
-                                        if(room!=null){
+                                        if (room != null) {
                                             if (userCurrent.getUid().equals(room.getId_own_post()) && room.getStatus_room() == statusRoomInt) {
                                                 roomlist.add(room);
                                             }
@@ -145,7 +175,7 @@ public class ManagePostActivity extends AppCompatActivity {
                                 for (DataSnapshot chungCuSnapshot : dataSnapshot.getChildren()) {
                                     if (chungCuSnapshot.exists()) {
                                         Room room = chungCuSnapshot.getValue(Room.class);
-                                        if(room!=null){
+                                        if (room != null) {
                                             if (userCurrent.getUid().equals(room.getId_own_post()) && room.getStatus_room() == statusRoomInt) {
                                                 roomlist.add(room);
                                             }
