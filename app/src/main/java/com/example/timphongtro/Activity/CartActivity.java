@@ -91,8 +91,16 @@ public class CartActivity extends AppCompatActivity {
                 }
                 cartAdapter.notifyDataSetChanged();
 
+                if (cartList.isEmpty()) {
+                    rcvcart.setVisibility(View.GONE);
+                    findViewById(R.id.nohistory).setVisibility(View.VISIBLE);
+                } else {
+                    rcvcart.setVisibility(View.VISIBLE);
+                    findViewById(R.id.nohistory).setVisibility(View.GONE);
+                }
+
                 long totalPrice = calculateTotalPrice(cartList);
-                textView_total.setText(String.valueOf(totalPrice));
+                textView_total.setText(totalPrice + " VNĐ");
             }
 
             @Override

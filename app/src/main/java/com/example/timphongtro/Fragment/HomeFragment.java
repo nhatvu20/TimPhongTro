@@ -189,7 +189,7 @@ public class HomeFragment extends Fragment {
                         if (key.equals("Tro") || key.equals("ChungCuMini")) {
                             for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
                                 Room room = childSnapshot.getValue(Room.class);
-                                if (room != null && room.getAddress().getCity().equals(selectedspinner)) {
+                                if (room != null && room.getStatus_room() != 1 && room.getAddress().getCity().equals(selectedspinner)) {
                                     roomlist.add(room);
                                 }
                             }

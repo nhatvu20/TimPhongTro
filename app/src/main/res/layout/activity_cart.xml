@@ -34,6 +34,33 @@
 
     </RelativeLayout>
 
+    <LinearLayout
+        android:id="@+id/nohistory"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_nocart" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="Giỏ hàng hiện chưa có gì, bạn hãy quay lại thêm vào giỏ nha!"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvcart"
