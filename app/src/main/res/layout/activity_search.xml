@@ -41,45 +41,51 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchtitle">
 
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="0dp">
 
-            <RelativeLayout
+            <SearchView
+                android:id="@+id/search_room"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp">
+                android:layout_margin="5dp"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/search_border"
+                android:closeIcon="@drawable/ic_clear"
+                android:iconifiedByDefault="false"
+                android:queryBackground="@android:color/transparent"
+                android:queryHint="Tìm kiếm tiêu đề..."
+                android:searchHintIcon="@null"
+                android:searchIcon="@drawable/ic_search"
+                app:layout_constraintEnd_toStartOf="@+id/contraintlayout"
+                app:layout_constraintStart_toEndOf="@+id/contraintlayout"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <SearchView
-                    android:id="@+id/search_room"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/search_border"
-                    android:closeIcon="@drawable/ic_clear"
-                    android:focusable="false"
-                    android:iconifiedByDefault="false"
-                    android:queryHint="Tìm kiếm tiêu đề..."
-                    android:searchHintIcon="@null"
-                    android:searchIcon="@drawable/ic_search" />
-            </RelativeLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/showmorelist"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/contraintlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </LinearLayout>
+                app:layout_constraintTop_toBottomOf="@+id/search_room">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/showmorelist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
