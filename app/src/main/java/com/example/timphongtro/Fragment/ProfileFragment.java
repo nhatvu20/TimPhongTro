@@ -19,6 +19,7 @@ import com.example.timphongtro.Activity.InformationActivity;
 import com.example.timphongtro.Activity.LoginActivity;
 import com.example.timphongtro.Activity.ManagePostActivity;
 import com.example.timphongtro.Activity.MyLovePostActivity;
+import com.example.timphongtro.Activity.scheduleVisitRoomActivity;
 import com.example.timphongtro.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -98,6 +99,14 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 Intent lovepost = new Intent(getActivity(), MyLovePostActivity.class);
                 startActivity(lovepost);
+            }
+        });
+
+        btnlichhen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent schedule = new Intent(getActivity(), scheduleVisitRoomActivity.class);
+                startActivity(schedule);
             }
         });
 

@@ -54,6 +54,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -155,19 +157,24 @@ public class DetailRoomActivity extends AppCompatActivity {
             }
             textViewTypeRoom.setText(typeRoomStr);
             textViewTitle.setText(roomData.getTitle_room());
-            String price = roomData.getPrice_room() + " đ/tháng";
-            textViewPrice.setText(price);
+            long price = roomData.getPrice_room();
+//            NumberFormat numberFormat = NumberFormat.getInstance();
+//            numberFormat.setMinimumFractionDigits(3);
+//            String priceNumber = numberFormat.format(price) + " đ/tháng";
+            DecimalFormat decimalFormat = new DecimalFormat("#,###.###");
+            decimalFormat.setDecimalSeparatorAlwaysShown(false);
+            String priceNumber = decimalFormat.format(price) + " đ/tháng";
+            textViewPrice.setText(priceNumber);
             textViewCombine_address.setText(roomData.getAddress().getAddress_combine());
             textViewPhone.setText(roomData.getPhone());
             textViewFloor.setText(String.valueOf(roomData.getFloor()));
             textViewArea.setText(roomData.getArea_room());
-            textViewDeposit.setText(String.valueOf(roomData.getDeposit_room()));
+            textViewDeposit.setText(decimalFormat.format(roomData.getDeposit_room()));
             textViewPersonInRoom.setText(String.valueOf(roomData.getPerson_in_room()));
             textViewGender.setText(roomData.getGender_room());
-            textViewWater.setText(String.valueOf(roomData.getPrice_water()));
-            textViewWater.setText(String.valueOf(roomData.getPrice_water()));
-            textViewInternet.setText(String.valueOf(roomData.getPrice_internet()));
-            textViewElectric.setText(String.valueOf(roomData.getPrice_electric()));
+            textViewWater.setText(decimalFormat.format(roomData.getPrice_water()));
+            textViewInternet.setText(decimalFormat.format(roomData.getPrice_internet()));
+            textViewElectric.setText(decimalFormat.format(roomData.getPrice_electric()));
             textviewDescriptionRoom.setText(roomData.getDescription_room());
 
 
@@ -268,11 +275,14 @@ public class DetailRoomActivity extends AppCompatActivity {
                                             myLovePostRef.child(roomData.getId_room()).removeValue();
                                             isLove = false;
                                             imageViewLove.setImageResource(R.drawable.ic_heart_thin_icon);
+                                            Toast.makeText(DetailRoomActivity.this, "Bỏ yêu thích thành công",Toast.LENGTH_SHORT).show();
                                         } else {
                                             roomRef.child("userLovePost").child(user.getUid()).setValue(true);
-                                            myLovePostRef.child(roomData.getId_room()).setValue(roomData);
+//                                            myLovePostRef.child(roomData.getId_room()).setValue(roomData);
+                                            myLovePostRef.child(roomData.getId_room()).setValue(true);
                                             isLove = false;
                                             imageViewLove.setImageResource(R.drawable.ic_love_fill);
+                                            Toast.makeText(DetailRoomActivity.this, "Yêu thích thành công",Toast.LENGTH_SHORT).show();
                                         }
                                         //nem id hien tai vao bang room
                                     }
@@ -482,7 +492,8 @@ public class DetailRoomActivity extends AppCompatActivity {
         if (isValid) {
             ScheduleVisitRoomClass schedule = new ScheduleVisitRoomClass(edtYourName.getText().toString(), phone, edtNote.getText().toString(), edtTime.getText().toString(), roomData.getId_own_post(), user.getUid(), "0", roomData.getId_room()); // status create
             if (user != null) {
-                scheduleVisitRoomref.child(user.getUid()).setValue(schedule);
+//                scheduleVisitRoomref.child(user.getUid()).setValue(schedule);
+                Toast.makeText(getApplicationContext(), "Chức năng đang phát triển", Toast.LENGTH_LONG).show();
             }
         } else {
             Toast.makeText(getApplicationContext(), "Vui lòng nhập đầy đủ các trường yêu cầu", Toast.LENGTH_LONG).show();

@@ -29,6 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> {
@@ -39,7 +40,6 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     FirebaseUser user = firebaseAuth.getCurrentUser();
     Room room;
-
 
     public RoomAdapter(Context context, ArrayList<Room> list) {
         this.context = context;
@@ -55,9 +55,11 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        DecimalFormat decimalFormat = new DecimalFormat("#,###.###");
+        decimalFormat.setDecimalSeparatorAlwaysShown(false);
         Room room = list.get(position);
         holder.title_room.setText(room.getTitle_room());
-        holder.price_room.setText(String.valueOf(room.getPrice_room()));
+        holder.price_room.setText(decimalFormat.format(room.getPrice_room()));
         holder.area_room.setText(String.valueOf(room.getArea_room()));
         holder.people_room.setText(String.valueOf(room.getPerson_in_room()));
 
@@ -71,7 +73,10 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
         holder.cardViewRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userID = user.getUid();
+                String userID = "";
+                if(user != null) {
+                    userID = user.getUid();
+                }
                 Intent detailRoom = new Intent(context, DetailRoomActivity.class);
                 int typeRoom = list.get(holder.getAdapterPosition()).getType_room();
                 detailRoom.putExtra("DataRoom", room.toString());
@@ -83,47 +88,51 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
     }
 
     private void RecentlyRead(String userID, MyViewHolder holder) {
-        room = list.get(holder.getAdapterPosition());
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("History/" + userID);
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<Room> recently_read = snapshot.getValue(new GenericTypeIndicator<ArrayList<Room>>() {});
-                if (recently_read == null) {
-                    recently_read = new ArrayList<>();
-                } else {
-                    // Tìm kiếm phần tử trong mảng và xoá nếu cần
-                    int existingIndex = -1;
-                    for (int i = 0; i < recently_read.size(); i++) {
-                        Room existingRoom = recently_read.get(i);
-                        if (existingRoom.getId_room().equals(room.getId_room())) {
-                            existingIndex = i;
-                            break;
+        if(user != null) {
+            room = list.get(holder.getAdapterPosition());
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("History/" + userID);
+            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    ArrayList<Room> recently_read = snapshot.getValue(new GenericTypeIndicator<ArrayList<Room>>() {
+                    });
+                    if (recently_read == null) {
+                        recently_read = new ArrayList<>();
+                    } else {
+                        // Tìm kiếm phần tử trong mảng và xoá nếu cần
+                        int existingIndex = -1;
+                        for (int i = 0; i < recently_read.size(); i++) {
+                            Room existingRoom = recently_read.get(i);
+                            if (existingRoom.getId_room().equals(room.getId_room())) {
+                                existingIndex = i;
+                                break;
+                            }
+                        }
+                        if (existingIndex != -1) {
+                            recently_read.remove(existingIndex);
                         }
                     }
-                    if (existingIndex != -1) {
-                        recently_read.remove(existingIndex);
-                    }
+                    recently_read.add(room);
+                    databaseReference.setValue(recently_read).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                        }
+                    });
                 }
-                recently_read.add(room);
-                databaseReference.setValue(recently_read).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
 
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-                });
-            }
+                }
+            });
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+        }
     }
 
     @Override

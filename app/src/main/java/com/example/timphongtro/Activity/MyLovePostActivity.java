@@ -32,8 +32,9 @@ import java.util.ArrayList;
 public class MyLovePostActivity extends AppCompatActivity {
     FirebaseUser user;
     FirebaseDatabase database;
-    DatabaseReference myLovePostRef, roomdatabase, myLovePostRemoveRef;
-    ArrayList<Room> roomsLove;
+    DatabaseReference myLovePostRef, roomRef, myLovePostRemoveRef;
+    ArrayList<String> roomsLove;
+    ArrayList<Room> rooms;
     RoomAdapter roomAdapter;
     RecyclerView rcvLovePost;
 
@@ -58,84 +59,53 @@ public class MyLovePostActivity extends AppCompatActivity {
         });
         rcvLovePost = findViewById(R.id.rcvLovePost);
         roomsLove = new ArrayList<>();
+        rooms = new ArrayList<>();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MyLovePostActivity.this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         rcvLovePost.setLayoutManager(linearLayoutManager);
 
         if (user != null) {
             myLovePostRef = database.getReference("LovePost/" + user.getUid());
-            roomdatabase = database.getReference("rooms");
             myLovePostRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-//                            lay phong trong yeu thich
-                            Room roomInLove = dataSnapshot.getValue(Room.class);
-                            //lay phong trong rooms
-                            roomdatabase.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshotRoom) {
-                                    roomsLove.clear();
-                                    if (snapshotRoom.exists()) {
-                                        for (DataSnapshot dataSnapshot : snapshotRoom.getChildren()) {
-                                            if (dataSnapshot.getKey().equals("Tro") || dataSnapshot.getKey().equals("ChungCuMini")) {
-                                                // Lấy dữ liệu từ child "Tro"
-                                                if (dataSnapshot.getKey().equals("Tro") && dataSnapshot.exists()) {
-                                                    for (DataSnapshot troSnapshot : dataSnapshot.getChildren()) {
-                                                        if (troSnapshot.exists()) {
-                                                            Room room = troSnapshot.getValue(Room.class);
-                                                            if (room != null && roomInLove != null) {
-                                                                //neu phong trong yeu thich == phong trong rooms
-                                                                if (roomInLove.getId_room().equals(room.getId_room())) {
-                                                                    roomsLove.add(room);
-                                                                } else {
-                                                                    //nếu phòng đó không tồn tại trong rooms là khong có trong database thi phai xoa
-//                                                                    database.getReference("LovePost/" + user.getUid() + "/" + roomInLove.getId_room()).removeValue();
-                                                                }
-                                                            }
-                                                        }
+                            String roomInLove = dataSnapshot.getKey();
+                            roomsLove.add(roomInLove);
+                        }
+                        roomRef = database.getReference("rooms");
+                        roomRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                rooms.clear();
+                                if (snapshot.exists()) {
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                        String key = dataSnapshot.getKey();
+                                        if (key.equals("Tro") || key.equals("ChungCuMini")) {
+                                            for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                                                if (childSnapshot.exists()) {
+                                                    if (roomsLove.contains(childSnapshot.getKey())) {
+                                                        Room room = childSnapshot.getValue(Room.class);
+//                                            if (room != null) {
+                                                        rooms.add(room);
+//                                            }
                                                     }
-//                                manageRoomAdapter.notifyDataSetChanged();
-                                                }
-                                                // Lấy dữ liệu từ child "ChungCu"
-                                                else if (dataSnapshot.getKey().equals("ChungCuMini") && dataSnapshot.exists()) {
-                                                    for (DataSnapshot chungCuSnapshot : dataSnapshot.getChildren()) {
-                                                        if (chungCuSnapshot.exists()) {
-                                                            Room room = chungCuSnapshot.getValue(Room.class);
-                                                            if (room != null && roomInLove != null) {
-                                                                //neu phong trong yeu thich == phong trong rooms
-                                                                if (roomInLove.getId_room().equals(room.getId_room())) {
-                                                                    roomsLove.add(room);
-                                                                } else {
-                                                                    //nếu phòng đó không tồn tại trong rooms là khong có trong database thi phai xoa
-                                                                    database.getReference("LovePost/" + user.getUid() + "/" + roomInLove.getId_room()).removeValue();
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-//                                manageRoomAdapter.notifyDataSetChanged();
                                                 }
                                             }
                                         }
-//                    manageRoomAdapter.notifyDataSetChanged();
-                                    } else {
-                                        // Không có dữ liệu tồn tại
                                     }
-                                    roomAdapter.notifyDataSetChanged();
                                 }
+                                roomAdapter.notifyDataSetChanged();
+                            }
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-                                    // Xử lý lỗi nếu có
-                                }
-                            });
-//                            Room roomInLove = dataSnapshot.getValue(Room.class);
-//                            roomsLove.add(roomInLove);
-                        }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
 
+                            }
+                        });
                     }
-                    roomAdapter.notifyDataSetChanged();
+//                    roomAdapter.notifyDataSetChanged();
                 }
 
                 @Override
@@ -143,10 +113,39 @@ public class MyLovePostActivity extends AppCompatActivity {
 
                 }
             });
-
-
+//            roomRef = database.getReference("rooms");
+//            roomRef.addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    rooms.clear();
+//                    if (snapshot.exists()) {
+//                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+//                            String key = dataSnapshot.getKey();
+//                            if (key.equals("Tro") || key.equals("ChungCuMini")) {
+//                                for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+//                                    if(childSnapshot.exists()){
+//                                        if (roomsLove.contains(childSnapshot.getKey())){
+//                                            Room room = childSnapshot.getValue(Room.class);
+////                                            if (room != null) {
+//                                                rooms.add(room);
+////                                            }
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError error) {
+//
+//                }
+//            });
         }
-        roomAdapter = new RoomAdapter(MyLovePostActivity.this, roomsLove);
+
+
+        roomAdapter = new RoomAdapter(MyLovePostActivity.this, rooms);
         rcvLovePost.setAdapter(roomAdapter);
     }
 

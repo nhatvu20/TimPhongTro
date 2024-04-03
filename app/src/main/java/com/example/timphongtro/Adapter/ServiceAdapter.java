@@ -28,6 +28,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceViewHolder> {
@@ -53,9 +54,11 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceV
 
     @Override
     public void onBindViewHolder(@NonNull ServiceAdapter.ServiceViewHolder holder, int position) {
+        DecimalFormat decimalFormat = new DecimalFormat("#,###.###");
+        decimalFormat.setDecimalSeparatorAlwaysShown(false);
         Service service = serviceList.get(position);
         holder.name.setText(service.getTitle());
-        holder.price.setText(service.getPrice() + " VNĐ");
+        holder.price.setText(decimalFormat.format(service.getPrice()) + " VNĐ");
         Glide.with(context).load(service.getImg1()).centerCrop().into(holder.image);
 
         holder.btn_add.setOnClickListener(new View.OnClickListener() {

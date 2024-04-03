@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -30,6 +31,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class ServiceDetailActivity extends AppCompatActivity {
@@ -44,7 +46,8 @@ public class ServiceDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service_detail);
-
+        DecimalFormat decimalFormat = new DecimalFormat("#,###.###");
+        decimalFormat.setDecimalSeparatorAlwaysShown(false);
         Bundle bundle = getIntent().getExtras();
         ImageSlider imageSlider = findViewById(R.id.ServiceImage);
         ArrayList<SlideModel> slideModels = new ArrayList<>();
@@ -119,7 +122,7 @@ public class ServiceDetailActivity extends AppCompatActivity {
             service = gson.fromJson(serviceString, Service.class);
 
             service_title.setText(service.getTitle());
-            String price = String.valueOf(service.getPrice()) + " VNĐ";
+            String price = decimalFormat.format(service.getPrice()) + " VNĐ";
             service_price.setText(price);
             service_sold_count.setText(String.valueOf(service.getSold()));
             service_description.setText(service.getDescription());
