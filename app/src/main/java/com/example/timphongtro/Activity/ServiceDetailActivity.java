@@ -40,7 +40,7 @@ public class ServiceDetailActivity extends AppCompatActivity {
     private Button btn_add_to_cart;
     private ImageView button_cart, imageView_back;
     private Service service;
-    private ArrayList<Service> cartItemList = new ArrayList<>();
+    private ArrayList<Service> cartItemList = new ArrayList<>();;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +58,9 @@ public class ServiceDetailActivity extends AppCompatActivity {
         btn_add_to_cart = findViewById(R.id.btn_add_to_cart);
         button_cart = findViewById(R.id.button_cart);
         imageView_back = findViewById(R.id.imageView_back);
+
+        imageView_back.setColorFilter(ContextCompat.getColor(this, R.color.white));
+        button_cart.setColorFilter(ContextCompat.getColor(this, R.color.white));
 
         button_cart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,12 +85,14 @@ public class ServiceDetailActivity extends AppCompatActivity {
                 String userID = user.getUid();
                 DatabaseReference serviceRef = FirebaseDatabase.getInstance().getInstance().getReference("Cart/" + userID);
 
+                //Truy vấn Firebase theo tilte, so sánh với title tại thời điểm get
                 serviceRef.orderByChild("title").equalTo(service.getTitle()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        //mặc định false, coi như là đã tồn tại.
                         boolean serviceExists = false;
+                        //chạy vòng lặp duyệt qua các nút con
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            String key = snapshot.getKey();
                             int currentAmount = snapshot.getValue(Service.class).getAmount();
                             int updatedAmount = currentAmount + 1;
 
@@ -99,9 +104,9 @@ public class ServiceDetailActivity extends AppCompatActivity {
                             break;
                         }
 
+                        //nếu dịch vụ chưa tồn tại, push dữ liệu lên
                         if (!serviceExists) {
                             DatabaseReference newServiceRef = serviceRef.push();
-
                             service.setAmount(1);
                             newServiceRef.setValue(service);
                         }

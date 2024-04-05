@@ -74,7 +74,6 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceV
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         boolean serviceExists = false;
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            String key = snapshot.getKey();
                             int currentAmount = snapshot.getValue(Service.class).getAmount();
                             int updatedAmount = currentAmount + 1;
 
