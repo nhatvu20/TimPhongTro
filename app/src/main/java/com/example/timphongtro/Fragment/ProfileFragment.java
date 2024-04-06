@@ -10,11 +10,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.timphongtro.Activity.DetailRoomActivity;
-import com.example.timphongtro.Activity.InformationActivity;
+import com.example.timphongtro.Activity.UpdateInformationUserActivity;
 import com.example.timphongtro.Activity.LoginActivity;
 import com.example.timphongtro.Activity.ManagePostActivity;
 import com.example.timphongtro.R;
@@ -49,7 +47,6 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
         mUser = FirebaseAuth.getInstance().getCurrentUser();
-        Spinner spinner;
 
         TextView btndangxuat, btnquanlyphong, btnlichhen;
 
@@ -73,7 +70,6 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (mUser != null) {
-                    //Sau phai sua cho nay thanh view User
                     Intent mypost = new Intent(getActivity(), ManagePostActivity.class);
                     startActivity(mypost);
                 } else {
@@ -86,7 +82,7 @@ public class ProfileFragment extends Fragment {
         txtViewInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), InformationActivity.class);
+                Intent i = new Intent(getActivity(), UpdateInformationUserActivity.class);
                 startActivity(i);
             }
         });
@@ -108,14 +104,26 @@ public class ProfileFragment extends Fragment {
         });
 
 
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
+
+        if (mUser != null) {
             // Người dùng đã đăng nhập, bạn có thể lấy thông tin người dùng từ currentUser
-            String uid = currentUser.getUid();
-            String email = currentUser.getEmail();
-            //     String name =
-            //Chuyen qua chuc nang do
-            //Neu dang la Form Ca nhan thi se cho truong Email nao vao textView de Hien thi
+            String uid = mUser.getUid();
+            String email = mUser.getEmail();
+            userRef = database.getReference("users/" + mUser.getUid());
+            userRef.child("name").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        name = snapshot.getValue(String.class);
+                        txtViewInfo.setText(name);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
 
         } else {
             // Người dùng chưa đăng nhập hoặc đã đăng xuất

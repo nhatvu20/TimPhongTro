@@ -78,7 +78,7 @@
                         tools:ignore="MissingConstraints"
                         android:textSize="20sp"
                         android:gravity="center_vertical"
-                        android:text="Phạm Huy Hoàng"
+                        android:text=""
                         >
                     </TextView>
 
@@ -152,7 +152,7 @@
                         android:id="@+id/btnyeuthich"
                         android:layout_width="match_parent"
                         android:layout_height="70dp"
-                        android:drawableStart="@drawable/ic_lichhen"
+                        android:drawableStart="@drawable/ic_phongyeuthich"
                         android:drawablePadding="10dp"
                         android:gravity="center_vertical"
                         android:padding="15dp"
@@ -186,17 +186,5 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <!--    <TextView-->
-    <!--        android:id="@+id/txtviewProfile"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="50dp"-->
-    <!--        android:layout_marginStart="80dp"-->
-    <!--        android:layout_marginEnd="80dp"-->
-    <!--        android:background="@color/grey_font"-->
-
-    <!--        android:text=""-->
-    <!--        tools:layout_editor_absoluteY="581dp" />-->
 
 </FrameLayout>
