@@ -58,6 +58,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
+                        android:text=""
                         android:textSize="20sp"
                         tools:ignore="MissingConstraints">
 
@@ -126,6 +127,45 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btnlichhen" />
 
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="horizontal">-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/btnlichhen"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="70dp"-->
+<!--                        android:drawableStart="@drawable/ic_lichhen"-->
+<!--                        android:drawablePadding="10dp"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:padding="15dp"-->
+<!--                        android:text="@string/lichhen"-->
+<!--                        android:textSize="20sp"-->
+<!--                        app:layout_constraintStart_toStartOf="@+id/btnquanlyphong"-->
+<!--                        app:layout_constraintTop_toBottomOf="@+id/btnquanlyphong" />-->
+<!--                </LinearLayout>-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="horizontal">-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/btnyeuthich"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="70dp"-->
+<!--                        android:drawableStart="@drawable/ic_phongyeuthich"-->
+<!--                        android:drawablePadding="10dp"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:padding="15dp"-->
+<!--                        android:text="Phòng yêu thích"-->
+<!--                        android:textSize="20sp"-->
+<!--                        app:layout_constraintStart_toStartOf="@+id/btnquanlyphong"-->
+<!--                        app:layout_constraintTop_toBottomOf="@+id/btnquanlyphong" />-->
+<!--                </LinearLayout>-->
+
+<!--            </LinearLayout>-->
             <TextView
                 android:id="@+id/btnlichsu"
                 android:layout_width="match_parent"

@@ -86,7 +86,7 @@ public class SearchActivity extends AppCompatActivity {
                         if (key.equals("Tro") || key.equals("ChungCuMini")) {
                             for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
                                 Room room = childSnapshot.getValue(Room.class);
-                                if (room != null && room.getStatus_room() != 1) {
+                                if (room != null && room.getStatus_room() != 1 && room.getStatus_room() != 1) {
                                     roomlist.add(room);
                                 }
                             }

@@ -4,19 +4,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.timphongtro.Adapter.RoomAdapter;
-import com.example.timphongtro.Entity.Address;
-import com.example.timphongtro.Entity.ExtensionRoom_class;
-import com.example.timphongtro.Entity.FurnitureClass;
 import com.example.timphongtro.Entity.Room;
 import com.example.timphongtro.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,13 +34,8 @@ public class MyLovePostActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_my_love_post);
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-//            return insets;
-//        });
+
         user = FirebaseAuth.getInstance().getCurrentUser();
         database = FirebaseDatabase.getInstance();
         ImageView imageViewBack = findViewById(R.id.imageViewBack);
@@ -97,6 +85,14 @@ public class MyLovePostActivity extends AppCompatActivity {
                                     }
                                 }
                                 roomAdapter.notifyDataSetChanged();
+
+                                if (rooms.isEmpty()) {
+                                    rcvLovePost.setVisibility(View.GONE);
+                                    findViewById(R.id.nohistory).setVisibility(View.VISIBLE);
+                                } else {
+                                    rcvLovePost.setVisibility(View.VISIBLE);
+                                    findViewById(R.id.nohistory).setVisibility(View.GONE);
+                                }
                             }
 
                             @Override
