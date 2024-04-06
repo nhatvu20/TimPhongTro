@@ -33,6 +33,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
@@ -45,6 +48,7 @@ import com.example.timphongtro.Entity.ScheduleVisitRoomClass;
 import com.example.timphongtro.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -66,20 +70,20 @@ import java.util.regex.Pattern;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DetailRoomActivity extends AppCompatActivity {
-    Room roomData;
-    TextView textViewTitle, textViewPrice, textViewCombine_address, textViewPhone, textViewTypeRoom, textViewFloor, textViewArea, textViewDeposit, textViewPersonInRoom, textViewGender,
+    private Room roomData;
+    private TextView textViewTitle, textViewPrice, textViewCombine_address, textViewPhone, textViewTypeRoom, textViewFloor, textViewArea, textViewDeposit, textViewPersonInRoom, textViewGender,
             textViewWater, textViewInternet, textViewElectric, textviewDescriptionRoom, textViewNameUser;
-    RecyclerView recycleviewFuniture;
-    RecyclerView recycleviewExtension;
-    FurnitureAdapter furnitureAdapter;
-    ExtensionAdapter extensionAdapter;
-    ImageView imageViewBack, imageViewLove;
-    Button btnCall, btnBookRoom;
-    LinearLayout userPost;
+    private RecyclerView recycleviewFuniture;
+    private RecyclerView recycleviewExtension;
+    private FurnitureAdapter furnitureAdapter;
+    private ExtensionAdapter extensionAdapter;
+    private ImageView imageViewBack, imageViewLove, imageViewRoom;
+    private Button btnCall, btnBookRoom;
+    private LinearLayout userPost;
 
-    FirebaseUser user;
+    private FirebaseUser user;
 
-    CircleImageView profile_image;
+    private CircleImageView profile_image;
 
     private static final int CALL_PHONE_PERMISSION_REQUEST_CODE = 1;
 
@@ -94,7 +98,7 @@ public class DetailRoomActivity extends AppCompatActivity {
     Calendar myCalender;
     TextView edtTime;
 
-    MaterialButton btnConfirm, btnCancel;
+    MaterialButton btnConfirm, btnCancel, btnZalo;
     EditText edtYourName, edtPhone, edtNote;
 
     @Override
@@ -102,7 +106,7 @@ public class DetailRoomActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_room);
         Bundle bundle = getIntent().getExtras();
-        ImageSlider imageSlider = (ImageSlider) findViewById(R.id.ImageRoomPrd);
+//        ImageSlider imageSlider = (ImageSlider) findViewById(R.id.ImageRoomPrd);
         ArrayList<SlideModel> slideModels = new ArrayList<>();
         database = FirebaseDatabase.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -130,7 +134,7 @@ public class DetailRoomActivity extends AppCompatActivity {
         userPost = findViewById(R.id.userPost);
         textViewNameUser = findViewById(R.id.textViewNameUser);
         profile_image = findViewById(R.id.profile_image);
-
+        btnZalo = findViewById(R.id.btnZalo);
         userPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -183,7 +187,24 @@ public class DetailRoomActivity extends AppCompatActivity {
             // slideModels.add(new SlideModel(roomData.getImages().getImg3(), ScaleTypes.FIT));
             // slideModels.add(new SlideModel(roomData.getImages().getImg4(), ScaleTypes.FIT));
 
-            imageSlider.setImageList(slideModels, ScaleTypes.CENTER_CROP);
+//            imageSlider.setImageList(slideModels, ScaleTypes.CENTER_CROP);
+            imageViewRoom = findViewById(R.id.imageViewRoom);
+
+            Glide.with(DetailRoomActivity.this)
+                    .load(roomData.getImages().getImg1())
+                    .apply(new RequestOptions()
+                            .centerCrop()
+                            .placeholder(R.drawable.loading) // Ảnh thay thế khi đang tải
+                            .error(R.drawable.a)) // Ảnh thay thế khi xảy ra lỗi
+                    .transition(DrawableTransitionOptions.withCrossFade()) // Hiệu ứng chuyển tiếp khi hiển thị ảnh
+                    .into(imageViewRoom);
+
+            imageViewRoom.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showZoomImgDialog();
+                }
+            });
 
             ArrayList<FurnitureClass> furnitures = roomData.getFurniture();
 
@@ -274,14 +295,14 @@ public class DetailRoomActivity extends AppCompatActivity {
                                             myLovePostRef.child(roomData.getId_room()).removeValue();
                                             isLove = false;
                                             imageViewLove.setImageResource(R.drawable.ic_heart_thin_icon);
-                                            Toast.makeText(DetailRoomActivity.this, "Bỏ yêu thích thành công",Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(DetailRoomActivity.this, "Bỏ yêu thích thành công", Toast.LENGTH_SHORT).show();
                                         } else {
                                             roomRef.child("userLovePost").child(user.getUid()).setValue(true);
 //                                            myLovePostRef.child(roomData.getId_room()).setValue(roomData);
                                             myLovePostRef.child(roomData.getId_room()).setValue(true);
                                             isLove = false;
                                             imageViewLove.setImageResource(R.drawable.ic_love_fill);
-                                            Toast.makeText(DetailRoomActivity.this, "Yêu thích thành công",Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(DetailRoomActivity.this, "Yêu thích thành công", Toast.LENGTH_SHORT).show();
                                         }
                                         //nem id hien tai vao bang room
                                     }
@@ -382,6 +403,24 @@ public class DetailRoomActivity extends AppCompatActivity {
                 }
             });
 
+
+            btnZalo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    //phải sửa ở đây
+                    String url = "http://zalo.me/" + "0964259203"; // URL bạn muốn chuyển đến
+
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(url));
+//                    if (intent.resolveActivity(getPackageManager()) != null) {
+                    Toast.makeText(DetailRoomActivity.this, "Bạn chỉ sử dụng chức năng khi máy đã cài đặt Zalo", Toast.LENGTH_SHORT).show();
+                    startActivity(intent);
+//                    } else {
+//                        // Không có ứng dụng nào có thể xử lý Intent này
+//                    }
+                }
+            });
         }
 
     }
@@ -393,6 +432,37 @@ public class DetailRoomActivity extends AppCompatActivity {
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
         }
+    }
+
+    private void showZoomImgDialog() {
+
+        final Dialog dialog = new Dialog(DetailRoomActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        dialog.setContentView(R.layout.dialog_zoom_img);
+        ImageView imageViewBack = dialog.findViewById(R.id.imageViewBack);
+        ImageView imageViewZoom = dialog.findViewById(R.id.imageViewZoom);
+        Glide.with(DetailRoomActivity.this)
+                .load(roomData.getImages().getImg1())
+                .apply(new RequestOptions()
+                        .placeholder(R.drawable.loading) // Ảnh thay thế khi đang tải
+                        .error(R.drawable.a)) // Ảnh thay thế khi xảy ra lỗi
+                .transition(DrawableTransitionOptions.withCrossFade()) // Hiệu ứng chuyển tiếp khi hiển thị ảnh
+                .into(imageViewZoom);
+
+        imageViewBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.TOP);
+        dialog.setCancelable(true);
     }
 
     private void showBottomDialog() {

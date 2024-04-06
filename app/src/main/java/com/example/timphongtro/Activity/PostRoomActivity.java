@@ -1,26 +1,40 @@
 package com.example.timphongtro.Activity;
 
+import static android.provider.MediaStore.ACTION_IMAGE_CAPTURE;
+
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -35,6 +49,7 @@ import com.example.timphongtro.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -46,6 +61,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -55,12 +71,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PostRoomActivity extends AppCompatActivity {
-
+    FirebaseUser userCurrent;
     ImageView btnBack;
     EditText edtTitleRoom, edtDeposit, edtPrice, edtInternet, edtElectric, edtWater, edtArea, edtPhone, edtFloor, edtPerson, edtDescriptionRoom, edtPark, edtAddress;
     Button btn_create_room;
     RadioButton radiobtnChungCu, radiobtnTro;
-
+    ActivityResultLauncher<Intent> activityResultLauncher;
+    LinearLayout pickImgAlbum, pickImgCamera;
     CheckBox checkboxtoilet, checkboxfloor, checkbox_time_flex, checkboxfingerprint, checkboxbacony, checkboxpet, checkbox_w_owner, checkbox_air_condition, checkbox_heater, checkbox_curtain, checkboxfridge, checkboxbed, checkboxwardrobe, checkbox_washing_machine, checkboxsofa, checkboxNam, checkboxNu;
     RadioButton radiobtnPhongTrong;
     RadioButton radiobtnDaChoThue;
@@ -68,13 +85,14 @@ public class PostRoomActivity extends AppCompatActivity {
     ImageView uploadPicture1, uploadPicture2;
     String imageURL1;
     //    String imageURL2;
-    Uri uri;
+    Uri uri, uriBitmap;
+    Bitmap photo;
     //    Uri uri2;
     Spinner spinnerCity, spinnerDistrict, spinnerWard;
 
     boolean isUploadImg1;
     boolean isUploadImg2;
-
+    BottomSheetDialog dialog;
     List<String> cities, districts, wards;
 
     String path;
@@ -82,6 +100,8 @@ public class PostRoomActivity extends AppCompatActivity {
 
     ArrayList<ExtensionRoom_class> extensions_room;
     Address address;
+    private ActivityResultLauncher<Intent> cameraLauncher;
+    private static final int pic_id = 123;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +144,7 @@ public class PostRoomActivity extends AppCompatActivity {
                 startActivity(main);
             }
         });
-        ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
                 if (result.getResultCode() == Activity.RESULT_OK) {
@@ -132,12 +152,30 @@ public class PostRoomActivity extends AppCompatActivity {
                     uri = data.getData();
                     uploadPicture1.setImageURI(uri);
                     isUploadImg1 = true;
+                    dialog.dismiss();
                 } else {
                     isUploadImg1 = false;
                     Toast.makeText(PostRoomActivity.this, "No image selected", Toast.LENGTH_LONG).show();
                 }
             }
         });
+
+        cameraLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result.getResultCode() == RESULT_OK) {
+                Intent data = result.getData();
+                photo = (Bitmap) data.getExtras().get("data");
+                uploadPicture1.setImageBitmap(photo);
+                isUploadImg1 = true;
+//                uri = data.getData();
+//                uploadPicture1.setImageURI(uri);
+//                isUploadImg1 = true;
+                dialog.dismiss();
+            } else {
+                isUploadImg1 = false;
+                Toast.makeText(PostRoomActivity.this, "No image selected", Toast.LENGTH_LONG).show();
+            }
+        });
+
         btn_create_room.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -166,9 +204,12 @@ public class PostRoomActivity extends AppCompatActivity {
         uploadPicture1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent photoPicker = new Intent(Intent.ACTION_PICK);
-                photoPicker.setType("image/*");
-                activityResultLauncher.launch(photoPicker);
+//                Intent photoPicker = new Intent(Intent.ACTION_PICK);
+//                photoPicker.setType("image/*");
+//                activityResultLauncher.launch(photoPicker);
+                showBottomDialog();
+
+
             }
         });
     }
@@ -219,28 +260,57 @@ public class PostRoomActivity extends AppCompatActivity {
     }
 
     public void saveImage() {
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("roomImgage").child(Objects.requireNonNull(uri.getLastPathSegment()));
         AlertDialog.Builder builder = new AlertDialog.Builder(PostRoomActivity.this);
         builder.setCancelable(false);
         builder.setView(R.layout.progress_layout);
         AlertDialog dialog = builder.create();
         dialog.show();
-        storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+        if (uri != null) {
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("roomImgage").child(Objects.requireNonNull(uri.getLastPathSegment()));
+            storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                    while (!uriTask.isComplete()) ;
+                    Uri urlImage = uriTask.getResult();
+                    imageURL1 = String.valueOf(urlImage);
+                    onClickPushData();
+                    dialog.dismiss();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    dialog.dismiss();
+                }
+            });
+
+        } else {
+            // Chuyển đổi Bitmap thành mảng byte
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            photo.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            byte[] imageData = baos.toByteArray();
+            String uniqueImageName = "image_" + System.currentTimeMillis() + ".jpg";
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            StorageReference storageRef = storage.getReference("roomImgage").child(uniqueImageName);
+            // Tạo một tên duy nhất cho file hình ảnh trên Firebase Sorage
+
+            // Tham chiếu đến file trên Firebase Storage
+
+            // Tải lên mảng byte lên Firebase Storage
+            UploadTask uploadTask = storageRef.putBytes(imageData);
+            uploadTask.addOnSuccessListener(taskSnapshot -> {
+                // Thành công, bạn có thể lấy URL của hình ảnh tải lên từ taskSnapshot.getDownloadUrl()
+                // Ví dụ: Uri downloadUri = taskSnapshot.getDownloadUrl();
                 Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
                 while (!uriTask.isComplete()) ;
                 Uri urlImage = uriTask.getResult();
                 imageURL1 = String.valueOf(urlImage);
                 onClickPushData();
                 dialog.dismiss();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                dialog.dismiss();
-            }
-        });
+            }).addOnFailureListener(exception -> {
+                // Xảy ra lỗi trong quá trình tải lên
+            });
+        }
     }
 
     void onClickPushData() {
@@ -311,7 +381,7 @@ public class PostRoomActivity extends AppCompatActivity {
         }
 
         DatabaseReference myRef = database.getReference("rooms/" + path);
-        FirebaseUser userCurrent = FirebaseAuth.getInstance().getCurrentUser();
+        userCurrent = FirebaseAuth.getInstance().getCurrentUser();
 //        DatabaseReference myPostRef = null;
 //
 //        if (userCurrent != null) {
@@ -382,15 +452,15 @@ public class PostRoomActivity extends AppCompatActivity {
             park_slot = Integer.parseInt(edtPark.getText().toString());
         }
 
-        if(isEmpty(edtElectric) || isEmpty(edtInternet) || isEmpty(edtWater)){
+        if (isEmpty(edtElectric) || isEmpty(edtInternet) || isEmpty(edtWater)) {
             isValid = false;
             if (isEmpty(edtInternet)) {
                 edtInternet.setError("Vui lòng nhập giá Internet");
             }
-            if(isEmpty(edtElectric)) {
+            if (isEmpty(edtElectric)) {
                 edtElectric.setError("Vui lòng nhập giá điện");
             }
-            if(isEmpty(edtWater)) {
+            if (isEmpty(edtWater)) {
                 edtWater.setError("Vui lòng nhập giá nước");
             }
         }
@@ -437,8 +507,8 @@ public class PostRoomActivity extends AppCompatActivity {
                     Toast.makeText(PostRoomActivity.this, "Đăng thông tin phòng thất bại", Toast.LENGTH_SHORT).show();
                 }
             });
-            Intent main = new Intent(this, MainActivity.class);
-            startActivity(main);
+//            Intent main = new Intent(this, MainActivity.class);
+//            startActivity(main);
         } else {
             Toast.makeText(PostRoomActivity.this, "Vui lòng nhập đầy đủ các trường dữ liệu", Toast.LENGTH_SHORT).show();
         }
@@ -553,5 +623,57 @@ public class PostRoomActivity extends AppCompatActivity {
         spinnerDistrict = (Spinner) findViewById(R.id.spinnerDistrict);
 
         edtAddress = (EditText) findViewById(R.id.edtAddress);
+    }
+
+    private void showBottomDialog() {
+        dialog = new BottomSheetDialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_choose_uploadimg);
+
+        ImageView cancelButton;
+        pickImgAlbum = dialog.findViewById(R.id.pickImgAlbum);
+        pickImgCamera = dialog.findViewById(R.id.pickImgCamera);
+        cancelButton = dialog.findViewById(R.id.cancelButton);
+
+        pickImgAlbum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent photoPicker = new Intent(Intent.ACTION_PICK);
+                photoPicker.setType("image/*");
+                activityResultLauncher.launch(photoPicker);
+            }
+        });
+
+        pickImgCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent cameraIntent = new Intent(ACTION_IMAGE_CAPTURE);
+//                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (ActivityCompat.checkSelfPermission(PostRoomActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(PostRoomActivity.this, new String[]{Manifest.permission.CAMERA}, 1);
+                    return;
+                }
+//                cameraIntent.setType("image/*");
+//                activityResultLauncher.launch(cameraIntent);
+
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                cameraLauncher.launch(cameraIntent);
+
+
+            }
+        });
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+        dialog.setCancelable(true);
     }
 }

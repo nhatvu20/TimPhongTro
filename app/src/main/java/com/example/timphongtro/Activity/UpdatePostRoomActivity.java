@@ -142,9 +142,11 @@ public class UpdatePostRoomActivity extends AppCompatActivity {
                                 if (isUploadImg1) {
                                     Uri uriTmp = uri;
                                     if (containsSubstring(uriTmp.toString(), "https")) {
+//                                        Toast.makeText(getApplicationContext(), "Vào", Toast.LENGTH_LONG).show();
                                         imageURL1 = uri.toString();
                                         onClickPushData();
                                     } else {
+//                                        Toast.makeText(getApplicationContext(), "Vào2", Toast.LENGTH_LONG).show();
                                         saveImage();
                                     }
                                 } else
@@ -402,6 +404,7 @@ public class UpdatePostRoomActivity extends AppCompatActivity {
             updates.put("price_electric", Long.parseLong(edtInternet.getText().toString()));
             updates.put("price_water", Long.parseLong(edtWater.getText().toString()));
             updates.put("price_internet", Long.parseLong(edtInternet.getText().toString()));
+            //update khi bai co tim
             if (isHasMyLovePost) {
                 for (HashMap<String, Object> hashMap : userLovePost) {
                     // Xử lý từng phần tử trong mảng HashMap
@@ -420,6 +423,21 @@ public class UpdatePostRoomActivity extends AppCompatActivity {
                         }
                     });
                 }
+            } else {
+                //update khi bai khong co tim
+                myRefUpdate.child(id_room).updateChildren(updates).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(UpdatePostRoomActivity.this, "Cập nhật thông tin phòng thành công", Toast.LENGTH_SHORT).show();
+                        Intent main = new Intent(UpdatePostRoomActivity.this, MainActivity.class);
+                        startActivity(main);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(UpdatePostRoomActivity.this, "Cập nhật thông tin phòng thất bại", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             //Xu ly cho firebase

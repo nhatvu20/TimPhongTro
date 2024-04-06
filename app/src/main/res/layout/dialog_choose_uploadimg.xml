@@ -18,10 +18,8 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="10dp"
             android:layout_weight="1"
-            android:gravity="start"
             android:padding="8dp"
-            android:text="@string/postdashboard"
-            android:textAlignment="center"
+            android:text="Chọn ảnh từ"
             android:textAllCaps="false"
             android:textColor="@color/black"
             android:textSize="25sp"
@@ -37,63 +35,41 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/house"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        android:padding="10dp">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_house" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="20dp"
-            android:text="@string/findaplace"
-            android:textColor="@color/orange"
-            android:textSize="20sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/pickImgAlbum"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/border_bottom"
         android:orientation="horizontal"
-        android:padding="10dp">
+        android:padding="15dp">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_groupusers" />
+            android:src="@drawable/ic_type" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="20dp"
-            android:text="@string/findpeople"
+            android:text="Album"
             android:textColor="@color/orange"
             android:textSize="20sp" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/contract"
+        android:id="@+id/pickImgCamera"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal"
-        android:padding="10dp">
+        android:padding="15dp">
 
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/ic_contract" />
+            android:src="@drawable/ic_camera" />
 
         <TextView
             android:id="@+id/rentRoom"
@@ -101,7 +77,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="20dp"
-            android:text="@string/forrent"
+            android:text="Camera"
             android:textColor="@color/orange"
             android:textSize="20sp" />
 

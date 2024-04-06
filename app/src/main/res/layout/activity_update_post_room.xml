@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Cập nhật phòng"
+                    android:text="@string/forrent_update"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="20sp"
