@@ -93,39 +93,37 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
             databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    ArrayList<Room> recently_read = snapshot.getValue(new GenericTypeIndicator<ArrayList<Room>>() {
-                    });
-                    //Kiểm tra xem mảng có null không
+                    ArrayList<String> recently_read = snapshot.getValue(new GenericTypeIndicator<ArrayList<String>>() {});
+                    // Kiểm tra xem mảng có null không
                     if (recently_read == null) {
                         recently_read = new ArrayList<>();
                     } else {
-                        // Tìm kiếm phần tử trong mảng và xoá nếu cần
+                        // Tìm kiếm ID phòng trong mảng và xoá nếu cần
                         int existingIndex = -1;
                         for (int i = 0; i < recently_read.size(); i++) {
-                            //Trả về vị trí của phần tử
-                            Room existingRoom = recently_read.get(i);
-                            //nếu đã tồn tại thì gán vị trí tồn tại để xoá
-                            if (existingRoom.getId_room().equals(room.getId_room())) {
+                            String existingRoomId = recently_read.get(i);
+                            // Nếu đã tồn tại ID phòng, gán vị trí tồn tại để xoá
+                            if (existingRoomId.equals(room.getId_room())) {
                                 existingIndex = i;
                                 break;
                             }
                         }
-                        //xoá vị trí đã được gán ở trên
+                        // Xoá vị trí đã được gán ở trên
                         if (existingIndex != -1) {
                             recently_read.remove(existingIndex);
                         }
                     }
-                    //chưa tồn tại thì thêm vào mảng hoặc là đã xử lý xong đoạn trên
-                    recently_read.add(room);
+                    // Chưa tồn tại thì thêm ID phòng vào mảng hoặc đã xử lý xong đoạn trên
+                    recently_read.add(room.getId_room());
                     databaseReference.setValue(recently_read).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
-
+                            // Xử lý thành công
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-
+                            // Xử lý lỗi
                         }
                     });
                 }
