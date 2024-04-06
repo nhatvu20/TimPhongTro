@@ -64,6 +64,16 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/border_radius_slider">
 
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/imageViewRoom"
+                            android:layout_width="match_parent"
+                            android:layout_height="280dp" />
+                    </androidx.cardview.widget.CardView>
+
                     <com.denzcoskun.imageslider.ImageSlider
                         android:id="@+id/ImageRoomPrd"
                         android:layout_width="match_parent"
@@ -238,7 +248,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="5dp"
-                                    android:drawableTop="@drawable/ic_area"
+                                    android:drawableTop="@drawable/ic_area2"
                                     android:drawablePadding="10dp"
                                     android:text="Diện tích"
                                     android:textAlignment="center" />
@@ -678,12 +688,27 @@
         tools:layout_editor_absoluteX="0dp">
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnZalo"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:text="Chat"
+            android:textColor="@color/orange"
+            android:textSize="16sp"
+            app:icon="@drawable/ic_zalo"
+            app:iconPadding="0dp"
+            app:strokeColor="@color/orange" />
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCall"
             style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:text="Gọi"
             android:textColor="@color/orange"
@@ -694,14 +719,18 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnBookRoom"
+            style="@style/Widget.Material3.Button"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-
             android:backgroundTint="@color/orange"
-            android:text="Đặt lịch xem phòng"
-            app:cornerRadius="10dp" />
+            android:text="Đặt lịch"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:cornerRadius="10dp"
+            app:iconPadding="0dp"
+            app:strokeColor="@color/orange" />
 
     </LinearLayout>
 
