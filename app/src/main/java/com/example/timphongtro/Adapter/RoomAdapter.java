@@ -78,7 +78,6 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
                     userID = user.getUid();
                 }
                 Intent detailRoom = new Intent(context, DetailRoomActivity.class);
-                int typeRoom = list.get(holder.getAdapterPosition()).getType_room();
                 detailRoom.putExtra("DataRoom", room.toString());
                 context.startActivity(detailRoom);
                 RecentlyRead(userID,holder);
@@ -96,22 +95,27 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     ArrayList<Room> recently_read = snapshot.getValue(new GenericTypeIndicator<ArrayList<Room>>() {
                     });
+                    //Kiểm tra xem mảng có null không
                     if (recently_read == null) {
                         recently_read = new ArrayList<>();
                     } else {
                         // Tìm kiếm phần tử trong mảng và xoá nếu cần
                         int existingIndex = -1;
                         for (int i = 0; i < recently_read.size(); i++) {
+                            //Trả về vị trí của phần tử
                             Room existingRoom = recently_read.get(i);
+                            //nếu đã tồn tại thì gán vị trí tồn tại để xoá
                             if (existingRoom.getId_room().equals(room.getId_room())) {
                                 existingIndex = i;
                                 break;
                             }
                         }
+                        //xoá vị trí đã được gán ở trên
                         if (existingIndex != -1) {
                             recently_read.remove(existingIndex);
                         }
                     }
+                    //chưa tồn tại thì thêm vào mảng hoặc là đã xử lý xong đoạn trên
                     recently_read.add(room);
                     databaseReference.setValue(recently_read).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override

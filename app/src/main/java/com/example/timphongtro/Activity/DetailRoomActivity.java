@@ -202,8 +202,7 @@ public class DetailRoomActivity extends AppCompatActivity {
             imageViewBack.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent main = new Intent(DetailRoomActivity.this, MainActivity.class);
-                    startActivity(main);
+                    finish();
                 }
             });
 
