@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import android.app.Dialog;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.bottom_dialog);
 
         LinearLayout house = dialog.findViewById(R.id.house);
-        LinearLayout groupusers = dialog.findViewById(R.id.groupusers);
+        LinearLayout groupusers = dialog.findViewById(R.id.pickImgAlbum);
         LinearLayout contract = dialog.findViewById(R.id.contract);
         ImageView cancelButton = dialog.findViewById(R.id.cancelButton);
 
