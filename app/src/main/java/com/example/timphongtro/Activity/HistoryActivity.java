@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -28,12 +29,14 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class HistoryActivity extends AppCompatActivity {
     FirebaseUser user;
     FirebaseDatabase database;
     DatabaseReference myHistoryRef;
     ArrayList<Room> roomArrayList;
+    ArrayList<String> roomsLove;
     RoomAdapter roomAdapter;
     RecyclerView rcvHistory;
 
@@ -84,38 +87,66 @@ public class HistoryActivity extends AppCompatActivity {
 
         rcvHistory = findViewById(R.id.rcv_history);
         roomArrayList = new ArrayList<>();
+        roomAdapter = new RoomAdapter(HistoryActivity.this, roomArrayList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HistoryActivity.this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         rcvHistory.setLayoutManager(linearLayoutManager);
+        rcvHistory.setAdapter(roomAdapter);
 
-            myHistoryRef = database.getReference("History/" + user.getUid());
-            myHistoryRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    roomArrayList.clear();
-                    if (snapshot.exists()) {
-                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                            Room roomCur = dataSnapshot.getValue(Room.class);
-                            roomArrayList.add(roomCur);
+        myHistoryRef = database.getReference("History/" + user.getUid());
+        myHistoryRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                roomArrayList.clear();
+
+                List<String> roomIds = new ArrayList<>();
+
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    String roomId = dataSnapshot.getValue(String.class);
+                    roomIds.add(roomId);
+                }
+
+                DatabaseReference roomsRef = database.getReference("rooms");
+
+                roomsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot roomsSnapshot) {
+                        //Duyệt qua các nhánh to, ở đây là "Tro" và "ChungCuMini"
+                        for (DataSnapshot roomTypeSnapshot : roomsSnapshot.getChildren()) {
+                            //Duyệt qua các phòng trong nhánh
+                            for (DataSnapshot roomSnapshot : roomTypeSnapshot.getChildren()) {
+                                String roomId = roomSnapshot.getKey();
+                                if (roomIds.contains(roomId)) {
+                                    Room roomCur = roomSnapshot.getValue(Room.class);
+                                    roomArrayList.add(roomCur);
+                                }
+                            }
                         }
+
+                        // Sắp xếp ngược lại danh sách
                         Collections.reverse(roomArrayList);
+                        roomAdapter.notifyDataSetChanged();
+
+                        if (roomArrayList.isEmpty()) {
+                            rcvHistory.setVisibility(View.GONE);
+                            findViewById(R.id.nohistory).setVisibility(View.VISIBLE);
+                        } else {
+                            rcvHistory.setVisibility(View.VISIBLE);
+                            findViewById(R.id.nohistory).setVisibility(View.GONE);
+                        }
                     }
-                    roomAdapter.notifyDataSetChanged();
 
-                    if (roomArrayList.isEmpty()) {
-                        rcvHistory.setVisibility(View.GONE);
-                        findViewById(R.id.nohistory).setVisibility(View.VISIBLE);
-                    } else {
-                        rcvHistory.setVisibility(View.VISIBLE);
-                        findViewById(R.id.nohistory).setVisibility(View.GONE);
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
                     }
-                }
+                });
+            }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
 
         roomAdapter = new RoomAdapter(HistoryActivity.this, roomArrayList);
         rcvHistory.setAdapter(roomAdapter);
