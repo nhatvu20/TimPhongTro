@@ -101,7 +101,6 @@ public class PostRoomActivity extends AppCompatActivity {
     ArrayList<ExtensionRoom_class> extensions_room;
     Address address;
     private ActivityResultLauncher<Intent> cameraLauncher;
-    private static final int pic_id = 123;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -208,8 +207,6 @@ public class PostRoomActivity extends AppCompatActivity {
 //                photoPicker.setType("image/*");
 //                activityResultLauncher.launch(photoPicker);
                 showBottomDialog();
-
-
             }
         });
     }
