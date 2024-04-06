@@ -86,6 +86,7 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(getApplicationContext(), "Đăng ký thành công.", Toast.LENGTH_SHORT).show();
+                            btnDangky.setEnabled(false);
                             // Khởi tạo Firebase Realtime Database
                             FirebaseDatabase database = FirebaseDatabase.getInstance();
                             mDatabase = database.getReference();

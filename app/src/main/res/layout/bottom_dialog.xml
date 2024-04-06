@@ -61,7 +61,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/groupusers"
+        android:id="@+id/pickImgAlbum"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
