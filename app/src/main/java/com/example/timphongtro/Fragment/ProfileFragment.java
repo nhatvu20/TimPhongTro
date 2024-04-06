@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.example.timphongtro.Activity.UpdateInformationUserActivity;
 import com.example.timphongtro.Activity.DetailRoomActivity;
 import com.example.timphongtro.Activity.HistoryActivity;
-import com.example.timphongtro.Activity.InformationActivity;
 import com.example.timphongtro.Activity.LoginActivity;
 import com.example.timphongtro.Activity.ManagePostActivity;
 import com.example.timphongtro.Activity.MyLovePostActivity;
