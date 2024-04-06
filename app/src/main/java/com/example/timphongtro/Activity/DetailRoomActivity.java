@@ -48,7 +48,6 @@ import com.example.timphongtro.Entity.ScheduleVisitRoomClass;
 import com.example.timphongtro.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -59,7 +58,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -67,7 +65,6 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DetailRoomActivity extends AppCompatActivity {
     private Room roomData;
@@ -83,8 +80,6 @@ public class DetailRoomActivity extends AppCompatActivity {
 
     private FirebaseUser user;
 
-    private CircleImageView profile_image;
-
     private static final int CALL_PHONE_PERMISSION_REQUEST_CODE = 1;
 
     private static final int codeL = 100;
@@ -96,7 +91,7 @@ public class DetailRoomActivity extends AppCompatActivity {
     DatabaseReference scheduleVisitRoomref;
     boolean isLove;
     Calendar myCalender;
-    TextView edtTime;
+    TextView edtTime,tvprofile;
 
     MaterialButton btnConfirm, btnCancel, btnZalo;
     EditText edtYourName, edtPhone, edtNote;
@@ -133,7 +128,7 @@ public class DetailRoomActivity extends AppCompatActivity {
         btnBookRoom = findViewById(R.id.btnBookRoom);
         userPost = findViewById(R.id.userPost);
         textViewNameUser = findViewById(R.id.textViewNameUser);
-        profile_image = findViewById(R.id.profile_image);
+        tvprofile = findViewById(R.id.tvprofileDetail);
         btnZalo = findViewById(R.id.btnZalo);
         userPost.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -237,6 +232,7 @@ public class DetailRoomActivity extends AppCompatActivity {
                     if (snapshot.exists()) {
                         String name = snapshot.getValue(String.class);
                         textViewNameUser.setText(name);
+                        tvprofile.setText(getFirstLetter(name));
                     }
                 }
 
@@ -249,6 +245,7 @@ public class DetailRoomActivity extends AppCompatActivity {
 //                userOwnPostRef.child("avatar")
             myLovePostRef = null;
             if (user != null) {
+
                 myLovePostRef = database.getReference("LovePost/" + user.getUid());
 
                 String typeRoom = "ChungCuMini/";
@@ -590,6 +587,23 @@ public class DetailRoomActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public static String getFirstLetter(String input) {
+        String[] words = input.split(" ");
+        StringBuilder result = new StringBuilder();
+
+        if (words.length == 1) {
+            // Nếu chuỗi chỉ có 1 từ, lấy chữ đầu từ đó
+            result.append(words[0].charAt(0));
+        } else {
+            // Nếu chuỗi có nhiều từ, lấy chữ cái đầu của từ thứ 1 và 2
+            for (int i = 0; i < 2; i++) {
+                result.append(words[i].charAt(0));
+            }
+        }
+
+        return result.toString().toUpperCase();
     }
 
 }

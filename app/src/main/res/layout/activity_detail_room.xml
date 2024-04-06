@@ -587,13 +587,24 @@
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
 
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/profile_image"
+                            <LinearLayout
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
-                                android:src="@drawable/a"
-                                app:civ_border_color="#FF000000"
-                                app:civ_border_width="2dp" />
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="5dp"
+                                android:background="@drawable/avatar"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/tvprofileDetail"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/white"
+                                    android:textSize="30sp" />
+                            </LinearLayout>
+
                             <!--                        <ImageView-->
                             <!--                            android:id="@+id/imageViewAvatar"-->
                             <!--                            android:layout_width="50dp"-->
@@ -611,9 +622,7 @@
                                     android:id="@+id/textViewNameUser"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="5dp"
                                     android:layout_marginRight="10dp"
-                                    android:text="Nhất Vũ"
                                     android:textColor="@color/black"
                                     android:textSize="20sp" />
 
