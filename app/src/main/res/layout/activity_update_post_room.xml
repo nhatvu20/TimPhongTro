@@ -794,7 +794,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:orientation="vertical">
@@ -826,7 +826,7 @@
                             <EditText
                                 android:id="@+id/edtDescriptionRoom"
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
+                                android:layout_height="100dp"
                                 android:layout_marginLeft="15dp"
                                 android:layout_weight="1"
                                 android:ems="10"
@@ -943,7 +943,7 @@
                             android:drawableStart="@drawable/ic_toilet"
                             android:gravity="center"
                             android:padding="10dp"
-                            android:text="Vệ sinh khép kín"
+                            android:text="VS khép kín"
                             android:textStyle="bold" />
 
                         <CheckBox

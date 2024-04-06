@@ -3,6 +3,7 @@ package com.example.timphongtro.Entity;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Room {
     private String id_own_post;
@@ -33,6 +34,8 @@ public class Room {
 
     //    private ArrayList<Service_roomClass> services_room;
     private ArrayList<ExtensionRoom_class> extension_room;
+
+//    private ArrayList<HashMap<String,Boolean>> userLovePost;
 
     public Room() {
     }

@@ -22,14 +22,19 @@ import com.example.timphongtro.Activity.UpdatePostRoomActivity;
 import com.example.timphongtro.Entity.Address;
 import com.example.timphongtro.Entity.ImagesRoomClass;
 import com.example.timphongtro.Entity.Room;
+import com.example.timphongtro.Entity.User;
 import com.example.timphongtro.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class ManageRoomAdapter extends RecyclerView.Adapter<ManageRoomAdapter.MyViewHolder> {
@@ -50,10 +55,12 @@ public class ManageRoomAdapter extends RecyclerView.Adapter<ManageRoomAdapter.My
 
     @Override
     public void onBindViewHolder(@NonNull ManageRoomAdapter.MyViewHolder holder, int position) {
+        DecimalFormat decimalFormat = new DecimalFormat("#,###.###");
+        decimalFormat.setDecimalSeparatorAlwaysShown(false);
         Room room = list.get(position);
         if (room != null) {
             holder.title_room.setText(room.getTitle_room());
-            holder.price_room.setText(String.valueOf(room.getPrice_room()));
+            holder.price_room.setText(decimalFormat.format(room.getPrice_room()));
             holder.area_room.setText(String.valueOf(room.getArea_room()));
             holder.people_room.setText(String.valueOf(room.getPerson_in_room()));
 
@@ -106,7 +113,30 @@ public class ManageRoomAdapter extends RecyclerView.Adapter<ManageRoomAdapter.My
                                             Toast.makeText(context, "Xóa bài thành công", Toast.LENGTH_SHORT).show();
                                         }
                                     });
-                                    myLovePostRef = database.getReference("LovePost/" + room.getId_own_post() + "/" + room.getId_room() );
+
+//                                    myLovePostRef = database.getReference("LovePost");
+//                                    myLovePostRef.addValueEventListener(new ValueEventListener() {
+//                                        @Override
+//                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                                            if (snapshot.exists()) {
+//                                                for (DataSnapshot userInRef : snapshot.getChildren()) {
+//                                                    if (userInRef.exists()) {
+//                                                        if (userInRef.hasChild(room.getId_room())) {
+//                                                            User userInfor = userInRef.getValue(User.class);
+//                                                            if (userInfor != null) {
+//                                                                database.getReference("LovePost").child(userInfor.getUid()).child(room.getId_room()).removeValue();
+//                                                            }
+//                                                        }
+//                                                    }
+//                                                }
+//                                            }
+//                                        }
+//
+//                                        @Override
+//                                        public void onCancelled(@NonNull DatabaseError error) {
+//
+//                                        }
+//                                    });
                                 }
                             })
                                     .

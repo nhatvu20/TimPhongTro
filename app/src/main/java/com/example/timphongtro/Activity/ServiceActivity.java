@@ -7,6 +7,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -42,9 +43,10 @@ public class ServiceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service);
-
         cart_button = findViewById(R.id.button_cart);
         back_button = findViewById(R.id.imageView_back);
+        back_button.setColorFilter(ContextCompat.getColor(this, R.color.white));
+        cart_button.setColorFilter(ContextCompat.getColor(this, R.color.white));
 
         item = "";
         Bundle bundle = getIntent().getExtras();

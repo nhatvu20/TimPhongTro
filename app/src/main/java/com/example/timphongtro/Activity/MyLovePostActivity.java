@@ -1,24 +1,17 @@
-package com.example.timphongtro.Fragment;
+package com.example.timphongtro.Activity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.Toast;
-
-import com.example.timphongtro.Activity.MyLovePostActivity;
 import com.example.timphongtro.Adapter.RoomAdapter;
 import com.example.timphongtro.Entity.Room;
 import com.example.timphongtro.R;
-import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -29,7 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class NotificationFragment extends Fragment {
+public class MyLovePostActivity extends AppCompatActivity {
     FirebaseUser user;
     FirebaseDatabase database;
     DatabaseReference myLovePostRef, roomRef, myLovePostRemoveRef;
@@ -37,24 +30,25 @@ public class NotificationFragment extends Fragment {
     ArrayList<Room> rooms;
     RoomAdapter roomAdapter;
     RecyclerView rcvLovePost;
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_notification, container, false);
-    }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_my_love_post);
+
         user = FirebaseAuth.getInstance().getCurrentUser();
         database = FirebaseDatabase.getInstance();
-        ImageView imageViewBack = view.findViewById(R.id.imageViewBack);
-
-        rcvLovePost = view.findViewById(R.id.rcvLovePost);
+        ImageView imageViewBack = findViewById(R.id.imageViewBack);
+        imageViewBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        rcvLovePost = findViewById(R.id.rcvLovePost);
         roomsLove = new ArrayList<>();
         rooms = new ArrayList<>();
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MyLovePostActivity.this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         rcvLovePost.setLayoutManager(linearLayoutManager);
 
@@ -91,6 +85,14 @@ public class NotificationFragment extends Fragment {
                                     }
                                 }
                                 roomAdapter.notifyDataSetChanged();
+
+                                if (rooms.isEmpty()) {
+                                    rcvLovePost.setVisibility(View.GONE);
+                                    findViewById(R.id.nohistory).setVisibility(View.VISIBLE);
+                                } else {
+                                    rcvLovePost.setVisibility(View.VISIBLE);
+                                    findViewById(R.id.nohistory).setVisibility(View.GONE);
+                                }
                             }
 
                             @Override
@@ -139,7 +141,8 @@ public class NotificationFragment extends Fragment {
         }
 
 
-        roomAdapter = new RoomAdapter(getContext(), rooms);
+        roomAdapter = new RoomAdapter(MyLovePostActivity.this, rooms);
         rcvLovePost.setAdapter(roomAdapter);
     }
+
 }

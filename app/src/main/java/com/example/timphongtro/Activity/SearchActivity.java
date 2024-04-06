@@ -1,7 +1,7 @@
 package com.example.timphongtro.Activity;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -10,10 +10,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
- 
+
 import com.example.timphongtro.Entity.Room;
 import com.example.timphongtro.Adapter.SearchAdapter;
-import com.example.timphongtro.R; 
+import com.example.timphongtro.R;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -78,40 +79,27 @@ public class SearchActivity extends AppCompatActivity {
         roomdatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
+                roomlist.clear();
+                if (snapshot.exists()) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        if (dataSnapshot.getKey().equals("Tro") || dataSnapshot.getKey().equals("ChungCuMini")) {
-                            // Lấy dữ liệu từ child "Tro"
-                            if (dataSnapshot.getKey().equals("Tro")) {
-                                for (DataSnapshot troSnapshot : dataSnapshot.getChildren()) {
-                                    Room room = troSnapshot.getValue(Room.class);
-                                    if (room != null) {
-                                        if (room.getStatus_room() != 1) {
-                                            roomlist.add(room);
-                                        }
-                                    }
-                                }
-                            }
-                            // Lấy dữ liệu từ child "ChungCu"
-                            else if (dataSnapshot.getKey().equals("ChungCuMini")) {
-                                for (DataSnapshot chungCuSnapshot : dataSnapshot.getChildren()) {
-                                    Room room = chungCuSnapshot.getValue(Room.class);
-                                    if (room != null) {
-                                        if (room.getStatus_room() != 1) {
-                                            roomlist.add(room);
-                                        }
-                                    }
+                        String key = dataSnapshot.getKey();
+                        if (key.equals("Tro") || key.equals("ChungCuMini")) {
+                            for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                                Room room = childSnapshot.getValue(Room.class);
+                                if (room != null && room.getStatus_room() != 1 && room.getStatus_room() != 1) {
+                                    roomlist.add(room);
                                 }
                             }
                         }
                     }
                 }
 
-                if (!"".equals(searchView.getQuery().toString())) {
+                if (!searchView.getQuery().toString().isEmpty()) {
                     searchList(searchView.getQuery().toString());
                 }
 
                 searchAdapter.notifyDataSetChanged();
+
             }
 
             @Override
@@ -129,5 +117,6 @@ public class SearchActivity extends AppCompatActivity {
             }
         }
         searchAdapter.searchDataList(searchList);
+
     }
 }

@@ -18,7 +18,18 @@ import com.example.timphongtro.Entity.Address;
 import com.example.timphongtro.Entity.ImagesRoomClass;
 import com.example.timphongtro.Entity.Room;
 import com.example.timphongtro.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> {
@@ -26,6 +37,9 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
     Context context;
     ArrayList<Room> list;
     int maxitemcount = 10;
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    FirebaseUser user = firebaseAuth.getCurrentUser();
+    Room room;
 
     public RoomAdapter(Context context, ArrayList<Room> list) {
         this.context = context;
@@ -41,9 +55,11 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        DecimalFormat decimalFormat = new DecimalFormat("#,###.###");
+        decimalFormat.setDecimalSeparatorAlwaysShown(false);
         Room room = list.get(position);
         holder.title_room.setText(room.getTitle_room());
-        holder.price_room.setText(String.valueOf(room.getPrice_room()));
+        holder.price_room.setText(decimalFormat.format(room.getPrice_room()));
         holder.area_room.setText(String.valueOf(room.getArea_room()));
         holder.people_room.setText(String.valueOf(room.getPerson_in_room()));
 
@@ -57,22 +73,70 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
         holder.cardViewRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String userID = "";
+                if(user != null) {
+                    userID = user.getUid();
+                }
                 Intent detailRoom = new Intent(context, DetailRoomActivity.class);
-//                detailRoom.putExtra("Title",list.get(holder.getAdapterPosition()).getTitle_room());
-//                detailRoom.putExtra("Price",String.valueOf(list.get(holder.getAdapterPosition()).getPrice_room()));
-//                detailRoom.putExtra("CombineAddress",list.get(holder.getAdapterPosition()).getAddress().getAddress_combine());
-//                detailRoom.putExtra("Phone",list.get(holder.getAdapterPosition()).getPhone());
-//                ImagesRoomClass images = list.get(holder.getAdapterPosition()).getImages();
-//                detailRoom.putExtra("Id_Room",list.get(holder.getAdapterPosition()).getId_room());
-//                detailRoom.putExtra("Image1",images.getImg1());
-//                detailRoom.putExtra("Image2",images.getImg2());
-                int typeRoom = list.get(holder.getAdapterPosition()).getType_room();
-                //Truyền object qua intent
                 detailRoom.putExtra("DataRoom", room.toString());
-
                 context.startActivity(detailRoom);
+                RecentlyRead(userID,holder);
             }
+
         });
+    }
+
+    private void RecentlyRead(String userID, MyViewHolder holder) {
+        if(user != null) {
+            room = list.get(holder.getAdapterPosition());
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("History/" + userID);
+            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    ArrayList<Room> recently_read = snapshot.getValue(new GenericTypeIndicator<ArrayList<Room>>() {
+                    });
+                    //Kiểm tra xem mảng có null không
+                    if (recently_read == null) {
+                        recently_read = new ArrayList<>();
+                    } else {
+                        // Tìm kiếm phần tử trong mảng và xoá nếu cần
+                        int existingIndex = -1;
+                        for (int i = 0; i < recently_read.size(); i++) {
+                            //Trả về vị trí của phần tử
+                            Room existingRoom = recently_read.get(i);
+                            //nếu đã tồn tại thì gán vị trí tồn tại để xoá
+                            if (existingRoom.getId_room().equals(room.getId_room())) {
+                                existingIndex = i;
+                                break;
+                            }
+                        }
+                        //xoá vị trí đã được gán ở trên
+                        if (existingIndex != -1) {
+                            recently_read.remove(existingIndex);
+                        }
+                    }
+                    //chưa tồn tại thì thêm vào mảng hoặc là đã xử lý xong đoạn trên
+                    recently_read.add(room);
+                    databaseReference.setValue(recently_read).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                        }
+                    });
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+        }
     }
 
     @Override

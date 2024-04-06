@@ -23,17 +23,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
 
     private ArrayList<Service> cartList;
     private Context context;
-
+    private DecimalFormat decimalFormat;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseUser user = firebaseAuth.getCurrentUser();
     private String userID = user.getUid();
-    private DatabaseReference cartRef = FirebaseDatabase.getInstance().getReference("users").child(userID).child("cart");
+    private DatabaseReference cartRef = FirebaseDatabase.getInstance().getReference("Cart/" + userID);
 
     public CartAdapter(Context context, ArrayList<Service> cartList) {
         this.context = context;
@@ -51,7 +52,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     public void onBindViewHolder(@NonNull CartAdapter.CartViewHolder holder, int position) {
         Service service = cartList.get(position);
         holder.name.setText(service.getTitle());
-        holder.price.setText(service.getPrice() + " VNĐ");
+        decimalFormat = new DecimalFormat("#,###.###");
+        decimalFormat.setDecimalSeparatorAlwaysShown(false);
+        holder.price.setText(decimalFormat.format(service.getPrice()) + " VNĐ");
         holder.amount.setText(String.valueOf(service.getAmount()));
         Glide.with(context).load(service.getImg1()).centerCrop().into(holder.image);
 
@@ -89,10 +92,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     }
 
     private void removeCartItem(Service service) {
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        String userID = user.getUid();
-
         cartRef.orderByChild("title").equalTo(service.getTitle()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -109,10 +108,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     }
 
     private void updateCartItem(Service service) {
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        String userID = user.getUid();
-
         cartRef.orderByChild("title").equalTo(service.getTitle()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -144,9 +139,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             super(itemview);
             plus = itemview.findViewById(R.id.textView_plus);
             minus = itemview.findViewById(R.id.textView_minus);
-            name = itemview.findViewById(R.id.Flowername);
+            name = itemview.findViewById(R.id.Cartname);
             price = itemview.findViewById(R.id.Price);
-            image = itemview.findViewById(R.id.Flowerimage);
+            image = itemview.findViewById(R.id.Cartimage);
             btn_remove = itemview.findViewById(R.id.button_remove);
             amount = itemview.findViewById(R.id.editText_amount);
         }

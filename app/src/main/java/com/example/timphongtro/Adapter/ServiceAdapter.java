@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.timphongtro.Activity.DetailRoomActivity;
+import com.example.timphongtro.Activity.LoginActivity;
 import com.example.timphongtro.Activity.ServiceDetailActivity;
 import com.example.timphongtro.Entity.Service;
 import com.example.timphongtro.R;
@@ -27,12 +28,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceViewHolder> {
 
     private ArrayList<Service> serviceList, cartItemList;
     private Context context;
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    private FirebaseUser user = firebaseAuth.getCurrentUser();
 
     public ServiceAdapter(Context context, ArrayList<Service> serviceList) {
         this.context = context;
@@ -50,39 +54,42 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceV
 
     @Override
     public void onBindViewHolder(@NonNull ServiceAdapter.ServiceViewHolder holder, int position) {
+        DecimalFormat decimalFormat = new DecimalFormat("#,###.###");
+        decimalFormat.setDecimalSeparatorAlwaysShown(false);
         Service service = serviceList.get(position);
         holder.name.setText(service.getTitle());
-        holder.price.setText(service.getPrice() + " VNĐ");
+        holder.price.setText(decimalFormat.format(service.getPrice()) + " VNĐ");
         Glide.with(context).load(service.getImg1()).centerCrop().into(holder.image);
 
         holder.btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cartItemList.add(service);
-                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    cartItemList.add(service);
                 String userID = user.getUid();
-                DatabaseReference serviceRef = FirebaseDatabase.getInstance().getReference("users").child(userID).child("cart");
+                DatabaseReference serviceRef = FirebaseDatabase.getInstance().getReference("Cart/" + userID);
 
                 serviceRef.orderByChild("title").equalTo(service.getTitle()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         boolean serviceExists = false;
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            snapshot.getKey();
-                            int currentAmount = snapshot.child("amount").getValue(Integer.class);
+                            int currentAmount = snapshot.getValue(Service.class).getAmount();
                             int updatedAmount = currentAmount + 1;
-                            snapshot.getRef().child("amount").setValue(updatedAmount);
+
+                            Service updatedService = snapshot.getValue(Service.class);
+                            updatedService.setAmount(updatedAmount);
+
+                            snapshot.getRef().setValue(updatedService);
                             serviceExists = true;
                             break;
                         }
 
                         if (!serviceExists) {
                             DatabaseReference newServiceRef = serviceRef.push();
-                            newServiceRef.child("title").setValue(service.getTitle());
-                            newServiceRef.child("img1").setValue(service.getImg1());
-                            newServiceRef.child("price").setValue(service.getPrice());
-                            newServiceRef.child("amount").setValue(1);
+
+                            service.setAmount(1);
+                            newServiceRef.setValue(service);
                         }
 
                         Toast.makeText(context, service.getTitle() + " added!", Toast.LENGTH_SHORT).show();
@@ -92,16 +99,21 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceV
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                     }
                 });
-            }
+            } else {
+                    Intent intent = new Intent(context, LoginActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+        }
         });
 
         holder.cardService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent detailRoom = new Intent(context, ServiceDetailActivity.class);
-                detailRoom.putExtra("ServiceData", service.toString());
-                detailRoom.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(detailRoom);
+                Intent intent = new Intent(context, ServiceDetailActivity.class);
+                intent.putExtra("ServiceData", service.toString());
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
             }
         });
     }

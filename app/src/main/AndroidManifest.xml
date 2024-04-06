@@ -29,14 +29,26 @@
             android:name=".Activity.UpdateInformationUserActivity"
             android:exported="false" />
         <activity
+            android:name=".Activity.scheduleVisitRoomActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.HistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.MyLovePostActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.InformationActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.UpdatePostRoomActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.CartActivity"
             android:exported="false" />
-         <activity
-         android:name=".Activity.ForgotPasswordActivity"
-         android:exported="false" />
+        <activity
+            android:name=".Activity.ForgotPasswordActivity"
+            android:exported="false" />
         <activity
             android:name=".Activity.ServiceDetailActivity"
             android:exported="false" />
