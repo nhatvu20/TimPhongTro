@@ -25,10 +25,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class HistoryActivity extends AppCompatActivity {
@@ -92,29 +94,28 @@ public class HistoryActivity extends AppCompatActivity {
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         rcvHistory.setLayoutManager(linearLayoutManager);
         rcvHistory.setAdapter(roomAdapter);
+        roomAdapter = new RoomAdapter(HistoryActivity.this, roomArrayList);
+        rcvHistory.setAdapter(roomAdapter);
 
         myHistoryRef = database.getReference("History/" + user.getUid());
         myHistoryRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                roomArrayList.clear();
-
-                List<String> roomIds = new ArrayList<>();
+                ArrayList<String> roomIds = new ArrayList<>();
 
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    String roomId = dataSnapshot.getValue(String.class);
+                    String roomId = dataSnapshot.getKey();
                     roomIds.add(roomId);
                 }
 
                 DatabaseReference roomsRef = database.getReference("rooms");
-
                 roomsRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot roomsSnapshot) {
-                        //Duyệt qua các nhánh to, ở đây là "Tro" và "ChungCuMini"
+                        // Duyệt qua các nhánh to, ở đây là "Tro" và "ChungCuMini"
                         for (DataSnapshot roomTypeSnapshot : roomsSnapshot.getChildren()) {
-                            //Duyệt qua các phòng trong nhánh
+                            // Duyệt qua các phòng trong nhánh
                             for (DataSnapshot roomSnapshot : roomTypeSnapshot.getChildren()) {
                                 String roomId = roomSnapshot.getKey();
                                 if (roomIds.contains(roomId)) {
@@ -124,8 +125,6 @@ public class HistoryActivity extends AppCompatActivity {
                             }
                         }
 
-                        // Sắp xếp ngược lại danh sách
-                        Collections.reverse(roomArrayList);
                         roomAdapter.notifyDataSetChanged();
 
                         if (roomArrayList.isEmpty()) {
@@ -139,16 +138,15 @@ public class HistoryActivity extends AppCompatActivity {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
+                        // Xử lý lỗi nếu cần thiết
                     }
                 });
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-
-        roomAdapter = new RoomAdapter(HistoryActivity.this, roomArrayList);
-        rcvHistory.setAdapter(roomAdapter);
     }
 }
