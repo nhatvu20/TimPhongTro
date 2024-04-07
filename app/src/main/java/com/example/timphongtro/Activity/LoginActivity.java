@@ -28,8 +28,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -146,10 +148,12 @@ public class LoginActivity extends AppCompatActivity {
 
     public void handleSignInTask(Task<GoogleSignInAccount> task) {
         try {
+
             GoogleSignInAccount account = task.getResult(ApiException.class);
             Intent i = new Intent(LoginActivity.this, MainActivity.class);
  //         final String getFullName = account.getDisplayName();
 //            final String getEmail = account.getEmail();
+//            FirebaseGoogleAuth(account);
             startActivity(i);
             finish();
 
@@ -159,4 +163,74 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+
+    private void FirebaseGoogleAuth(GoogleSignInAccount acct) {
+        AuthCredential authCredential = GoogleAuthProvider.getCredential(acct.getIdToken(),null);
+        mAuth.signInWithCredential(authCredential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()) {
+//                            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
+//                            fireStore.collection("users")
+//                                    .whereEqualTo("email", account.getEmail())
+//                                    .get()
+//                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                                        @Override
+//                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                                            if (task.isSuccessful()) {
+//                                                if (!task.getResult().isEmpty()) {
+//                                                    Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+//                                                    gotoMainActivity();
+//                                                    return;
+//                                                } else {
+//                                                    FirebaseUser mCurrent = mAuth.getCurrentUser();
+//                                                    String userId = mCurrent.getUid();
+//                                                    if(mCurrent != null) {
+//                                                        Map<String, Object> user = new HashMap<>();
+//                                                        user.put("uid", userId);
+//                                                        user.put("email", account.getEmail());
+//                                                        user.put("displayName", account.getDisplayName());
+//                                                        user.put("address", "");
+//                                                        user.put("avatar", "");
+//                                                        user.put("phoneNumber", "");
+//                                                        user.put("gender", "");
+//                                                        user.put("loginOption","google");
+//                                                        // Thêm dữ liệu vào Firestore
+//                                                        fireStore.collection("users").document(userId)
+//                                                                .set(user)
+//                                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                                                    @Override
+//                                                                    public void onSuccess(Void aVoid) {
+//                                                                        gotoMainActivity();
+//                                                                        Toast.makeText(LoginActivity.this, ""+ mAuth.getCurrentUser(), Toast.LENGTH_SHORT).show();
+//                                                                    }
+//                                                                })
+//                                                                .addOnFailureListener(new OnFailureListener() {
+//                                                                    @Override
+//                                                                    public void onFailure(@NonNull Exception e) {
+//                                                                        Log.w(TAG, "Error adding document", e);
+//                                                                    }
+//                                                                });
+//                                                        Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+//                                                        gotoMainActivity();
+//                                                    }
+//                                                }
+//                                            } else {
+//                                                Log.d(TAG, "Error getting documents: ", task.getException());
+//                                            }
+//                                        }
+//
+//                                    });
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+    private void gotoMainActivity() {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }
