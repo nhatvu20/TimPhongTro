@@ -18,19 +18,17 @@ import com.example.timphongtro.Entity.Address;
 import com.example.timphongtro.Entity.ImagesRoomClass;
 import com.example.timphongtro.Entity.Room;
 import com.example.timphongtro.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> {
 
@@ -88,52 +86,20 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
 
     private void RecentlyRead(String userID, MyViewHolder holder) {
         if(user != null) {
+
             room = list.get(holder.getAdapterPosition());
+            Date timeRead = new Date();
+            long timestamp = timeRead.getTime();
             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("History/" + userID);
             databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    ArrayList<String> recently_read = snapshot.getValue(new GenericTypeIndicator<ArrayList<String>>() {});
-                    // Kiểm tra xem mảng có null không
-                    if (recently_read == null) {
-                        recently_read = new ArrayList<>();
-                    } else {
-                        // Tìm kiếm ID phòng trong mảng và xoá nếu cần
-                        int existingIndex = -1;
-                        for (int i = 0; i < recently_read.size(); i++) {
-                            String existingRoomId = recently_read.get(i);
-                            // Nếu đã tồn tại ID phòng, gán vị trí tồn tại để xoá
-                            if (existingRoomId.equals(room.getId_room())) {
-                                existingIndex = i;
-                                break;
-                            }
-                        }
-                        // Xoá vị trí đã được gán ở trên
-                        if (existingIndex != -1) {
-                            recently_read.remove(existingIndex);
-                        }
-                    }
-                    // Chưa tồn tại thì thêm ID phòng vào mảng hoặc đã xử lý xong đoạn trên
-                    recently_read.add(room.getId_room());
-                    databaseReference.setValue(recently_read).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            // Xử lý thành công
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            // Xử lý lỗi
-                        }
-                    });
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    databaseReference.child(room.getId_room()).setValue(timestamp);
                 }
-
                 @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
+                public void onCancelled(@NonNull DatabaseError databaseError) {
                 }
             });
-
         }
     }
 
