@@ -6,21 +6,32 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
@@ -35,6 +46,7 @@ import com.example.timphongtro.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -47,6 +59,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -71,8 +84,9 @@ public class UpdatePostRoomActivity extends AppCompatActivity {
     //    String imageURL2;
     Uri uri;
     //    Uri uri2;
+    Bitmap photo;
     boolean isUploadImg1;
-    boolean isUploadImg2;
+    boolean isCamera;
 
     List<String> cities, districts, wards;
 
@@ -87,6 +101,9 @@ public class UpdatePostRoomActivity extends AppCompatActivity {
     ArrayList<HashMap<String, Object>> userLovePost;
     boolean isHasMyLovePost;
 
+    private ActivityResultLauncher<Intent> cameraLauncher, activityResultLauncher;
+    BottomSheetDialog dialog;
+    LinearLayout pickImgAlbum, pickImgCamera;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,7 +132,8 @@ public class UpdatePostRoomActivity extends AppCompatActivity {
                 finish();
             }
         });
-        ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        isCamera = false;
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
                 if (result.getResultCode() == Activity.RESULT_OK) {
@@ -123,30 +141,55 @@ public class UpdatePostRoomActivity extends AppCompatActivity {
                     uri = data.getData();
                     uploadPicture1.setImageURI(uri);
                     isUploadImg1 = true;
+                    isCamera = false;
+                    dialog.dismiss();
                 } else {
                     //Không có else vì đã có sẵn 1 bức ảnh
 //                    isUploadImg1 = false;
-//                    Toast.makeText(UpdatePostRoomActivity.this, "No image selected", Toast.LENGTH_LONG).show();
+                    Toast.makeText(UpdatePostRoomActivity.this, "No image selected", Toast.LENGTH_LONG).show();
                 }
             }
         });
+
+        cameraLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result.getResultCode() == RESULT_OK) {
+                Intent data = result.getData();
+                photo = (Bitmap) data.getExtras().get("data");
+                uploadPicture1.setImageBitmap(photo);
+                isUploadImg1 = true;
+//                uri = data.getData();
+//                uploadPicture1.setImageURI(uri);
+//                isUploadImg1 = true;
+                isCamera = true;
+                dialog.dismiss();
+            } else {
+                Toast.makeText(UpdatePostRoomActivity.this, "No image selected", Toast.LENGTH_LONG).show();
+            }
+        });
+
         btn_create_room.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(UpdatePostRoomActivity.this);
                 builder.setTitle("Xác nhận") // Thiết lập tiêu đề của Dialog
-                        .setMessage("Bạn có muốn đăng bài không?")
+                        .setMessage("Bạn có cập nhật bài đăng không?")
                         .setPositiveButton("Có", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 if (isUploadImg1) {
-                                    Uri uriTmp = uri;
-                                    if (containsSubstring(uriTmp.toString(), "https")) {
+                                    if(!isCamera) {
+                                        Uri uriTmp = uri;
+                                        //nếu như là ảnh mặc định trên firebase về
+                                        if (containsSubstring(uriTmp.toString(), "https")) {
 //                                        Toast.makeText(getApplicationContext(), "Vào", Toast.LENGTH_LONG).show();
-                                        imageURL1 = uri.toString();
-                                        onClickPushData();
-                                    } else {
+                                            imageURL1 = uri.toString();
+                                            onClickPushData();
+                                        } else {
+                                            //nếu là ảnh mình tải lên
 //                                        Toast.makeText(getApplicationContext(), "Vào2", Toast.LENGTH_LONG).show();
+                                            saveImage();
+                                        }
+                                    }else {
                                         saveImage();
                                     }
                                 } else
@@ -167,36 +210,69 @@ public class UpdatePostRoomActivity extends AppCompatActivity {
         uploadPicture1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent photoPicker = new Intent(Intent.ACTION_PICK);
-                photoPicker.setType("image/*");
-                activityResultLauncher.launch(photoPicker);
+//                Intent photoPicker = new Intent(Intent.ACTION_PICK);
+//                photoPicker.setType("image/*");
+//                activityResultLauncher.launch(photoPicker);
+                showBottomDialog();
             }
         });
     }
 
     public void saveImage() {
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("roomImgage").child(Objects.requireNonNull(uri.getLastPathSegment()));
+//        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("roomImgage").child(Objects.requireNonNull(uri.getLastPathSegment()));
         AlertDialog.Builder builder = new AlertDialog.Builder(UpdatePostRoomActivity.this);
         builder.setCancelable(false);
         builder.setView(R.layout.progress_layout);
         AlertDialog dialog = builder.create();
         dialog.show();
-        storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+        if (!isCamera) {
+//            Toast.makeText(getApplicationContext(),"vào",Toast.LENGTH_SHORT).show();
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("roomImgage").child(Objects.requireNonNull(uri.getLastPathSegment()));
+            storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                    while (!uriTask.isComplete()) ;
+                    Uri urlImage = uriTask.getResult();
+                    imageURL1 = String.valueOf(urlImage);
+                    onClickPushData();
+                    dialog.dismiss();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    dialog.dismiss();
+                }
+            });
+
+        } else {
+//            Toast.makeText(getApplicationContext(),"vào1",Toast.LENGTH_SHORT).show();
+            // Chuyển đổi Bitmap thành mảng byte
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            photo.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            byte[] imageData = baos.toByteArray();
+            String uniqueImageName = "image_" + System.currentTimeMillis() + ".jpg";
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            StorageReference storageRef = storage.getReference("roomImgage").child(uniqueImageName);
+            // Tạo một tên duy nhất cho file hình ảnh trên Firebase Sorage
+
+            // Tham chiếu đến file trên Firebase Storage
+
+            // Tải lên mảng byte lên Firebase Storage
+            UploadTask uploadTask = storageRef.putBytes(imageData);
+            uploadTask.addOnSuccessListener(taskSnapshot -> {
+                // Thành công, bạn có thể lấy URL của hình ảnh tải lên từ taskSnapshot.getDownloadUrl()
+                // Ví dụ: Uri downloadUri = taskSnapshot.getDownloadUrl();
                 Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
                 while (!uriTask.isComplete()) ;
                 Uri urlImage = uriTask.getResult();
                 imageURL1 = String.valueOf(urlImage);
                 onClickPushData();
                 dialog.dismiss();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                dialog.dismiss();
-            }
-        });
+            }).addOnFailureListener(exception -> {
+                // Xảy ra lỗi trong quá trình tải lên
+            });
+        }
     }
 
     void onClickPushData() {
@@ -712,5 +788,56 @@ public class UpdatePostRoomActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+    private void showBottomDialog() {
+        dialog = new BottomSheetDialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_choose_uploadimg);
+
+        ImageView cancelButton;
+        pickImgAlbum = dialog.findViewById(R.id.pickImgAlbum);
+        pickImgCamera = dialog.findViewById(R.id.pickImgCamera);
+        cancelButton = dialog.findViewById(R.id.cancelButton);
+
+        pickImgAlbum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent photoPicker = new Intent(Intent.ACTION_PICK);
+                photoPicker.setType("image/*");
+                activityResultLauncher.launch(photoPicker);
+            }
+        });
+
+        pickImgCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent cameraIntent = new Intent(ACTION_IMAGE_CAPTURE);
+//                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (ActivityCompat.checkSelfPermission(UpdatePostRoomActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(UpdatePostRoomActivity.this, new String[]{Manifest.permission.CAMERA}, 1);
+                    return;
+                }
+//                cameraIntent.setType("image/*");
+//                activityResultLauncher.launch(cameraIntent);
+
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                cameraLauncher.launch(cameraIntent);
+
+
+            }
+        });
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+        dialog.setCancelable(true);
     }
 }

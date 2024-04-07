@@ -35,7 +35,7 @@ public class ProfileFragment extends Fragment {
     FirebaseDatabase database;
     private String name;
     DatabaseReference userRef;
-    private TextView txtViewInfo;
+    private TextView txtViewInfo, tvprofile;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,7 +50,7 @@ public class ProfileFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         mUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        TextView btndangxuat, btnquanlyphong, btnlichhen, btnyeuthich, btnlichsu,txtviewEmail;
+        TextView btndangxuat, btnquanlyphong, btnlichhen, btnyeuthich, btnlichsu, txtviewEmail;
 
         txtViewInfo = view.findViewById(R.id.txtviewInfo);
         txtviewEmail = view.findViewById(R.id.txtviewEmail);
@@ -60,6 +60,7 @@ public class ProfileFragment extends Fragment {
         btnlichhen = view.findViewById(R.id.btnlichhen);
         btnlichsu = view.findViewById(R.id.btnlichsu);
         btnyeuthich = view.findViewById(R.id.btnyeuthich);
+        tvprofile = view.findViewById(R.id.tvprofile);
 
 
         btnlichsu.setOnClickListener(new View.OnClickListener() {
@@ -133,18 +134,21 @@ public class ProfileFragment extends Fragment {
         });
 
 
-
         if (mUser != null) {
             // Người dùng đã đăng nhập, bạn có thể lấy thông tin người dùng từ currentUser
             String uid = mUser.getUid();
             String email = mUser.getEmail();
+            txtviewEmail.setText(email);
             userRef = database.getReference("users/" + mUser.getUid());
             userRef.child("name").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {
                         name = snapshot.getValue(String.class);
-                        txtViewInfo.setText(name);
+                        if (!"".equals(name)) {
+                            txtViewInfo.setText(name);
+                            tvprofile.setText(getFirstLetter(name));
+                        }
                     }
                 }
 
@@ -162,5 +166,22 @@ public class ProfileFragment extends Fragment {
         }
 
 
+    }
+
+    public static String getFirstLetter(String input) {
+        String[] words = input.split(" ");
+        StringBuilder result = new StringBuilder();
+
+        if (words.length == 1) {
+            // Nếu chuỗi chỉ có 1 từ, lấy chữ đầu từ đó
+            result.append(words[0].charAt(0));
+        } else {
+            // Nếu chuỗi có nhiều từ, lấy chữ cái đầu của từ thứ 1 và 2
+            for (int i = 0; i < 2; i++) {
+                result.append(words[i].charAt(0));
+            }
+        }
+
+        return result.toString().toUpperCase();
     }
 }

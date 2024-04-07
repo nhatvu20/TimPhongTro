@@ -79,45 +79,52 @@ public class ServiceDetailActivity extends AppCompatActivity {
         btn_add_to_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cartItemList.add(service);
+
                 FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 String userID = user.getUid();
-                DatabaseReference serviceRef = FirebaseDatabase.getInstance().getInstance().getReference("Cart/" + userID);
 
-                //Truy vấn Firebase theo tilte, so sánh với title tại thời điểm get
-                serviceRef.orderByChild("title").equalTo(service.getTitle()).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        //mặc định false, coi như là đã tồn tại.
-                        boolean serviceExists = false;
-                        //chạy vòng lặp duyệt qua các nút con
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            int currentAmount = snapshot.getValue(Service.class).getAmount();
-                            int updatedAmount = currentAmount + 1;
+                if (user != null) {
+                    cartItemList.add(service);
+                    DatabaseReference serviceRef = FirebaseDatabase.getInstance().getInstance().getReference("Cart/" + userID);
 
-                            Service updatedService = snapshot.getValue(Service.class);
-                            updatedService.setAmount(updatedAmount);
+                    //Truy vấn Firebase theo tilte, so sánh với title tại thời điểm get
+                    serviceRef.orderByChild("title").equalTo(service.getTitle()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            //mặc định false, coi như là đã tồn tại.
+                            boolean serviceExists = false;
+                            //chạy vòng lặp duyệt qua các nút con
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                int currentAmount = snapshot.getValue(Service.class).getAmount();
+                                int updatedAmount = currentAmount + 1;
 
-                            snapshot.getRef().setValue(updatedService);
-                            serviceExists = true;
-                            break;
+                                Service updatedService = snapshot.getValue(Service.class);
+                                updatedService.setAmount(updatedAmount);
+
+                                snapshot.getRef().setValue(updatedService);
+                                serviceExists = true;
+                                break;
+                            }
+
+                            //nếu dịch vụ chưa tồn tại, push dữ liệu lên
+                            if (!serviceExists) {
+                                DatabaseReference newServiceRef = serviceRef.push();
+                                service.setAmount(1);
+                                newServiceRef.setValue(service);
+                            }
+
+                            Toast.makeText(ServiceDetailActivity.this, service.getTitle() + " added!", Toast.LENGTH_SHORT).show();
                         }
 
-                        //nếu dịch vụ chưa tồn tại, push dữ liệu lên
-                        if (!serviceExists) {
-                            DatabaseReference newServiceRef = serviceRef.push();
-                            service.setAmount(1);
-                            newServiceRef.setValue(service);
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
                         }
-
-                        Toast.makeText(ServiceDetailActivity.this, service.getTitle() + " added!", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                    }
-                });
+                    });
+                } else {
+                    Intent intent = new Intent(ServiceDetailActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
