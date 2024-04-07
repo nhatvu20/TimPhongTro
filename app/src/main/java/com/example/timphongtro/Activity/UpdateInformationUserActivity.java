@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,6 +41,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class UpdateInformationUserActivity extends AppCompatActivity {
 
@@ -103,8 +106,20 @@ public class UpdateInformationUserActivity extends AppCompatActivity {
         btnCapnhat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!TextUtils.isEmpty(txtname.getText().toString()) && !TextUtils.isEmpty(txtphone.getText().toString())){
+                        String regex = "^\\d{10}$";
+                        Pattern pattern = Pattern.compile(regex);
+                        Matcher matcher = pattern.matcher(txtphone.getText().toString());
+                        if (matcher.matches()) {
+                            uploadData();
+                        } else {
+                            Toast.makeText(getApplicationContext(),"Vui lòng nhập đúng định dạng số điện thoại",Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"Vui lòng nhập đầy đủ các trường thông tin",Toast.LENGTH_SHORT).show();
 
-                uploadData();
+                }
             }
         });
     }
