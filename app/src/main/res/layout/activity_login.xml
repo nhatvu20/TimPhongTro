@@ -93,28 +93,29 @@
 
         <LinearLayout
             android:id="@+id/layout_dangky"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="50dp"
 
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="10dp">
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
                 android:text="@string/textview_dangky"
+                android:textAlignment="center"
                 android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/textviewDangky"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
                 android:text="@string/btn_dangky"
+                android:textAlignment="center"
                 android:textColor="@android:color/holo_green_dark"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -132,10 +133,12 @@
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="50dp"
+                android:layout_weight="1"
                 android:src="@drawable/ic_google"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/layout_dangky" />
+
             <ImageView
                 android:id="@+id/imgFacebookSignin"
                 android:layout_width="wrap_content"
@@ -143,10 +146,12 @@
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="50dp"
+                android:layout_weight="1"
                 android:src="@drawable/ic_facebook"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/layout_dangky" />
+
             <ImageView
                 android:id="@+id/imgGuest"
                 android:layout_width="wrap_content"
@@ -154,7 +159,8 @@
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="50dp"
-                android:src="@drawable/ic_guest"
+                android:layout_weight="1"
+                android:src="@drawable/ic_user_khach"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/layout_dangky" />

@@ -1,5 +1,5 @@
 package com.example.timphongtro.Activity;
- 
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -13,7 +13,7 @@ import android.view.Gravity;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
-import android.widget.LinearLayout; 
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.timphongtro.Fragment.HomeFragment;
@@ -22,9 +22,14 @@ import com.example.timphongtro.Fragment.ProfileFragment;
 import com.example.timphongtro.Fragment.ServiceFragment;
 import com.example.timphongtro.R;
 import com.example.timphongtro.databinding.ActivityMainBinding;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -51,14 +56,41 @@ public class MainActivity extends AppCompatActivity {
             } else if (item.getItemId() == R.id.notification) {
                 if (user != null) {
                     replaceFragment(new NotificationFragment());
-                }
-                else {
+                } else {
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
-                    Toast.makeText(MainActivity.this,"Vui lòng đăng nhập để sử dụng chức năng này", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Vui lòng đăng nhập để sử dụng chức năng này", Toast.LENGTH_SHORT).show();
                 }
             } else if (item.getItemId() == R.id.profile) {
-                if (user != null) {
+//                if (user != null) {
+//                    boolean isGoogleSignIn = user.getProviderData().stream()
+//                            .anyMatch(userInfo -> userInfo.getProviderId().equals(GoogleAuthProvider.PROVIDER_ID));
+//
+//                    boolean isFirebaseSignIn = user.getProviderData().stream()
+//                            .anyMatch(userInfo -> userInfo.getProviderId().equals(EmailAuthProvider.PROVIDER_ID));
+//
+//                    if (isGoogleSignIn) {
+//                        // Người dùng đã đăng nhập bằng Google
+//                        // Do something khi người dùng đăng nhập bằng Google
+//                        replaceFragment(new ProfileFragment());
+//                    } else if (isFirebaseSignIn) {
+//                        // Người dùng đã đăng nhập bằng Firebase Authentication
+//                        // Do something khi người dùng đăng nhập bằng Firebase Authentication
+//                        replaceFragment(new ProfileFragment());
+//                    } else {
+//                        // Trường hợp khác, không phải đăng nhập bằng Google hoặc Firebase Authentication
+//                    }
+//                } else {
+//                    // Người dùng chưa đăng nhập
+//                    // Do something khi người dùng chưa đăng nhập
+//                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+//                    startActivity(intent);
+//                    Toast.makeText(MainActivity.this,"Vui lòng đăng nhập để sử dụng chức năng này", Toast.LENGTH_SHORT).show();
+//                }
+                GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
+                String id_user = user != null ? user.getUid() : (account != null ? account.getId() : "");
+
+                if (user != null || account != null) {
                     replaceFragment(new ProfileFragment());
                 }
                 else {
@@ -71,15 +103,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
         binding.fab.setOnClickListener(v -> {
-                showBottomDialog();
+            showBottomDialog();
         });
     }
 
     private void replaceFragment(Fragment fragment) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(binding.frameLayout.getId(), fragment);
-            fragmentTransaction.commit();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(binding.frameLayout.getId(), fragment);
+        fragmentTransaction.commit();
     }
 
     //Hiển thị khay dưới khi bấm dấu cộng
@@ -95,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
         house.setOnClickListener(v -> {
             dialog.dismiss();
-            Intent search = new Intent(this,SearchActivity.class);
+            Intent search = new Intent(this, SearchActivity.class);
             startActivity(search);
         });
 
@@ -106,14 +138,14 @@ public class MainActivity extends AppCompatActivity {
 
         contract.setOnClickListener(v -> {
             dialog.dismiss();
-                if(user != null) {
-                    Intent post = new Intent(this, PostRoomActivity.class);
-                    startActivity(post);
-                }else {
-                    Intent login = new Intent(MainActivity.this, LoginActivity.class);
-                    startActivity(login);
-                    Toast.makeText(MainActivity.this,"Bạn phải đăng nhập để sử dụng chức năng này",Toast.LENGTH_SHORT).show();
-                }
+            if (user != null) {
+                Intent post = new Intent(this, PostRoomActivity.class);
+                startActivity(post);
+            } else {
+                Intent login = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(login);
+                Toast.makeText(MainActivity.this, "Bạn phải đăng nhập để sử dụng chức năng này", Toast.LENGTH_SHORT).show();
+            }
         });
 
         cancelButton.setOnClickListener(v -> dialog.dismiss());
