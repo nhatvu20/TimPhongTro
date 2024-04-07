@@ -20,6 +20,9 @@ import com.example.timphongtro.Activity.ManagePostActivity;
 import com.example.timphongtro.Activity.MyLovePostActivity;
 import com.example.timphongtro.Activity.scheduleVisitRoomActivity;
 import com.example.timphongtro.R;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -32,6 +35,7 @@ public class ProfileFragment extends Fragment {
 
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
+    GoogleSignInAccount account;
     FirebaseDatabase database;
     private String name;
     DatabaseReference userRef;
@@ -61,94 +65,75 @@ public class ProfileFragment extends Fragment {
         btnlichsu = view.findViewById(R.id.btnlichsu);
         btnyeuthich = view.findViewById(R.id.btnyeuthich);
         tvprofile = view.findViewById(R.id.tvprofile);
-
-
-        btnlichsu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), HistoryActivity.class);
-                startActivity(intent);
-            }
-        });
-        btndangxuat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mAuth.signOut();
-                Intent i = new Intent(getActivity(), LoginActivity.class);
-                startActivity(i);
-                getActivity().finish();
-            }
-        });
-
-        btnquanlyphong.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mUser != null) {
-                    Intent mypost = new Intent(getActivity(), ManagePostActivity.class);
-                    startActivity(mypost);
-                } else {
-                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+//        account = GoogleSignIn.getLastSignedInAccount(getActivity().getApplicationContext());
+//        String id_user = mUser != null ? mUser.getUid() : (account != null ? account.getId() : "");
+        if(mUser != null){
+            btnlichsu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), HistoryActivity.class);
                     startActivity(intent);
                 }
-            }
-        });
-
-        btnyeuthich.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent lovepost = new Intent(getActivity(), MyLovePostActivity.class);
-                startActivity(lovepost);
-            }
-        });
-
-        btnlichhen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent schedule = new Intent(getActivity(), scheduleVisitRoomActivity.class);
-                startActivity(schedule);
-            }
-        });
-
-        txtViewInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(), UpdateInformationUserActivity.class);
-                startActivity(i);
-            }
-        });
-        database = FirebaseDatabase.getInstance();
-        userRef = database.getReference("users/" + mUser.getUid());
-        userRef.child("name").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    name = snapshot.getValue(String.class);
-                    txtViewInfo.setText(name);
+            });
+            btndangxuat.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mAuth.signOut();
+                    GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                            .requestEmail()
+                            .requestIdToken(getString(R.string.default_web_client_id)).build();
+                    GoogleSignIn.getClient(getActivity().getApplicationContext(), GoogleSignInOptions.DEFAULT_SIGN_IN).signOut();
+                    Intent i = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(i);
+                    getActivity().finish();
                 }
-            }
+            });
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            btnquanlyphong.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mUser != null) {
+                        Intent mypost = new Intent(getActivity(), ManagePostActivity.class);
+                        startActivity(mypost);
+                    } else {
+                        Intent intent = new Intent(getActivity(), LoginActivity.class);
+                        startActivity(intent);
+                    }
+                }
+            });
 
-            }
-        });
+            btnyeuthich.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent lovepost = new Intent(getActivity(), MyLovePostActivity.class);
+                    startActivity(lovepost);
+                }
+            });
 
+            btnlichhen.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent schedule = new Intent(getActivity(), scheduleVisitRoomActivity.class);
+                    startActivity(schedule);
+                }
+            });
 
-        if (mUser != null) {
-            // Người dùng đã đăng nhập, bạn có thể lấy thông tin người dùng từ currentUser
-            String uid = mUser.getUid();
-            String email = mUser.getEmail();
-            txtviewEmail.setText(email);
+            txtViewInfo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(getActivity(), UpdateInformationUserActivity.class);
+                    startActivity(i);
+                }
+            });
+            database = FirebaseDatabase.getInstance();
+
             userRef = database.getReference("users/" + mUser.getUid());
             userRef.child("name").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {
                         name = snapshot.getValue(String.class);
-                        if (!"".equals(name)) {
-                            txtViewInfo.setText(name);
-                            tvprofile.setText(getFirstLetter(name));
-                        }
+                        txtViewInfo.setText(name);
                     }
                 }
 
@@ -158,11 +143,39 @@ public class ProfileFragment extends Fragment {
                 }
             });
 
-        } else {
-            // Người dùng chưa đăng nhập hoặc đã đăng xuất
-            //Thi Chuyen qua form Login
-            Intent i = new Intent(getActivity(), LoginActivity.class);
-            startActivity(i);
+
+            if (mUser != null) {
+                // Người dùng đã đăng nhập, bạn có thể lấy thông tin người dùng từ currentUser
+                String uid = mUser.getUid();
+                String email = mUser.getEmail();
+//                String uid = mUser != null ? mUser.getUid() : (account != null ? account.getId() : "");;
+//                String email =mUser != null ? mUser.getUid() : (account != null ? account.getEmail() : "");
+                txtviewEmail.setText(email);
+                userRef = database.getReference("users/" + mUser.getUid());
+                userRef.child("name").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            name = snapshot.getValue(String.class);
+                            if (!"".equals(name)) {
+                                txtViewInfo.setText(name);
+                                tvprofile.setText(getFirstLetter(name));
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+            } else {
+                // Người dùng chưa đăng nhập hoặc đã đăng xuất
+                //Thi Chuyen qua form Login
+                Intent i = new Intent(getActivity(), LoginActivity.class);
+                startActivity(i);
+            }
         }
 
 
