@@ -5,6 +5,7 @@ import android.os.Bundle;
  
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -62,9 +63,14 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         btnForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickForgotPassWord();
+                if(!TextUtils.isEmpty(txtemail.getText().toString())) {
+                    onClickForgotPassWord();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "Vui lòng nhập Email.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }
-
             private void onClickForgotPassWord() {
                 FirebaseAuth auth = FirebaseAuth.getInstance();
 
@@ -85,54 +91,5 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         });
 
     }
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        EdgeToEdge.enable(this);
-//        setContentView(R.layout.activity_forgot_password);
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-//            return insets;
-//        });
-//
-//        mAuth = FirebaseAuth.getInstance();
-//        txtemail = (EditText) findViewById(R.id.txtemail);
-//        btnForgotPassword = (Button) findViewById(R.id.btnForgotPassword);
-//        btnBack = (Button) findViewById(R.id.btnBack);
-//
-//        btnBack.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent i = new Intent(ForgotPasswordActivity.this, LoginActivity.class);
-//                startActivity(i);
-//            }
-//        });
-//
-//        btnForgotPassword.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                onClickForgotPassWord();
-//            }
-//
-//            private void onClickForgotPassWord() {
-//                FirebaseAuth auth = FirebaseAuth.getInstance();
-//
-//                auth.sendPasswordResetEmail(txtemail.getText().toString())
-//                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                            @Override
-//                            public void onComplete(@NonNull Task<Void> task) {
-//                                if (task.isSuccessful()) {
-//                                    Toast.makeText(ForgotPasswordActivity.this,"Email sent.",Toast.LENGTH_SHORT).show();
-//                                }
-//                                else{
-//                                    Toast.makeText(ForgotPasswordActivity.this,"Can't send email.",Toast.LENGTH_SHORT).show();
-//                                }
-//                            }
-//                        });
-//
-//            }
-//        });
-//
-//    }
+
 }

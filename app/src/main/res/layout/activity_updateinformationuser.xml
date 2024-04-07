@@ -51,6 +51,7 @@
                 android:layout_margin="10dp"
                 android:drawableStart="@drawable/ic_sdt"
                 android:drawablePadding="5dp"
+                android:hint="Số Điện Thoại"
                 android:gravity="center_vertical"
                 android:text=""
                 android:textSize="20sp" />

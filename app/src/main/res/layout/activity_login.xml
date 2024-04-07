@@ -6,125 +6,159 @@
     android:layout_height="match_parent"
     tools:context=".Activity.LoginActivity">
 
-    <EditText
-        android:id="@+id/txtemail"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="80dp"
-        android:background="@drawable/border"
-        android:ems="10"
-        android:hint="@string/email"
-        android:inputType="text"
-        android:text=""
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
-
-
-
-
-    <Button
-        android:id="@+id/btnDangnhap"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="80dp"
-        android:background="@drawable/border"
-        android:text="@string/btn_dangnhap"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtpassword" />
-
     <LinearLayout
-        android:id="@+id/layout_forgotpassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="80dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="vertical"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnDangnhap">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/txtViewForgotPassword"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imageView8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="80dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="80dp"
+                app:srcCompat="@drawable/ic_timphongtro" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/txtemail"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/border"
+            android:ems="10"
+            android:hint="@string/email"
+            android:inputType="text"
+            android:text=""
+            android:textAlignment="center" />
+
+        <EditText
+            android:id="@+id/txtpassword"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="80dp"
+            android:background="@drawable/border"
+            android:ems="10"
+            android:hint="@string/matkhau"
+            android:inputType="textPassword"
+            android:text=""
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/btnDangnhap"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="80dp"
+            android:background="@drawable/border"
+            android:text="@string/btn_dangnhap" />
+
+        <LinearLayout
+            android:id="@+id/layout_forgotpassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/forgotpassword"
-            android:textColor="@android:color/holo_green_dark"
-            android:textSize="20sp" />
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="80dp"
+            android:orientation="vertical"
+            android:padding="10dp">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/holo_green_dark" />
+            <TextView
+                android:id="@+id/txtViewForgotPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/forgotpassword"
+                android:textColor="@android:color/holo_green_dark"
+                android:textSize="20sp" />
 
-    </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/holo_green_dark" />
 
-    <LinearLayout
-        android:id="@+id/layout_dangky"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="50dp"
+        </LinearLayout>
 
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_forgotpassword">
+        <LinearLayout
+            android:id="@+id/layout_dangky"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="50dp"
 
-        <TextView
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/textview_dangky"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textviewDangky"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="@string/btn_dangky"
+                android:textColor="@android:color/holo_green_dark"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/textview_dangky"
-            android:textSize="20sp" />
+            android:orientation="horizontal"
+            tools:ignore="MissingConstraints">
 
-        <TextView
-            android:id="@+id/textviewDangky"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
-            android:text="@string/btn_dangky"
-            android:textColor="@android:color/holo_green_dark"
-            android:textSize="20sp" />
+            <ImageView
+                android:id="@+id/imgGoogleSignin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="50dp"
+                android:src="@drawable/ic_google"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layout_dangky" />
+            <ImageView
+                android:id="@+id/imgFacebookSignin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="50dp"
+                android:src="@drawable/ic_facebook"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layout_dangky" />
+            <ImageView
+                android:id="@+id/imgGuest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="50dp"
+                android:src="@drawable/ic_guest"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layout_dangky" />
+        </LinearLayout>
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="80dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_timphongtro" />
-
-    <EditText
-        android:id="@+id/txtpassword"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="80dp"
-        android:background="@drawable/border"
-        android:ems="10"
-        android:hint="@string/matkhau"
-        android:inputType="textPassword"
-        android:text=""
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtemail" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
