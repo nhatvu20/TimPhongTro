@@ -38,7 +38,6 @@ public class HistoryActivity extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference myHistoryRef;
     ArrayList<Room> roomArrayList;
-    ArrayList<String> roomsLove;
     RoomAdapter roomAdapter;
     RecyclerView rcvHistory;
 
@@ -66,6 +65,9 @@ public class HistoryActivity extends AppCompatActivity {
                         myRef.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
+                                roomArrayList.clear();
+                                roomAdapter.notifyDataSetChanged();
+                                updateRecyclerViewVisibility(roomArrayList, rcvHistory, findViewById(R.id.nohistory));
                                 Toast.makeText(HistoryActivity.this, "Xóa lịch sử thành công", Toast.LENGTH_SHORT).show();
                             }
                         });
@@ -94,14 +96,13 @@ public class HistoryActivity extends AppCompatActivity {
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         rcvHistory.setLayoutManager(linearLayoutManager);
         rcvHistory.setAdapter(roomAdapter);
-        roomAdapter = new RoomAdapter(HistoryActivity.this, roomArrayList);
-        rcvHistory.setAdapter(roomAdapter);
 
         myHistoryRef = database.getReference("History/" + user.getUid());
         myHistoryRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+                roomArrayList.clear();
                 ArrayList<String> roomIds = new ArrayList<>();
 
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
@@ -126,14 +127,7 @@ public class HistoryActivity extends AppCompatActivity {
                         }
 
                         roomAdapter.notifyDataSetChanged();
-
-                        if (roomArrayList.isEmpty()) {
-                            rcvHistory.setVisibility(View.GONE);
-                            findViewById(R.id.nohistory).setVisibility(View.VISIBLE);
-                        } else {
-                            rcvHistory.setVisibility(View.VISIBLE);
-                            findViewById(R.id.nohistory).setVisibility(View.GONE);
-                        }
+                        updateRecyclerViewVisibility(roomArrayList, rcvHistory, findViewById(R.id.nohistory));
                     }
 
                     @Override
@@ -148,5 +142,18 @@ public class HistoryActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+
+        roomAdapter = new RoomAdapter(HistoryActivity.this, roomArrayList);
+        rcvHistory.setAdapter(roomAdapter);
+    }
+
+    private void updateRecyclerViewVisibility(ArrayList<Room> roomArrayList, RecyclerView rcvHistory, View noHistoryView) {
+        if (roomArrayList.isEmpty()) {
+            rcvHistory.setVisibility(View.GONE);
+            noHistoryView.setVisibility(View.VISIBLE);
+        } else {
+            rcvHistory.setVisibility(View.VISIBLE);
+            noHistoryView.setVisibility(View.GONE);
+        }
     }
 }

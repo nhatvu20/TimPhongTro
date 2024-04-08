@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.timphongtro.Adapter.CartAdapter;
+import com.example.timphongtro.Entity.Room;
 import com.example.timphongtro.Entity.Service;
 import com.example.timphongtro.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -93,14 +94,7 @@ public class CartActivity extends AppCompatActivity {
                     cartList.add(service);
                 }
                 cartAdapter.notifyDataSetChanged();
-
-                if (cartList.isEmpty()) {
-                    rcvcart.setVisibility(View.GONE);
-                    findViewById(R.id.nohistory).setVisibility(View.VISIBLE);
-                } else {
-                    rcvcart.setVisibility(View.VISIBLE);
-                    findViewById(R.id.nohistory).setVisibility(View.GONE);
-                }
+                updateRecyclerViewVisibility(cartList, rcvcart, findViewById(R.id.nohistory));
 
                 long totalPrice = calculateTotalPrice(cartList);
                 textView_total.setText(decimalFormat.format(totalPrice) + " VNĐ");
@@ -120,5 +114,15 @@ public class CartActivity extends AppCompatActivity {
         }
 
         return totalPrice;
+    }
+
+    private void updateRecyclerViewVisibility(ArrayList<Service> cartList, RecyclerView rcvcart, View noHistoryView) {
+        if (cartList.isEmpty()) {
+            rcvcart.setVisibility(View.GONE);
+            noHistoryView.setVisibility(View.VISIBLE);
+        } else {
+            rcvcart.setVisibility(View.VISIBLE);
+            noHistoryView.setVisibility(View.GONE);
+        }
     }
 }
