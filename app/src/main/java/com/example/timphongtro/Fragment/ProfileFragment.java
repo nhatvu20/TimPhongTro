@@ -54,7 +54,7 @@ public class ProfileFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         mUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        TextView btndangxuat, btnquanlyphong, btnlichhen, btnyeuthich, btnlichsu, txtviewEmail;
+        TextView btndangxuat, btnquanlyphong, btnlichhen, btnyeuthich, btnlichsu, txtviewEmail,btntrangcanhan;
 
         txtViewInfo = view.findViewById(R.id.txtviewInfo);
         txtviewEmail = view.findViewById(R.id.txtviewEmail);
@@ -65,9 +65,16 @@ public class ProfileFragment extends Fragment {
         btnlichsu = view.findViewById(R.id.btnlichsu);
         btnyeuthich = view.findViewById(R.id.btnyeuthich);
         tvprofile = view.findViewById(R.id.tvprofile);
+        btntrangcanhan = view.findViewById(R.id.btntrangcanhan);
 //        account = GoogleSignIn.getLastSignedInAccount(getActivity().getApplicationContext());
 //        String id_user = mUser != null ? mUser.getUid() : (account != null ? account.getId() : "");
         if(mUser != null){
+            btntrangcanhan.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //chuyen intent trang ca nhan
+                }
+            });
             btnlichsu.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -170,11 +177,6 @@ public class ProfileFragment extends Fragment {
                     }
                 });
 
-            } else {
-                // Người dùng chưa đăng nhập hoặc đã đăng xuất
-                //Thi Chuyen qua form Login
-                Intent i = new Intent(getActivity(), LoginActivity.class);
-                startActivity(i);
             }
         }
 

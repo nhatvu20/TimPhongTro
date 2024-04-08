@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnDangnhap;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
-    private ImageView imgGoogleSignin;
+    private ImageView imgGoogleSignin, imgGuest, imgFacebookSignin;
     private TextView textviewDangky;
     private TextView txtViewForgotPassword;
     GoogleSignInAccount account;
@@ -68,6 +68,8 @@ public class LoginActivity extends AppCompatActivity {
         btnDangnhap = (Button) findViewById(R.id.btnDangnhap);
         txtViewForgotPassword = (TextView) findViewById(R.id.txtViewForgotPassword);
         imgGoogleSignin = (ImageView) findViewById(R.id.imgGoogleSignin);
+        imgGuest = (ImageView) findViewById(R.id.imgGuest);
+        imgFacebookSignin = (ImageView) findViewById(R.id.imgFacebookSignin);
         btnDangnhap.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -104,6 +106,22 @@ public class LoginActivity extends AppCompatActivity {
             }
 
         });
+
+        imgFacebookSignin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "In Developing", LENGTH_SHORT).show();
+            }
+        });
+
+        imgGuest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent main = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(main);
+            }
+        });
+
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .requestIdToken(getString(R.string.default_web_client_id)).build();
