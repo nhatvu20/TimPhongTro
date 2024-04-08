@@ -30,7 +30,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
     private ArrayList<Service> cartList;
     private Context context;
-    private DecimalFormat decimalFormat;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseUser user = firebaseAuth.getCurrentUser();
     private String userID = user.getUid();
@@ -52,7 +51,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     public void onBindViewHolder(@NonNull CartAdapter.CartViewHolder holder, int position) {
         Service service = cartList.get(position);
         holder.name.setText(service.getTitle());
-        decimalFormat = new DecimalFormat("#,###.###");
+        DecimalFormat decimalFormat = new DecimalFormat("#,###.###");
         decimalFormat.setDecimalSeparatorAlwaysShown(false);
         holder.price.setText(decimalFormat.format(service.getPrice()) + " VNĐ");
         holder.amount.setText(String.valueOf(service.getAmount()));

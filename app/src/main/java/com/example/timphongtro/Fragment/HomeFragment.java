@@ -46,26 +46,23 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
-    String path = "/HaNoi";
-    String selectedspinner = "Hà Nội";
-    RecyclerView districtrecyclerView, roomrecyclerView;
-    ShimmerFrameLayout districtShimmer, roomShimmer;
-    DatabaseReference districtdatabase, roomdatabase, spinnerdatabase;
-    DistrictAdapter districtAdapter;
-    RoomAdapter roomAdapter;
-    ArrayList<DistrictData> districtlist;
-    ArrayList<Room> roomlist;
-    Spinner spinner;
-    ArrayList<String> spinnerlist;
-    ArrayAdapter<String> spinneradapter;
-    FirebaseStorage storage = FirebaseStorage.getInstance();
-    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    FirebaseUser user = firebaseAuth.getCurrentUser();
+    private String path = "/HaNoi", selectedSpinner = "Hà Nội";;
+    private ShimmerFrameLayout districtShimmer, roomShimmer;
+    private DatabaseReference spinnerRef;
+    private DistrictAdapter districtAdapter;
+    private RoomAdapter roomAdapter;
+    private ArrayList<DistrictData> districtArrayList;
+    private ArrayList<Room> roomArrayList;
+    private Spinner spinner;
+    private ArrayList<String> spinnerArrayList;
+    private ArrayAdapter<String> spinnerAdapter;
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    private FirebaseUser user = firebaseAuth.getCurrentUser();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -75,7 +72,7 @@ public class HomeFragment extends Fragment {
 
         //Auto Image Slider
         StorageReference storageReference = storage.getReference().child("HomeImageSlider");
-        ImageSlider imageSlider = view.findViewById(R.id.ImageSlider);
+        ImageSlider imageSlider = view.findViewById(R.id.imageSlider);
         storageReference.listAll().addOnSuccessListener(listResult -> {
             ArrayList<SlideModel> slideModels = new ArrayList<>();
             for (StorageReference item : listResult.getItems()) {
@@ -88,7 +85,6 @@ public class HomeFragment extends Fragment {
 
         });
 
-        //Bấm vào ô search nhảy sang activity mới
         TextView searchTextView = view.findViewById(R.id.searchEditText);
         searchTextView.setOnClickListener(v -> {
             FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -96,8 +92,8 @@ public class HomeFragment extends Fragment {
             startActivity(intent);
         });
 
-        TextView showmore = view.findViewById(R.id.showmore);
-        showmore.setOnClickListener(v -> {
+        TextView showMore = view.findViewById(R.id.showMore);
+        showMore.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), ShowMoreActivity.class);
             startActivity(intent);
         });
@@ -106,7 +102,7 @@ public class HomeFragment extends Fragment {
         LinearLayout tim_phong = view.findViewById(R.id.find_room);
         LinearLayout doi_binh_ga = view.findViewById(R.id.doi_binh_ga);
         LinearLayout doi_binh_nuoc = view.findViewById(R.id.doi_binh_nuoc);
-        LinearLayout giatla = view.findViewById(R.id.giat_la);
+        LinearLayout giat_la = view.findViewById(R.id.giat_la);
         LinearLayout sua_chua_dien_nuoc = view.findViewById(R.id.sua_chua_dien_nuoc);
         LinearLayout tu_van_thiet_ke_phong = view.findViewById(R.id.tu_van_thiet_ke_phong);
         LinearLayout cho_thue_noi_that = view.findViewById(R.id.cho_thue_noi_that);
@@ -135,7 +131,7 @@ public class HomeFragment extends Fragment {
         doi_binh_nuoc.setOnClickListener(v -> {
             openServiceActivity("doibinhnuoc");
         });
-        giatla.setOnClickListener(v -> {
+        giat_la.setOnClickListener(v -> {
             openServiceActivity("giatla");
         });
 
@@ -151,47 +147,45 @@ public class HomeFragment extends Fragment {
         });
 
         //Lấy dữ liệu từ database truyền vào spinner
-        spinner = view.findViewById(R.id.cityspinner);
-        spinnerdatabase = FirebaseDatabase.getInstance().getReference("city");
-        spinnerlist = new ArrayList<>();
-        fetchspinnerdatabase();
+        spinner = view.findViewById(R.id.city_spinner);
+        spinnerRef = FirebaseDatabase.getInstance().getReference("city");
+        spinnerArrayList = new ArrayList<>();
+        fetchSpinnerDatabase();
 
-        //Lấy dữ liệu từ database truyền vào districtrecyclerview
+        //Lấy dữ liệu từ database truyền vào rcv_district
         districtShimmer.startShimmer();
-        districtrecyclerView = view.findViewById(R.id.LocationExplore);
-        districtrecyclerView.setHasFixedSize(true);
-        districtrecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        districtlist = new ArrayList<>();
-        districtAdapter = new DistrictAdapter(getContext(), districtlist);
-        districtrecyclerView.setAdapter(districtAdapter);
-        fetchcityrecyclerviewdatabase();
+        RecyclerView rcv_district = view.findViewById(R.id.rcv_district);
+        rcv_district.setHasFixedSize(true);
+        rcv_district.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        districtArrayList = new ArrayList<>();
+        districtAdapter = new DistrictAdapter(getContext(), districtArrayList);
+        rcv_district.setAdapter(districtAdapter);
+        fetchCityDatabase();
 
-        //Lấy dữ liệu từ database truyền vào roomrecyclerview
+        //Lấy dữ liệu từ database truyền vào rcv_room
         roomShimmer.startShimmer();
-        roomrecyclerView = view.findViewById(R.id.RoomrecyclerView);
-        roomrecyclerView.setHasFixedSize(true);
-        roomrecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        roomlist = new ArrayList<>();
-        roomAdapter = new RoomAdapter(getContext(), roomlist);
-        roomrecyclerView.setAdapter(roomAdapter);
-        fetchroomrecyclerviewdatabse();
+        RecyclerView rcv_room = view.findViewById(R.id.rcv_room);
+        rcv_room.setHasFixedSize(true);
+        rcv_room.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        roomArrayList = new ArrayList<>();
+        roomAdapter = new RoomAdapter(getContext(), roomArrayList);
+        rcv_room.setAdapter(roomAdapter);
+        fetchRoomDatabase();
     }
 
-    private void fetchroomrecyclerviewdatabse() {
-        roomdatabase = FirebaseDatabase.getInstance().getReference("rooms");
-        roomdatabase.addValueEventListener(new ValueEventListener() {
+    private void fetchRoomDatabase() {
+        DatabaseReference roomRef = FirebaseDatabase.getInstance().getReference("rooms");
+        roomRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                roomlist.clear();
+                roomArrayList.clear();
                 if (snapshot.exists()) {
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        String key = dataSnapshot.getKey();
-                        if (key.equals("Tro") || key.equals("ChungCuMini")) {
-                            for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
-                                Room room = childSnapshot.getValue(Room.class);
-                                if (room != null && room.getStatus_room() != 1 && room.getAddress().getCity().equals(selectedspinner)) {
-                                    roomlist.add(room);
-                                }
+                    for (DataSnapshot roomType : snapshot.getChildren()) {
+
+                        for (DataSnapshot roomSnapshot : roomType.getChildren()) {
+                            Room room = roomSnapshot.getValue(Room.class);
+                            if (room != null && room.getStatus_room() != 1 && room.getAddress().getCity().equals(selectedSpinner)) {
+                                roomArrayList.add(room);
                             }
                         }
                     }
@@ -203,23 +197,23 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Toast.makeText(getContext(), "Can't fetch room from firebase", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void fetchcityrecyclerviewdatabase() {
+    private void fetchCityDatabase() {
 
-        districtdatabase = FirebaseDatabase.getInstance().getReference("city" + path);
-        districtdatabase.addValueEventListener(new ValueEventListener() {
+        DatabaseReference districtRef = FirebaseDatabase.getInstance().getReference("city" + path);
+        districtRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                districtlist.clear();
+                districtArrayList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     if (dataSnapshot.getKey().equals("district")) {
                         for (DataSnapshot districtSnapshot : dataSnapshot.getChildren()) {
                             DistrictData districtData = districtSnapshot.getValue(DistrictData.class);
-                            districtlist.add(districtData);
+                            districtArrayList.add(districtData);
                         }
                     }
                 }
@@ -235,42 +229,41 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void fetchspinnerdatabase() {
-        spinnerdatabase.addValueEventListener(new ValueEventListener() {
+    private void fetchSpinnerDatabase() {
+        spinnerRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                spinnerlist.clear();
+                spinnerArrayList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    String spinnername = dataSnapshot.child("name").getValue(String.class);
-                    spinnerlist.add(spinnername);
+                    String spinner_name = dataSnapshot.child("name").getValue(String.class);
+                    spinnerArrayList.add(spinner_name);
                 }
-                spinneradapter = new ArrayAdapter<>(requireContext(), R.layout.spinner_style, spinnerlist);
-                spinneradapter.setDropDownViewResource(R.layout.spinner_dropdown);
-                spinner.setAdapter(spinneradapter);
+                spinnerAdapter = new ArrayAdapter<>(requireContext(), R.layout.spinner_style, spinnerArrayList);
+                spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown);
+                spinner.setAdapter(spinnerAdapter);
 
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        selectedspinner = spinnerlist.get(position);
-                        if (selectedspinner.equals("Hà Nội")) {
+                        selectedSpinner = spinnerArrayList.get(position);
+                        if (selectedSpinner.equals("Hà Nội")) {
                             path = "/HaNoi";
-                        } else if (selectedspinner.equals("Hồ Chí Minh")) {
+                        } else if (selectedSpinner.equals("Hồ Chí Minh")) {
                             path = "/HoChiMinh";
                         }
-                        fetchcityrecyclerviewdatabase();
-                        fetchroomrecyclerviewdatabse();
+                        fetchCityDatabase();
+                        fetchRoomDatabase();
                     }
 
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
-                        Toast.makeText(getContext(), "Can't fetch spinner's items from firebase", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Toast.makeText(getContext(), "Can't fetch spinner's items from firebase", Toast.LENGTH_SHORT).show();
             }
         });
     }

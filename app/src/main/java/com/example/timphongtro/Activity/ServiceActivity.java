@@ -8,16 +8,11 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.timphongtro.Adapter.ServiceAdapter;
 import com.example.timphongtro.Entity.Service;
-import com.example.timphongtro.Fragment.HomeFragment;
-import com.example.timphongtro.Fragment.ServiceFragment;
 import com.example.timphongtro.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

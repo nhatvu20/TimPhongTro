@@ -5,17 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
@@ -41,6 +36,8 @@ public class ServiceDetailActivity extends AppCompatActivity {
     private ImageView button_cart, imageView_back;
     private Service service;
     private ArrayList<Service> cartItemList = new ArrayList<>();;
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    private FirebaseUser user = firebaseAuth.getCurrentUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +62,12 @@ public class ServiceDetailActivity extends AppCompatActivity {
         button_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ServiceDetailActivity.this, CartActivity.class);
+                Intent intent;
+                if (user != null) {
+                    intent = new Intent(ServiceDetailActivity.this, CartActivity.class);
+                } else {
+                    intent = new Intent(ServiceDetailActivity.this, LoginActivity.class);
+                }
                 startActivity(intent);
             }
         });
@@ -80,11 +82,8 @@ public class ServiceDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                String userID = user.getUid();
-
                 if (user != null) {
+                    String userID = user.getUid();
                     cartItemList.add(service);
                     DatabaseReference serviceRef = FirebaseDatabase.getInstance().getInstance().getReference("Cart/" + userID);
 

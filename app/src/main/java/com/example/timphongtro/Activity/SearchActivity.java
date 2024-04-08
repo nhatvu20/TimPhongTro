@@ -1,7 +1,6 @@
 package com.example.timphongtro.Activity;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.timphongtro.Entity.Room;
 import com.example.timphongtro.Adapter.SearchAdapter;
 import com.example.timphongtro.R;
-import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,9 +23,9 @@ import java.util.ArrayList;
 
 public class SearchActivity extends AppCompatActivity {
     RecyclerView roomrecyclerView;
-    DatabaseReference roomdatabase;
+    DatabaseReference roomRef;
     SearchAdapter searchAdapter;
-    ArrayList<Room> roomlist;
+    ArrayList<Room> roomArrayList;
     SearchView searchView;
     String district;
 
@@ -36,13 +34,13 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        roomdatabase = FirebaseDatabase.getInstance().getReference("rooms");
-        roomlist = new ArrayList<>();
-        fetchroomrecyclerviewdatabse();
+        roomRef = FirebaseDatabase.getInstance().getReference("rooms");
+        roomArrayList = new ArrayList<>();
+        fetchRoomDatabase();
 
 
-        ImageView backbutton = findViewById(R.id.backbutton);
-        backbutton.setOnClickListener(v -> {
+        ImageView btn_back = findViewById(R.id.btn_back);
+        btn_back.setOnClickListener(v -> {
             finish();
         });
         district = "";
@@ -67,33 +65,29 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-        roomrecyclerView = findViewById(R.id.showmorelist);
+        roomrecyclerView = findViewById(R.id.rcv_showmore);
         roomrecyclerView.setHasFixedSize(true);
         roomrecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        searchAdapter = new SearchAdapter(this, roomlist);
+        searchAdapter = new SearchAdapter(this, roomArrayList);
         roomrecyclerView.setAdapter(searchAdapter);
 
     }
 
-    private void fetchroomrecyclerviewdatabse() {
-        roomdatabase.addValueEventListener(new ValueEventListener() {
+    private void fetchRoomDatabase() {
+        roomRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                roomlist.clear();
+                roomArrayList.clear();
                 if (snapshot.exists()) {
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        String key = dataSnapshot.getKey();
-                        if (key.equals("Tro") || key.equals("ChungCuMini")) {
-                            for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
-                                Room room = childSnapshot.getValue(Room.class);
-                                if (room != null && room.getStatus_room() != 1 && room.getStatus_room() != 1) {
-                                    roomlist.add(room);
-                                }
+                    for (DataSnapshot roomType : snapshot.getChildren()) {
+                        for (DataSnapshot roomSnapshot : roomType.getChildren()) {
+                            Room room = roomSnapshot.getValue(Room.class);
+                            if (room != null && room.getStatus_room() != 1) {
+                                roomArrayList.add(room);
                             }
                         }
                     }
                 }
-
                 if (!searchView.getQuery().toString().isEmpty()) {
                     searchList(searchView.getQuery().toString());
                 }
@@ -111,7 +105,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private void searchList(String text) {
         ArrayList<Room> searchList = new ArrayList<>();
-        for (Room room : roomlist) {
+        for (Room room : roomArrayList) {
             if (room.getTitle_room().toLowerCase().contains(text.toLowerCase()) || room.getAddress().getDistrict().toLowerCase().contains(text.toLowerCase())) {
                 searchList.add(room);
             }
