@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.timphongtro.R;
 import com.google.android.material.tabs.TabLayout;
@@ -17,6 +19,7 @@ import com.google.android.material.tabs.TabLayout;
 public class scheduleVisitRoomActivity extends AppCompatActivity {
     ImageView imageViewBack;
     TabLayout tablayout;
+    RecyclerView rcvScheduleVisit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +31,10 @@ public class scheduleVisitRoomActivity extends AppCompatActivity {
 //            return insets;
 //        });
         imageViewBack = findViewById(R.id.imageViewBack);
+        rcvScheduleVisit = findViewById(R.id.rcvScheduleVisit);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(scheduleVisitRoomActivity.this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        rcvScheduleVisit.setLayoutManager(linearLayoutManager);
         imageViewBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

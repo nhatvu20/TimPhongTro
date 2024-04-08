@@ -69,7 +69,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
                         android:gravity="center_vertical"
-                        android:text="Nhất Vũ"
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         tools:ignore="MissingConstraints">
@@ -127,6 +126,18 @@
                 app:drawableStartCompat="@drawable/ic_quanlyphong" />
 
             <TextView
+                android:id="@+id/btnyeuthich"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="8dp"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="Phòng yêu thích"
+                android:textSize="20sp"
+                app:drawableStartCompat="@drawable/ic_yeuthich" />
+
+            <TextView
                 android:id="@+id/btnlichhen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -161,17 +172,6 @@
                 android:textSize="20sp"
                 app:drawableStartCompat="@drawable/ic_dangxuat" />
 
-            <TextView
-                android:id="@+id/btnyeuthich"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_marginTop="8dp"
-                android:drawablePadding="10dp"
-                android:gravity="center_vertical"
-                android:padding="15dp"
-                android:text="Phòng yêu thích"
-                android:textSize="20sp"
-                app:drawableStartCompat="@drawable/ic_yeuthich" />
         </LinearLayout>
 
     </LinearLayout>
