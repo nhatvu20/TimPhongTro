@@ -79,8 +79,8 @@ public class PostRoomActivity extends AppCompatActivity {
     ActivityResultLauncher<Intent> activityResultLauncher;
     LinearLayout pickImgAlbum, pickImgCamera;
     CheckBox checkboxtoilet, checkboxfloor, checkbox_time_flex, checkboxfingerprint, checkboxbacony, checkboxpet, checkbox_w_owner, checkbox_air_condition, checkbox_heater, checkbox_curtain, checkboxfridge, checkboxbed, checkboxwardrobe, checkbox_washing_machine, checkboxsofa, checkboxNam, checkboxNu;
-    RadioButton radiobtnPhongTrong;
-    RadioButton radiobtnDaChoThue;
+//    RadioButton radiobtnPhongTrong;
+//    RadioButton radiobtnDaChoThue;
 
     ImageView uploadPicture1, uploadPicture2;
     String imageURL1;
@@ -386,14 +386,14 @@ public class PostRoomActivity extends AppCompatActivity {
 //        }
 
         int status_room = 0;
-        if (radiobtnPhongTrong.isChecked() || radiobtnDaChoThue.isChecked()) {
-            if (radiobtnDaChoThue.isChecked()) {
-                status_room = 1;
-            }
-        } else {
-            isValid = false;
-            radiobtnTro.setError("Vui lòng chọn tình trạng phòng");
-        }
+//        if (radiobtnPhongTrong.isChecked() || radiobtnDaChoThue.isChecked()) {
+//            if (radiobtnDaChoThue.isChecked()) {
+//                status_room = 1;
+//            }
+//        } else {
+//            isValid = false;
+//            radiobtnTro.setError("Vui lòng chọn tình trạng phòng");
+//        }
 
         if (isEmpty(edtArea)) {
             edtArea.setError("Vui lòng nhập diện tích");
@@ -608,8 +608,8 @@ public class PostRoomActivity extends AppCompatActivity {
         checkboxNam = (CheckBox) this.<View>findViewById(R.id.checkboxNam);
         checkboxNu = (CheckBox) this.<View>findViewById(R.id.checkboxNu);
 
-        radiobtnPhongTrong = (RadioButton) this.<View>findViewById(R.id.radiobtnPhongTrong);
-        radiobtnDaChoThue = (RadioButton) this.<View>findViewById(R.id.radiobtnDaChoThue);
+//        radiobtnPhongTrong = (RadioButton) this.<View>findViewById(R.id.radiobtnPhongTrong);
+//        radiobtnDaChoThue = (RadioButton) this.<View>findViewById(R.id.radiobtnDaChoThue);
 
         btn_create_room = (Button) this.<View>findViewById(R.id.btn_create_room);
 

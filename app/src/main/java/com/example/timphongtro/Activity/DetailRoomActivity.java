@@ -46,6 +46,8 @@ import com.example.timphongtro.Entity.FurnitureClass;
 import com.example.timphongtro.Entity.Room;
 import com.example.timphongtro.Entity.ScheduleVisitRoomClass;
 import com.example.timphongtro.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -96,6 +98,7 @@ public class DetailRoomActivity extends AppCompatActivity {
 
     MaterialButton btnConfirm, btnCancel, btnZalo;
     EditText edtYourName, edtPhone, edtNote;
+    BottomSheetDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -465,7 +468,7 @@ public class DetailRoomActivity extends AppCompatActivity {
 
     private void showBottomDialog() {
 
-        final BottomSheetDialog dialog = new BottomSheetDialog(DetailRoomActivity.this);
+        dialog = new BottomSheetDialog(DetailRoomActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         dialog.setContentView(R.layout.dialog_book_room);
@@ -560,8 +563,19 @@ public class DetailRoomActivity extends AppCompatActivity {
         if (isValid) {
             ScheduleVisitRoomClass schedule = new ScheduleVisitRoomClass(edtYourName.getText().toString(), phone, edtNote.getText().toString(), edtTime.getText().toString(), roomData.getId_own_post(), user.getUid(), "0", roomData.getId_room()); // status create
             if (user != null) {
-                scheduleVisitRoomref.setValue(schedule);
-//                Toast.makeText(getApplicationContext(), "Chức năng đang phát triển", Toast.LENGTH_LONG).show();
+                scheduleVisitRoomref.setValue(schedule).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        dialog.dismiss();
+                        Toast.makeText(getApplicationContext(), "Đặt lịch thành công", Toast.LENGTH_LONG).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "Đặt lịch thất bại", Toast.LENGTH_LONG).show();
+                    }
+                });
+
             }
         } else {
             Toast.makeText(getApplicationContext(), "Vui lòng nhập đầy đủ các trường yêu cầu", Toast.LENGTH_LONG).show();
