@@ -36,14 +36,16 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    private FirebaseUser user = firebaseAuth.getCurrentUser();
+    private FirebaseUser user;
+    GoogleSignInAccount account;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
+        user = firebaseAuth.getCurrentUser();
         //Sử dụng ViewBinding để tối ưu về lượng code cho thanh bottom nav chuyển tab
         replaceFragment(new HomeFragment());
         binding.bottomNavigationView.setBackground(null);
@@ -59,44 +61,16 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
-                    Toast.makeText(MainActivity.this, "Vui lòng đăng nhập để sử dụng chức năng này", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(MainActivity.this, "Vui lòng đăng nhập để sử dụng chức năng này", Toast.LENGTH_SHORT).show();
                 }
             } else if (item.getItemId() == R.id.profile) {
-//                if (user != null) {
-//                    boolean isGoogleSignIn = user.getProviderData().stream()
-//                            .anyMatch(userInfo -> userInfo.getProviderId().equals(GoogleAuthProvider.PROVIDER_ID));
-//
-//                    boolean isFirebaseSignIn = user.getProviderData().stream()
-//                            .anyMatch(userInfo -> userInfo.getProviderId().equals(EmailAuthProvider.PROVIDER_ID));
-//
-//                    if (isGoogleSignIn) {
-//                        // Người dùng đã đăng nhập bằng Google
-//                        // Do something khi người dùng đăng nhập bằng Google
-//                        replaceFragment(new ProfileFragment());
-//                    } else if (isFirebaseSignIn) {
-//                        // Người dùng đã đăng nhập bằng Firebase Authentication
-//                        // Do something khi người dùng đăng nhập bằng Firebase Authentication
-//                        replaceFragment(new ProfileFragment());
-//                    } else {
-//                        // Trường hợp khác, không phải đăng nhập bằng Google hoặc Firebase Authentication
-//                    }
-//                } else {
-//                    // Người dùng chưa đăng nhập
-//                    // Do something khi người dùng chưa đăng nhập
-//                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-//                    startActivity(intent);
-//                    Toast.makeText(MainActivity.this,"Vui lòng đăng nhập để sử dụng chức năng này", Toast.LENGTH_SHORT).show();
-//                }
-                GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
-                String id_user = user != null ? user.getUid() : (account != null ? account.getId() : "");
-
-                if (user != null || account != null) {
+                if (user != null) {
                     replaceFragment(new ProfileFragment());
                 }
                 else {
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
-                    Toast.makeText(MainActivity.this,"Vui lòng đăng nhập để sử dụng chức năng này", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(MainActivity.this,"Vui lòng đăng nhập để sử dụng chức năng này", Toast.LENGTH_SHORT).show();
                 }
             }
             return true;
@@ -144,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 Intent login = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(login);
-                Toast.makeText(MainActivity.this, "Bạn phải đăng nhập để sử dụng chức năng này", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainActivity.this, "Bạn phải đăng nhập để sử dụng chức năng này", Toast.LENGTH_SHORT).show();
             }
         });
 

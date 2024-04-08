@@ -423,7 +423,7 @@ public class DetailRoomActivity extends AppCompatActivity {
     }
 
     private void makePhoneCall() {
-        Intent intent = new Intent(Intent.ACTION_DIAL);
+        Intent intent = new Intent(Intent.ACTION_CALL);
         intent.setData(Uri.parse("tel:" + roomData.getPhone()));
 
         if (intent.resolveActivity(getPackageManager()) != null) {
