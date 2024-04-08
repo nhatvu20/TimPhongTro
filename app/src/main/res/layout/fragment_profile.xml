@@ -60,6 +60,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
@@ -68,7 +69,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
                         android:gravity="center_vertical"
-                        android:text="Nhất Vũ"
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         tools:ignore="MissingConstraints">
@@ -86,15 +86,33 @@
                     </TextView>
                 </LinearLayout>
 
+                <ImageView
+                    android:id="@+id/imageView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    app:srcCompat="@drawable/ic_next" />
+
 
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cardView2"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="1000dp">
+            android:layout_height="466dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/btntrangcanhan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="Trang cá nhân"
+                android:textSize="20sp"
+                app:drawableStartCompat="@drawable/ic_king" />
 
             <TextView
                 android:id="@+id/btnquanlyphong"
@@ -105,10 +123,19 @@
                 android:padding="15dp"
                 android:text="@string/quanlyphong"
                 android:textSize="20sp"
-                app:drawableStartCompat="@drawable/ic_quanlyphong"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:drawableStartCompat="@drawable/ic_quanlyphong" />
+
+            <TextView
+                android:id="@+id/btnyeuthich"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="8dp"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="Phòng yêu thích"
+                android:textSize="20sp"
+                app:drawableStartCompat="@drawable/ic_yeuthich" />
 
             <TextView
                 android:id="@+id/btnlichhen"
@@ -119,93 +146,34 @@
                 android:padding="15dp"
                 android:text="@string/lichhen"
                 android:textSize="20sp"
-                app:drawableStartCompat="@drawable/ic_lichhen"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnquanlyphong" />
+                app:drawableStartCompat="@drawable/ic_lichhen" />
 
-            <TextView
-                android:id="@+id/btnyeuthich"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:drawablePadding="10dp"
-                android:gravity="center_vertical"
-                android:padding="15dp"
-                android:text="Phòng yêu thích"
-                android:textSize="20sp"
-                app:drawableStartCompat="@drawable/ic_yeuthich"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnlichhen" />
-
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="horizontal">-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/btnlichhen"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="70dp"-->
-<!--                        android:drawableStart="@drawable/ic_lichhen"-->
-<!--                        android:drawablePadding="10dp"-->
-<!--                        android:gravity="center_vertical"-->
-<!--                        android:padding="15dp"-->
-<!--                        android:text="@string/lichhen"-->
-<!--                        android:textSize="20sp"-->
-<!--                        app:layout_constraintStart_toStartOf="@+id/btnquanlyphong"-->
-<!--                        app:layout_constraintTop_toBottomOf="@+id/btnquanlyphong" />-->
-<!--                </LinearLayout>-->
-
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="horizontal">-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/btnyeuthich"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="70dp"-->
-<!--                        android:drawableStart="@drawable/ic_phongyeuthich"-->
-<!--                        android:drawablePadding="10dp"-->
-<!--                        android:gravity="center_vertical"-->
-<!--                        android:padding="15dp"-->
-<!--                        android:text="Phòng yêu thích"-->
-<!--                        android:textSize="20sp"-->
-<!--                        app:layout_constraintStart_toStartOf="@+id/btnquanlyphong"-->
-<!--                        app:layout_constraintTop_toBottomOf="@+id/btnquanlyphong" />-->
-<!--                </LinearLayout>-->
-
-<!--            </LinearLayout>-->
             <TextView
                 android:id="@+id/btnlichsu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
                 android:padding="15dp"
                 android:text="Lịch sử xem bài"
                 android:textSize="20sp"
-                app:drawableStartCompat="@drawable/ic_history"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnyeuthich" />
+                app:drawableStartCompat="@drawable/ic_history" />
 
             <TextView
                 android:id="@+id/btndangxuat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
                 android:padding="15dp"
                 android:text="@string/dangxuat"
                 android:textSize="20sp"
-                app:drawableStartCompat="@drawable/ic_dangxuat"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnlichsu" />
+                app:drawableStartCompat="@drawable/ic_dangxuat" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

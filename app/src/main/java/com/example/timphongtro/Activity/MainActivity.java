@@ -1,5 +1,5 @@
 package com.example.timphongtro.Activity;
- 
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -13,7 +13,7 @@ import android.view.Gravity;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
-import android.widget.LinearLayout; 
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.timphongtro.Fragment.HomeFragment;
@@ -22,23 +22,30 @@ import com.example.timphongtro.Fragment.ProfileFragment;
 import com.example.timphongtro.Fragment.ServiceFragment;
 import com.example.timphongtro.R;
 import com.example.timphongtro.databinding.ActivityMainBinding;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    private FirebaseUser user = firebaseAuth.getCurrentUser();
+    private FirebaseUser user;
+    GoogleSignInAccount account;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
+        user = firebaseAuth.getCurrentUser();
         //Sử dụng ViewBinding để tối ưu về lượng code cho thanh bottom nav chuyển tab
         replaceFragment(new HomeFragment());
         binding.bottomNavigationView.setBackground(null);
@@ -51,11 +58,10 @@ public class MainActivity extends AppCompatActivity {
             } else if (item.getItemId() == R.id.notification) {
                 if (user != null) {
                     replaceFragment(new NotificationFragment());
-                }
-                else {
+                } else {
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
-                    Toast.makeText(MainActivity.this,"Vui lòng đăng nhập để sử dụng chức năng này", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(MainActivity.this, "Vui lòng đăng nhập để sử dụng chức năng này", Toast.LENGTH_SHORT).show();
                 }
             } else if (item.getItemId() == R.id.profile) {
                 if (user != null) {
@@ -64,22 +70,22 @@ public class MainActivity extends AppCompatActivity {
                 else {
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
-                    Toast.makeText(MainActivity.this,"Vui lòng đăng nhập để sử dụng chức năng này", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(MainActivity.this,"Vui lòng đăng nhập để sử dụng chức năng này", Toast.LENGTH_SHORT).show();
                 }
             }
             return true;
         });
 
         binding.fab.setOnClickListener(v -> {
-                showBottomDialog();
+            showBottomDialog();
         });
     }
 
     private void replaceFragment(Fragment fragment) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(binding.frameLayout.getId(), fragment);
-            fragmentTransaction.commit();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(binding.frameLayout.getId(), fragment);
+        fragmentTransaction.commit();
     }
 
     //Hiển thị khay dưới khi bấm dấu cộng
@@ -95,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
         house.setOnClickListener(v -> {
             dialog.dismiss();
-            Intent search = new Intent(this,SearchActivity.class);
+            Intent search = new Intent(this, SearchActivity.class);
             startActivity(search);
         });
 
@@ -106,14 +112,14 @@ public class MainActivity extends AppCompatActivity {
 
         contract.setOnClickListener(v -> {
             dialog.dismiss();
-                if(user != null) {
-                    Intent post = new Intent(this, PostRoomActivity.class);
-                    startActivity(post);
-                }else {
-                    Intent login = new Intent(MainActivity.this, LoginActivity.class);
-                    startActivity(login);
-                    Toast.makeText(MainActivity.this,"Bạn phải đăng nhập để sử dụng chức năng này",Toast.LENGTH_SHORT).show();
-                }
+            if (user != null) {
+                Intent post = new Intent(this, PostRoomActivity.class);
+                startActivity(post);
+            } else {
+                Intent login = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(login);
+//                Toast.makeText(MainActivity.this, "Bạn phải đăng nhập để sử dụng chức năng này", Toast.LENGTH_SHORT).show();
+            }
         });
 
         cancelButton.setOnClickListener(v -> dialog.dismiss());

@@ -62,6 +62,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -423,7 +424,7 @@ public class DetailRoomActivity extends AppCompatActivity {
     }
 
     private void makePhoneCall() {
-        Intent intent = new Intent(Intent.ACTION_DIAL);
+        Intent intent = new Intent(Intent.ACTION_CALL);
         intent.setData(Uri.parse("tel:" + roomData.getPhone()));
 
         if (intent.resolveActivity(getPackageManager()) != null) {
@@ -497,7 +498,8 @@ public class DetailRoomActivity extends AppCompatActivity {
         btnConfirm = dialog.findViewById(R.id.btnConfirm);
         scheduleVisitRoomref = null;
         if (user != null) {
-            scheduleVisitRoomref = database.getReference("scheduleVisitRoom/" + roomData.getId_room());
+            UUID uuid = UUID.randomUUID();
+            scheduleVisitRoomref = database.getReference("scheduleVisitRoom/" + uuid.toString());
 
             btnConfirm.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -558,8 +560,8 @@ public class DetailRoomActivity extends AppCompatActivity {
         if (isValid) {
             ScheduleVisitRoomClass schedule = new ScheduleVisitRoomClass(edtYourName.getText().toString(), phone, edtNote.getText().toString(), edtTime.getText().toString(), roomData.getId_own_post(), user.getUid(), "0", roomData.getId_room()); // status create
             if (user != null) {
-//                scheduleVisitRoomref.child(user.getUid()).setValue(schedule);
-                Toast.makeText(getApplicationContext(), "Chức năng đang phát triển", Toast.LENGTH_LONG).show();
+                scheduleVisitRoomref.setValue(schedule);
+//                Toast.makeText(getApplicationContext(), "Chức năng đang phát triển", Toast.LENGTH_LONG).show();
             }
         } else {
             Toast.makeText(getApplicationContext(), "Vui lòng nhập đầy đủ các trường yêu cầu", Toast.LENGTH_LONG).show();

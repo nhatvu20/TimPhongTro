@@ -13,18 +13,9 @@ public class User {
 
     private String name;
 
-    private ArrayList<Room> rooms;
-
-    public ArrayList<Room> getRooms() {
-        return rooms;
+    public User() {
     }
 
-    public void setRooms(ArrayList<Room> rooms) {
-        this.rooms = rooms;
-    }
-
-    public User(){
-    }
     public User(String email, String uid, String name, String phone) {
         this.email = email;
         this.uid = uid;
@@ -37,13 +28,6 @@ public class User {
         this.uid = uid;
         this.name = name;
 
-    }
-
-    public User(String email, String uid, String name, ArrayList<Room> rooms) {
-        this.email = email;
-        this.uid = uid;
-        this.name = name;
-        this.rooms = rooms;
     }
 
     public String getphone() {

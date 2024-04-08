@@ -95,7 +95,6 @@ public class RegisterActivity extends AppCompatActivity {
                             String uid="";
                             String email="";
                             String name="";
-                            ArrayList<Room> rooms = new ArrayList<>();
                             if (currentUser != null) {
                                 // Người dùng đã đăng nhập
                                 uid = currentUser.getUid(); // Lấy ID người dùng
@@ -106,8 +105,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 // Người dùng chưa đăng nhập
                             }
                             // Tạo một đối tượng User
-                            User user = new User(email,uid,name,rooms);
-
+                            User user = new User(email,uid,name);
                             // Thêm đối tượng User vào Realtime Database
                             mDatabase.child("users").child(uid).setValue(user);
                             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
