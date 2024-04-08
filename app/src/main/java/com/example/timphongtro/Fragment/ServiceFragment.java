@@ -23,9 +23,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class ServiceFragment extends Fragment {
 
-    private LinearLayout chothuenoithat, tuvanthietkephong, suachuadiennuoc, giatla, doibinhnuoc, doibinhga;
-    private ImageView button_cart;
-
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseUser user = firebaseAuth.getCurrentUser();
     @Override
@@ -40,13 +37,13 @@ public class ServiceFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-        chothuenoithat = view.findViewById(R.id.chothuenoithat);
-        tuvanthietkephong = view.findViewById(R.id.tuvanthietkephong);
-        suachuadiennuoc = view.findViewById(R.id.suachuadiennuoc);
-        giatla = view.findViewById(R.id.giatla);
-        doibinhnuoc = view.findViewById(R.id.doibinhnuoc);
-        doibinhga = view.findViewById(R.id.doibinhga);
-        button_cart = view.findViewById(R.id.button_cart);
+        LinearLayout chothuenoithat = view.findViewById(R.id.chothuenoithat);
+        LinearLayout tuvanthietkephong = view.findViewById(R.id.tuvanthietkephong);
+        LinearLayout suachuadiennuoc = view.findViewById(R.id.suachuadiennuoc);
+        LinearLayout giatla = view.findViewById(R.id.giatla);
+        LinearLayout doibinhnuoc = view.findViewById(R.id.doibinhnuoc);
+        LinearLayout doibinhga = view.findViewById(R.id.doibinhga);
+        ImageView button_cart = view.findViewById(R.id.button_cart);
         button_cart.setColorFilter(ContextCompat.getColor(getContext(), R.color.white));
 
         button_cart.setOnClickListener(new View.OnClickListener() {

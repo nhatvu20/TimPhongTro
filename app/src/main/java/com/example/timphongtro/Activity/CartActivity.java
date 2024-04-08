@@ -33,8 +33,6 @@ public class CartActivity extends AppCompatActivity {
 
     private TextView textView_total;
     private RecyclerView rcvcart;
-    private Button btn_checkout;
-    private ImageView imageView_back;
     private CartAdapter cartAdapter;
     private ArrayList<Service> cartList;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -47,10 +45,10 @@ public class CartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-        imageView_back = findViewById(R.id.imageView_back);
+        ImageView imageView_back = findViewById(R.id.imageView_back);
         imageView_back.setColorFilter(ContextCompat.getColor(this, R.color.white));
 
-        btn_checkout = findViewById(R.id.button_checkout);
+        Button btn_checkout = findViewById(R.id.button_checkout);
         textView_total = findViewById(R.id.Total_price);
 
         btn_checkout.setOnClickListener(new View.OnClickListener() {

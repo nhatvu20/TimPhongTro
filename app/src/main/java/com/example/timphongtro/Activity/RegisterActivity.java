@@ -12,8 +12,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.timphongtro.Entity.Room;
-import com.example.timphongtro.Activity.LoginActivity;
 import com.example.timphongtro.Entity.User;
 import com.example.timphongtro.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,8 +21,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.ArrayList;
 
 public class RegisterActivity extends AppCompatActivity {
 
