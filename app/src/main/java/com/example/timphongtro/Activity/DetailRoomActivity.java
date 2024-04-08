@@ -94,7 +94,7 @@ public class DetailRoomActivity extends AppCompatActivity {
     DatabaseReference scheduleVisitRoomref;
     boolean isLove;
     Calendar myCalender;
-    TextView edtTime,tvprofile;
+    TextView edtTime, tvprofile;
 
     MaterialButton btnConfirm, btnCancel, btnZalo;
     EditText edtYourName, edtPhone, edtNote;
@@ -137,14 +137,9 @@ public class DetailRoomActivity extends AppCompatActivity {
         userPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (user != null) {
-//                    //Sau phai sua cho nay thanh view User
-//                    Intent mypost = new Intent(DetailRoomActivity.this, ManagePostActivity.class);
-//                    startActivity(mypost);
-//                } else {
-//                    Intent intent = new Intent(DetailRoomActivity.this, LoginActivity.class);
-//                    startActivity(intent);
-//                }
+                Intent intent = new Intent(DetailRoomActivity.this, UserActivity.class);
+                intent.putExtra("DataUser", roomData.toString());
+                startActivity(intent);
             }
         });
 
