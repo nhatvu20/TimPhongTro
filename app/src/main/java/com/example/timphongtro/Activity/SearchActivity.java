@@ -59,13 +59,13 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                Toast.makeText(getApplicationContext(), district, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), district, Toast.LENGTH_SHORT).show();
                 searchList(newText);
                 return true;
             }
         });
 
-        roomrecyclerView = findViewById(R.id.rcv_showmore);
+        roomrecyclerView = findViewById(R.id.rcv_search);
         roomrecyclerView.setHasFixedSize(true);
         roomrecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         searchAdapter = new SearchAdapter(this, roomArrayList);
