@@ -558,18 +558,23 @@ public class DetailRoomActivity extends AppCompatActivity {
         if (isValid) {
             ScheduleVisitRoomClass schedule = new ScheduleVisitRoomClass(roomData.getType_room(),uuid.toString(),edtYourName.getText().toString(), phone, edtNote.getText().toString(), edtTime.getText().toString(), roomData.getId_own_post(), user.getUid(), "0", roomData.getId_room()); // status create
             if (user != null) {
-                scheduleVisitRoomref.setValue(schedule).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        dialog.dismiss();
-                        Toast.makeText(getApplicationContext(), "Đặt lịch thành công", Toast.LENGTH_LONG).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getApplicationContext(), "Đặt lịch thất bại", Toast.LENGTH_LONG).show();
-                    }
-                });
+                if(!user.getUid().equals(roomData.getId_own_post())){
+                    scheduleVisitRoomref.setValue(schedule).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            dialog.dismiss();
+                            Toast.makeText(getApplicationContext(), "Đặt lịch thành công", Toast.LENGTH_LONG).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getApplicationContext(), "Đặt lịch thất bại", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }else {
+                    Toast.makeText(getApplicationContext(), "Bạn không thể đặt lịch hẹn với chính bài đăng của mình", Toast.LENGTH_LONG).show();
+                }
+
 
             }
         } else {

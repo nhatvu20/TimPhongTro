@@ -54,6 +54,8 @@ public class DistrictAdapter extends RecyclerView.Adapter<DistrictAdapter.MyView
         });
     }
 
+
+
     @Override
     public int getItemCount() {
         return list.size();

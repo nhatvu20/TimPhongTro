@@ -96,7 +96,7 @@ public class ScheduleVisitRoomSendAdapter extends RecyclerView.Adapter<ScheduleV
                 holder.tvStatus.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if ("0".equals(schedule.getStatus()) && user.getUid().equals(schedule.getIdTo())){
+                        if ("0".equals(schedule.getStatus()) && user.getUid().equals(schedule.getIdTo())) {
 
                         }
                         AlertDialog.Builder builder = new AlertDialog.Builder(context);
