@@ -34,4 +34,5 @@
     <string name="confirmed">Đã xác nhận</string>
     <string name="refuse">Đã từ chối</string>
     <string name="send">Đã gửi</string>
+    <string name="Search">Tìm kiếm...</string>
 </resources>

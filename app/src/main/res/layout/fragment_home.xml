@@ -20,7 +20,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cardView"
+                android:id="@+id/imageSlider_cardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/orange"
@@ -29,7 +29,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.denzcoskun.imageslider.ImageSlider
-                    android:id="@+id/ImageSlider"
+                    android:id="@+id/imageSlider"
                     android:layout_width="match_parent"
                     android:layout_height="180dp"
                     app:iss_auto_cycle="true"
@@ -44,10 +44,10 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <RelativeLayout
-                android:id="@+id/searchbox"
+                android:id="@+id/shortcut"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_below="@+id/cardView"
+                android:layout_below="@+id/imageSlider_cardView"
                 android:layout_centerHorizontal="true"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="-50dp"
@@ -55,14 +55,14 @@
                 android:background="@drawable/search_bg"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView">
+                app:layout_constraintTop_toBottomOf="@+id/imageSlider_cardView">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/constraintLayout2"
+                        android:id="@+id/constraintLayout"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_margin="10dp"
@@ -84,16 +84,16 @@
                             android:layout_height="match_parent"
                             android:background="@drawable/search_border"
                             android:gravity="center_vertical"
-                            android:hint="Tìm kiếm tiêu đề...."
+                            android:hint="@string/Search"
                             android:padding="10dp"
-                            app:layout_constraintEnd_toStartOf="@+id/cityspinner"
+                            app:layout_constraintEnd_toStartOf="@+id/city_spinner"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent">
 
                         </TextView>
 
                         <Spinner
-                            android:id="@+id/cityspinner"
+                            android:id="@+id/city_spinner"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:background="@drawable/spinner_border"
@@ -113,7 +113,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
+                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -129,7 +129,6 @@
                                 android:orientation="vertical">
 
                                 <ImageView
-                                    android:id="@+id/imageView5"
                                     android:layout_width="50dp"
                                     android:layout_height="50dp"
                                     android:src="@drawable/ic_tindangchothue" />
@@ -151,7 +150,6 @@
                                 android:orientation="vertical">
 
                                 <ImageView
-                                    android:id="@+id/imageView6"
                                     android:layout_width="50dp"
                                     android:layout_height="50dp"
                                     android:src="@drawable/ic_timphong" />
@@ -298,7 +296,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:id="@+id/Explore"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginStart="10dp"
@@ -338,7 +335,7 @@
             </com.facebook.shimmer.ShimmerFrameLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/LocationExplore"
+                android:id="@+id/rcv_district"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scrollbars="none"
@@ -367,7 +364,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/showmore"
+                android:id="@+id/showMore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/Showmore"
@@ -405,7 +402,7 @@
             </com.facebook.shimmer.ShimmerFrameLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/RoomrecyclerView"
+                android:id="@+id/rcv_room"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
