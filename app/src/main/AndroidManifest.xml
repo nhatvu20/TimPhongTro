@@ -26,6 +26,9 @@
         android:theme="@style/Theme.TimPhongTro"
         tools:targetApi="31">
         <activity
+            android:name=".Activity.ScheduleVisitDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.UserActivity"
             android:exported="false" />
         <activity
@@ -89,14 +92,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<!--        <receiver-->
-<!--            android:name=".BroadcastReceiver.NetworkChangeReceiver"-->
-<!--            android:enabled="true"-->
-<!--            android:exported="true">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />-->
-<!--            </intent-filter>-->
-<!--        </receiver>-->
     </application>
 
 </manifest>

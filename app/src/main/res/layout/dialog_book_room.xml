@@ -74,7 +74,7 @@
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:src="@drawable/ic_door" />
+                        android:src="@drawable/ic_user" />
 
                     <EditText
                         android:id="@+id/edtYourName"
@@ -168,9 +168,11 @@
                         android:layout_height="100dp"
                         android:layout_marginLeft="15dp"
                         android:layout_weight="1"
+                        android:background="@drawable/border_hcn"
                         android:ems="10"
                         android:hint="Nhập ghi chú"
-                        android:inputType="textMultiLine" />
+                        android:inputType="textMultiLine"
+                        android:padding="10dp" />
 
                 </LinearLayout>
 

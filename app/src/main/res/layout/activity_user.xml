@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/darkerwhite"
+    android:textAlignment="center"
     tools:context=".Activity.UserActivity">
 
     <LinearLayout
@@ -55,23 +56,28 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <de.hdodenhof.circleimageview.CircleImageView
+            <TextView
                 android:id="@+id/circleImageView"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="-50dp"
+                android:background="@drawable/avatar"
+                android:gravity="center"
                 android:src="@drawable/image1"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="40sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardView">
 
-            </de.hdodenhof.circleimageview.CircleImageView>
+            </TextView>
 
             <TextView
                 android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Username"
+                android:layout_marginTop="5dp"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="30sp"
@@ -104,25 +110,27 @@
                         app:cardElevation="10dp">
 
                         <LinearLayout
-                            android:id="@+id/chothuenoithat"
+                            android:id="@+id/phoneLinear"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_margin="5dp"
-                            android:gravity="center_horizontal"
+                            android:gravity="center|center_horizontal"
                             android:orientation="vertical">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:drawableStart="@drawable/ic_phone"
+                                android:drawableStart="@drawable/ic_phone2"
+                                android:drawablePadding="5dp"
+                                android:gravity="center"
                                 android:text="Số điện thoại">
 
                             </TextView>
 
                             <TextView
+                                android:id="@+id/phone"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="0987654321"
                                 android:textColor="@color/black"
                                 android:textStyle="bold">
 
@@ -139,25 +147,28 @@
                         app:cardElevation="10dp">
 
                         <LinearLayout
-                            android:id="@+id/tuvanthietkephong"
+                            android:id="@+id/emailLinear"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_gravity="center"
                             android:layout_margin="5dp"
-                            android:gravity="center_horizontal"
+                            android:gravity="center|center_horizontal"
                             android:orientation="vertical">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:drawableStart="@drawable/ic_email"
+                                android:drawablePadding="5dp"
+                                android:gravity="center"
                                 android:text="Email">
 
                             </TextView>
 
                             <TextView
+                                android:id="@+id/email"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="abcdefghiklm@gmail.com"
                                 android:textColor="@color/black"
                                 android:textStyle="bold">
 
@@ -192,6 +203,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView13">
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcvUser"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:layout_constraintBottom_toBottomOf="parent"

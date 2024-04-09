@@ -64,6 +64,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.TimeZone;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -99,7 +100,7 @@ public class DetailRoomActivity extends AppCompatActivity {
     MaterialButton btnConfirm, btnCancel, btnZalo;
     EditText edtYourName, edtPhone, edtNote;
     BottomSheetDialog dialog;
-
+    UUID uuid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,19 +135,18 @@ public class DetailRoomActivity extends AppCompatActivity {
         textViewNameUser = findViewById(R.id.textViewNameUser);
         tvprofile = findViewById(R.id.tvprofileDetail);
         btnZalo = findViewById(R.id.btnZalo);
-        userPost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DetailRoomActivity.this, UserActivity.class);
-                intent.putExtra("DataUser", roomData.toString());
-                startActivity(intent);
-            }
-        });
-
         if (bundle != null) {
             String roomString = bundle.getString("DataRoom");
             Gson gson = new Gson();
             roomData = gson.fromJson(roomString, Room.class);
+            userPost.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(DetailRoomActivity.this, UserActivity.class);
+                    intent.putExtra("id_own_post", roomData.getId_own_post());
+                    startActivity(intent);
+                }
+            });
             String typeRoomStr = "";
             if (roomData.getType_room() == 0) {
                 typeRoomStr = "Trọ";
@@ -496,7 +496,7 @@ public class DetailRoomActivity extends AppCompatActivity {
         btnConfirm = dialog.findViewById(R.id.btnConfirm);
         scheduleVisitRoomref = null;
         if (user != null) {
-            UUID uuid = UUID.randomUUID();
+            uuid = UUID.randomUUID();
             scheduleVisitRoomref = database.getReference("scheduleVisitRoom/" + uuid.toString());
 
             btnConfirm.setOnClickListener(new View.OnClickListener() {
@@ -524,8 +524,10 @@ public class DetailRoomActivity extends AppCompatActivity {
     }
 
     private void updateLabel() {
-        String myFormat = "MM/dd/yy EEEE";
-        SimpleDateFormat dateFormat = new SimpleDateFormat(myFormat, Locale.US);
+//        String myFormat = "EEEE, dd/MM/yyyy";
+//        SimpleDateFormat dateFormat = new SimpleDateFormat(myFormat, Locale.US);
+        // Định dạng theo định dạng của Việt Nam
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, dd/MM/yyyy", new Locale("vi", "VN"));
         edtTime.setText(dateFormat.format(myCalender.getTime()));
     }
 
@@ -556,7 +558,7 @@ public class DetailRoomActivity extends AppCompatActivity {
         }
 
         if (isValid) {
-            ScheduleVisitRoomClass schedule = new ScheduleVisitRoomClass(edtYourName.getText().toString(), phone, edtNote.getText().toString(), edtTime.getText().toString(), roomData.getId_own_post(), user.getUid(), "0", roomData.getId_room()); // status create
+            ScheduleVisitRoomClass schedule = new ScheduleVisitRoomClass(roomData.getType_room(),uuid.toString(),edtYourName.getText().toString(), phone, edtNote.getText().toString(), edtTime.getText().toString(), roomData.getId_own_post(), user.getUid(), "0", roomData.getId_room()); // status create
             if (user != null) {
                 scheduleVisitRoomref.setValue(schedule).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

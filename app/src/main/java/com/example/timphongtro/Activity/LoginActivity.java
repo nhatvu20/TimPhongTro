@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.timphongtro.Entity.User;
 import com.example.timphongtro.Fragment.HomeFragment;
 import com.example.timphongtro.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -49,13 +50,14 @@ public class LoginActivity extends AppCompatActivity {
     private EditText txtpassword;
     private Button btnDangnhap;
     private FirebaseAuth mAuth;
-    private FirebaseUser user;
+    private FirebaseUser userData;
     private ImageView imgGoogleSignin, imgGuest, imgFacebookSignin;
     private TextView textviewDangky;
     private TextView txtViewForgotPassword;
     GoogleSignInAccount account;
     DatabaseReference userRef;
-
+    HashMap<String, Object> userMap;
+    ArrayList<String> emails;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -181,8 +183,6 @@ public class LoginActivity extends AppCompatActivity {
             final String getFullName = account.getDisplayName();
             final String getEmail = account.getEmail();
             if (account != null) {
-
-
                 FirebaseGoogleAuth();
                 startActivity(i);
                 Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
@@ -203,42 +203,42 @@ public class LoginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     if (mAuth != null) {
-                        HashMap<String, Object> user = new HashMap<>();
-                        user.put("uid", mAuth.getUid());
-                        if (account != null) {
-                            user.put("email", account.getEmail());
-                            user.put("name", account.getDisplayName());
-                        }
-                        //Lấy tất cả email trên realtime
-                        userRef = FirebaseDatabase.getInstance().getReference("users");
-                        ArrayList<String> emails = new ArrayList<>();
-                        userRef.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                if (snapshot.exists()) {
-                                    for (DataSnapshot user : snapshot.getChildren()) {
-                                        String email = user.child("email").getValue(String.class);
-                                        if (email != null) {
-                                            emails.add(email);
+                        userData = mAuth.getCurrentUser();
+                        if (userData != null) {
+                            userMap = new HashMap<>();
+                            userMap.put("uid", userData.getUid());
+                            if (account != null) {
+                                userMap.put("email", account.getEmail());
+                                userMap.put("name", account.getDisplayName());
+                            }
+                            //Lấy tất cả email trên realtime
+                            userRef = FirebaseDatabase.getInstance().getReference("users");
+                            emails = new ArrayList<>();
+                            userRef.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (snapshot.exists()) {
+                                        for (DataSnapshot user : snapshot.getChildren()) {
+                                            String email = user.child("email").getValue(String.class);
+                                            if (email != null) {
+                                                emails.add(email);
+                                            }
                                         }
                                     }
                                 }
-                            }
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
 
-                            }
-                        });
-                        // Thêm dữ liệu vào Realtime
-                        userRef.child(Objects.requireNonNull(mAuth.getUid())).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
+                                }
+                            });
+                            // Thêm dữ liệu vào Realtime
+                            userRef.child(Objects.requireNonNull(mAuth.getUid())).setValue(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
 
-                            }
-                        });
-                        if (isElementInArray(account.getEmail(), emails)) {
-                            Toast.makeText(LoginActivity.this, "Tài khoản đã được đăng ký với authenic lần sau bạn chỉ có thể đăng nhập bằng google", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
 
                     }

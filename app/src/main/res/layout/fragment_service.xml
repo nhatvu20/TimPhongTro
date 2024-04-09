@@ -64,7 +64,7 @@
                 app:cardElevation="10dp">
 
                 <LinearLayout
-                    android:id="@+id/chothuenoithat"
+                    android:id="@+id/phoneLinear"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -95,7 +95,7 @@
                 app:cardElevation="10dp">
 
                 <LinearLayout
-                    android:id="@+id/tuvanthietkephong"
+                    android:id="@+id/emailLinear"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"

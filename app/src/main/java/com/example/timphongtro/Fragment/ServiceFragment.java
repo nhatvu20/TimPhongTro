@@ -40,8 +40,8 @@ public class ServiceFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-        chothuenoithat = view.findViewById(R.id.chothuenoithat);
-        tuvanthietkephong = view.findViewById(R.id.tuvanthietkephong);
+        chothuenoithat = view.findViewById(R.id.phoneLinear);
+        tuvanthietkephong = view.findViewById(R.id.emailLinear);
         suachuadiennuoc = view.findViewById(R.id.suachuadiennuoc);
         giatla = view.findViewById(R.id.giatla);
         doibinhnuoc = view.findViewById(R.id.doibinhnuoc);

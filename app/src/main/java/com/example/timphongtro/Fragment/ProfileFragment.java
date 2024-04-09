@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.timphongtro.Activity.UpdateInformationUserActivity;
@@ -18,6 +19,7 @@ import com.example.timphongtro.Activity.HistoryActivity;
 import com.example.timphongtro.Activity.LoginActivity;
 import com.example.timphongtro.Activity.ManagePostActivity;
 import com.example.timphongtro.Activity.MyLovePostActivity;
+import com.example.timphongtro.Activity.UserActivity;
 import com.example.timphongtro.Activity.scheduleVisitRoomActivity;
 import com.example.timphongtro.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -40,6 +42,8 @@ public class ProfileFragment extends Fragment {
     private String name;
     DatabaseReference userRef;
     private TextView txtViewInfo, tvprofile;
+    private LinearLayout linear_layoutProfile;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,6 +69,7 @@ public class ProfileFragment extends Fragment {
         btnlichsu = view.findViewById(R.id.btnlichsu);
         btnyeuthich = view.findViewById(R.id.btnyeuthich);
         tvprofile = view.findViewById(R.id.tvprofile);
+        linear_layoutProfile = view.findViewById(R.id.linear_layoutProfile);
         btntrangcanhan = view.findViewById(R.id.btntrangcanhan);
 //        account = GoogleSignIn.getLastSignedInAccount(getActivity().getApplicationContext());
 //        String id_user = mUser != null ? mUser.getUid() : (account != null ? account.getId() : "");
@@ -73,6 +78,9 @@ public class ProfileFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     //chuyen intent trang ca nhan
+                    Intent myprofile = new Intent(getActivity().getApplicationContext(), UserActivity.class);
+                    myprofile.putExtra("id_own_post",mUser.getUid());
+                    startActivity(myprofile);
                 }
             });
             btnlichsu.setOnClickListener(new View.OnClickListener() {
@@ -125,7 +133,7 @@ public class ProfileFragment extends Fragment {
                 }
             });
 
-            txtViewInfo.setOnClickListener(new View.OnClickListener() {
+            linear_layoutProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(getActivity(), UpdateInformationUserActivity.class);

@@ -495,8 +495,9 @@ public class PostRoomActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(Void unused) {
                     Toast.makeText(PostRoomActivity.this, "Đăng thông tin phòng thành công", Toast.LENGTH_SHORT).show();
-                    Intent main = new Intent(PostRoomActivity.this, MainActivity.class);
-                    startActivity(main);
+//                    Intent main = new Intent(PostRoomActivity.this, MainActivity.class);
+//                    startActivity(main);
+                    finish();
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
