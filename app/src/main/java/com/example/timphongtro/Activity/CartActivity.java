@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.timphongtro.Adapter.CartAdapter;
+import com.example.timphongtro.Entity.Room;
 import com.example.timphongtro.Entity.Service;
 import com.example.timphongtro.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,8 +33,6 @@ public class CartActivity extends AppCompatActivity {
 
     private TextView textView_total;
     private RecyclerView rcvcart;
-    private Button btn_checkout;
-    private ImageView imageView_back;
     private CartAdapter cartAdapter;
     private ArrayList<Service> cartList;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -46,10 +45,10 @@ public class CartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-        imageView_back = findViewById(R.id.imageView_back);
+        ImageView imageView_back = findViewById(R.id.imageView_back);
         imageView_back.setColorFilter(ContextCompat.getColor(this, R.color.white));
 
-        btn_checkout = findViewById(R.id.button_checkout);
+        Button btn_checkout = findViewById(R.id.button_checkout);
         textView_total = findViewById(R.id.Total_price);
 
         btn_checkout.setOnClickListener(new View.OnClickListener() {
@@ -93,14 +92,7 @@ public class CartActivity extends AppCompatActivity {
                     cartList.add(service);
                 }
                 cartAdapter.notifyDataSetChanged();
-
-                if (cartList.isEmpty()) {
-                    rcvcart.setVisibility(View.GONE);
-                    findViewById(R.id.nohistory).setVisibility(View.VISIBLE);
-                } else {
-                    rcvcart.setVisibility(View.VISIBLE);
-                    findViewById(R.id.nohistory).setVisibility(View.GONE);
-                }
+                updateRecyclerViewVisibility(cartList, rcvcart, findViewById(R.id.nohistory));
 
                 long totalPrice = calculateTotalPrice(cartList);
                 textView_total.setText(decimalFormat.format(totalPrice) + " VNĐ");
@@ -120,5 +112,15 @@ public class CartActivity extends AppCompatActivity {
         }
 
         return totalPrice;
+    }
+
+    private void updateRecyclerViewVisibility(ArrayList<Service> cartList, RecyclerView rcvcart, View noHistoryView) {
+        if (cartList.isEmpty()) {
+            rcvcart.setVisibility(View.GONE);
+            noHistoryView.setVisibility(View.VISIBLE);
+        } else {
+            rcvcart.setVisibility(View.VISIBLE);
+            noHistoryView.setVisibility(View.GONE);
+        }
     }
 }

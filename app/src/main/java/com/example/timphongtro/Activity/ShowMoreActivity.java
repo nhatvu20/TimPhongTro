@@ -1,6 +1,5 @@
 package com.example.timphongtro.Activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -24,11 +23,11 @@ import java.util.ArrayList;
 
 public class ShowMoreActivity extends AppCompatActivity {
     RecyclerView roomrecyclerView;
-    DatabaseReference roomdatabase;
+    DatabaseReference roomRef;
     ShowmoreAdapter showmoreAdapter;
-    ArrayList<Room> roomlist;
+    ArrayList<Room> roomArrayList;
     ShimmerFrameLayout roomShimmer;
-    ImageView backbutton;
+    ImageView btn_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,36 +35,33 @@ public class ShowMoreActivity extends AppCompatActivity {
         setContentView(R.layout.activity_show_more);
 
         roomShimmer = findViewById(R.id.room_shimmer);
-        backbutton = findViewById(R.id.backbutton);
-        backbutton.setOnClickListener(v -> {
+        btn_back = findViewById(R.id.btn_back);
+        btn_back.setOnClickListener(v -> {
             finish();
         });
 
         roomShimmer.startShimmer();
-        roomrecyclerView = findViewById(R.id.showmorelist);
+        roomrecyclerView = findViewById(R.id.rcv_showmore);
         roomrecyclerView.setHasFixedSize(true);
-        roomdatabase = FirebaseDatabase.getInstance().getReference("rooms");
+        roomRef = FirebaseDatabase.getInstance().getReference("rooms");
         roomrecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        roomlist = new ArrayList<>();
-        showmoreAdapter = new ShowmoreAdapter(this, roomlist);
+        roomArrayList = new ArrayList<>();
+        showmoreAdapter = new ShowmoreAdapter(this, roomArrayList);
         roomrecyclerView.setAdapter(showmoreAdapter);
-        fetchroomrecyclerviewdatabse();
+        fetchRoomDatabase();
     }
 
-    private void fetchroomrecyclerviewdatabse() {
-        roomdatabase.addValueEventListener(new ValueEventListener() {
+    private void fetchRoomDatabase() {
+        roomRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                roomlist.clear();
+                roomArrayList.clear();
                 if (snapshot.exists()) {
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        String key = dataSnapshot.getKey();
-                        if (key.equals("Tro") || key.equals("ChungCuMini")) {
-                            for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
-                                Room room = childSnapshot.getValue(Room.class);
-                                if (room != null && room.getStatus_room() != 1) {
-                                    roomlist.add(room);
-                                }
+                    for (DataSnapshot roomType : snapshot.getChildren()) {
+                        for (DataSnapshot roomSnapshot : roomType.getChildren()) {
+                            Room room = roomSnapshot.getValue(Room.class);
+                            if (room != null && room.getStatus_room() != 1) {
+                                roomArrayList.add(room);
                             }
                         }
                     }

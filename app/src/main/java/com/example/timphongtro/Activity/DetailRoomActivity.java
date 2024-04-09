@@ -16,7 +16,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -36,7 +35,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
-import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.timphongtro.Adapter.ExtensionAdapter;
@@ -92,7 +90,7 @@ public class DetailRoomActivity extends AppCompatActivity {
     DatabaseReference scheduleVisitRoomref;
     boolean isLove;
     Calendar myCalender;
-    TextView edtTime,tvprofile;
+    TextView edtTime, tvprofile;
 
     MaterialButton btnConfirm, btnCancel, btnZalo;
     EditText edtYourName, edtPhone, edtNote;
@@ -134,14 +132,9 @@ public class DetailRoomActivity extends AppCompatActivity {
         userPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (user != null) {
-//                    //Sau phai sua cho nay thanh view User
-//                    Intent mypost = new Intent(DetailRoomActivity.this, ManagePostActivity.class);
-//                    startActivity(mypost);
-//                } else {
-//                    Intent intent = new Intent(DetailRoomActivity.this, LoginActivity.class);
-//                    startActivity(intent);
-//                }
+                Intent intent = new Intent(DetailRoomActivity.this, UserActivity.class);
+                intent.putExtra("DataUser", roomData.toString());
+                startActivity(intent);
             }
         });
 

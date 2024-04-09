@@ -144,7 +144,9 @@
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/ic_suachuadiennuoc"></ImageView>
+                        android:src="@drawable/ic_suachuadiennuoc">
+
+                    </ImageView>
 
                     <TextView
                         android:layout_width="wrap_content"

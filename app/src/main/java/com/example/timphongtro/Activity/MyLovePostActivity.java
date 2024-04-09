@@ -85,14 +85,7 @@ public class MyLovePostActivity extends AppCompatActivity {
                                     }
                                 }
                                 roomAdapter.notifyDataSetChanged();
-
-                                if (rooms.isEmpty()) {
-                                    rcvLovePost.setVisibility(View.GONE);
-                                    findViewById(R.id.nohistory).setVisibility(View.VISIBLE);
-                                } else {
-                                    rcvLovePost.setVisibility(View.VISIBLE);
-                                    findViewById(R.id.nohistory).setVisibility(View.GONE);
-                                }
+                                updateRecyclerViewVisibility(rooms, rcvLovePost, findViewById(R.id.nohistory));
                             }
 
                             @Override
@@ -145,4 +138,13 @@ public class MyLovePostActivity extends AppCompatActivity {
         rcvLovePost.setAdapter(roomAdapter);
     }
 
+    private void updateRecyclerViewVisibility(ArrayList<Room> rooms, RecyclerView rcvLovePost, View noHistoryView) {
+        if (rooms.isEmpty()) {
+            rcvLovePost.setVisibility(View.GONE);
+            noHistoryView.setVisibility(View.VISIBLE);
+        } else {
+            rcvLovePost.setVisibility(View.VISIBLE);
+            noHistoryView.setVisibility(View.GONE);
+        }
+    }
 }
