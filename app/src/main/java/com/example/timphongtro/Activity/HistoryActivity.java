@@ -27,6 +27,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 
 public class HistoryActivity extends AppCompatActivity {
     private FirebaseDatabase database;
@@ -97,11 +101,14 @@ public class HistoryActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 roomArrayList.clear();
+                Map<String, Long> roomTimeMap = new HashMap<>();
                 ArrayList<String> roomIds = new ArrayList<>();
 
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     String roomId = dataSnapshot.getKey();
+                    long timestamp = dataSnapshot.getValue(Long.class);
                     roomIds.add(roomId);
+                    roomTimeMap.put(roomId, timestamp);
                 }
 
                 DatabaseReference roomsRef = database.getReference("rooms");
@@ -121,6 +128,22 @@ public class HistoryActivity extends AppCompatActivity {
                                 }
                             }
                         }
+                        roomArrayList.sort(new Comparator<Room>() {
+                            @Override
+                            public int compare(Room o1, Room o2) {
+                                Long timestamp1 = roomTimeMap.get(o1.getId_room());
+                                Long timestamp2 = roomTimeMap.get(o2.getId_room());
+                                if (timestamp1 != null && timestamp2 != null) {
+                                    return Long.compare(timestamp2, timestamp1);
+                                } else if (timestamp1 != null) {
+                                    return -1; // timestamp2 is null, consider timestamp1 smaller
+                                } else if (timestamp2 != null) {
+                                    return 1; // timestamp1 is null, consider timestamp2 smaller
+                                } else {
+                                    return 0; // both timestamps are null, consider them equal
+                                }
+                            }
+                        });
 
                         roomAdapter.notifyDataSetChanged();
                         updateRecyclerViewVisibility(roomArrayList, rcvHistory, findViewById(R.id.nohistory));
