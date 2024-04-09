@@ -65,7 +65,7 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-        roomrecyclerView = findViewById(R.id.rcv_showmore);
+        roomrecyclerView = findViewById(R.id.rcv_search);
         roomrecyclerView.setHasFixedSize(true);
         roomrecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         searchAdapter = new SearchAdapter(this, roomArrayList);
