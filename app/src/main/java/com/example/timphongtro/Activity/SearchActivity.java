@@ -61,7 +61,7 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                Toast.makeText(getApplicationContext(), district, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), district, Toast.LENGTH_SHORT).show();
                 searchList(newText);
                 return true;
             }
