@@ -94,7 +94,7 @@ public class MyLovePostActivity extends AppCompatActivity {
                             }
                         });
                     }
-//                    roomAdapter.notifyDataSetChanged();
+                    roomAdapter.notifyDataSetChanged();
                 }
 
                 @Override

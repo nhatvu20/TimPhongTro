@@ -1301,75 +1301,75 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:orientation="vertical">-->
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginBottom="15dp"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:paddingLeft="10dp"
-                        android:paddingTop="5dp"
-                        android:paddingRight="10dp"
-                        android:paddingBottom="5dp">
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_marginStart="5dp"-->
+<!--                        android:layout_marginTop="15dp"-->
+<!--                        android:layout_marginBottom="15dp"-->
+<!--                        android:gravity="center"-->
+<!--                        android:orientation="horizontal"-->
+<!--                        android:paddingLeft="10dp"-->
+<!--                        android:paddingTop="5dp"-->
+<!--                        android:paddingRight="10dp"-->
+<!--                        android:paddingBottom="5dp">-->
 
-                        <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:src="@drawable/ic_status" />
+<!--                        <ImageView-->
+<!--                            android:layout_width="30dp"-->
+<!--                            android:layout_height="30dp"-->
+<!--                            android:src="@drawable/ic_status" />-->
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:background="@drawable/border_bottom"
-                            android:gravity="center"
-                            android:padding="5dp"
-                            android:text="Tình trạng phòng"
-                            android:textColor="@color/black"
-                            android:textStyle="bold" />
-                    </LinearLayout>
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginStart="5dp"-->
+<!--                            android:background="@drawable/border_bottom"-->
+<!--                            android:gravity="center"-->
+<!--                            android:padding="5dp"-->
+<!--                            android:text="Tình trạng phòng"-->
+<!--                            android:textColor="@color/black"-->
+<!--                            android:textStyle="bold" />-->
+<!--                    </LinearLayout>-->
 
-                    <RadioGroup
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:orientation="horizontal">
+<!--                    <RadioGroup-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_marginLeft="20dp"-->
+<!--                        android:layout_marginRight="20dp"-->
+<!--                        android:orientation="horizontal">-->
 
-                        <RadioButton
-                            android:id="@+id/radiobtnPhongTrong"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="20dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/border_change_state_btn"
-                            android:button="@null"
-                            android:checked="true"
-                            android:gravity="center"
-                            android:text="Phòng trống"
-                            android:textStyle="bold" />
+<!--                        <RadioButton-->
+<!--                            android:id="@+id/radiobtnPhongTrong"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginRight="20dp"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:background="@drawable/border_change_state_btn"-->
+<!--                            android:button="@null"-->
+<!--                            android:checked="true"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="Phòng trống"-->
+<!--                            android:textStyle="bold" />-->
 
-                        <RadioButton
-                            android:id="@+id/radiobtnDaChoThue"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/border_change_state_btn"
-                            android:button="@null"
-                            android:gravity="center"
-                            android:text="Đã cho thuê"
-                            android:textStyle="bold" />
+<!--                        <RadioButton-->
+<!--                            android:id="@+id/radiobtnDaChoThue"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:background="@drawable/border_change_state_btn"-->
+<!--                            android:button="@null"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="Đã cho thuê"-->
+<!--                            android:textStyle="bold" />-->
 
-                    </RadioGroup>
+<!--                    </RadioGroup>-->
 
-                </LinearLayout>
+<!--                </LinearLayout>-->
 
             </LinearLayout>
 

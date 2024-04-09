@@ -6,8 +6,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.timphongtro.BroadcastReceiver.NetworkChangeReceiver;
 import com.example.timphongtro.Fragment.HomeFragment;
 import com.example.timphongtro.Fragment.NotificationFragment;
 import com.example.timphongtro.Fragment.ProfileFragment;
@@ -30,7 +33,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 
 public class MainActivity extends AppCompatActivity {
-
+    NetworkChangeReceiver networkChangeReceiver;
+    private boolean isReceiverRegistered = false;
     private ActivityMainBinding binding;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseUser user;
@@ -41,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        networkChangeReceiver = new NetworkChangeReceiver();
         account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
         user = firebaseAuth.getCurrentUser();
         //Sử dụng ViewBinding để tối ưu về lượng code cho thanh bottom nav chuyển tab
@@ -63,8 +68,7 @@ public class MainActivity extends AppCompatActivity {
             } else if (item.getItemId() == R.id.profile) {
                 if (user != null) {
                     replaceFragment(new ProfileFragment());
-                }
-                else {
+                } else {
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
 //                    Toast.makeText(MainActivity.this,"Vui lòng đăng nhập để sử dụng chức năng này", Toast.LENGTH_SHORT).show();
@@ -76,6 +80,17 @@ public class MainActivity extends AppCompatActivity {
         binding.fab.setOnClickListener(v -> {
             showBottomDialog();
         });
+    }
+
+    @Override
+    protected void onResume() {
+
+        super.onResume();
+        // Đăng ký BroadcastReceiver khi Activity được hiển thị
+        if (!isReceiverRegistered) {
+            registerReceiver(networkChangeReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+            isReceiverRegistered = true;
+        }
     }
 
     private void replaceFragment(Fragment fragment) {

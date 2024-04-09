@@ -1,5 +1,7 @@
 package com.example.timphongtro.Entity;
 
+import com.google.gson.Gson;
+
 public class ScheduleVisitRoomClass {
     private String name;
     private String phone;
@@ -13,10 +15,16 @@ public class ScheduleVisitRoomClass {
 
     private String idRoom;
 
+    private int typeRoom;
+
+    private String idSchedule;
+
     public ScheduleVisitRoomClass() {
     }
 
-    public ScheduleVisitRoomClass(String name, String phone, String note, String timeVisitRoom, String idTo, String idFrom, String status, String idRoom) {
+    public ScheduleVisitRoomClass(int typeRoom,String idSchedule, String name, String phone, String note, String timeVisitRoom, String idTo, String idFrom, String status, String idRoom) {
+        this.typeRoom = typeRoom;
+        this.idSchedule = idSchedule;
         this.idTo = idTo;
         this.idRoom = idRoom;
         this.status = status;
@@ -25,6 +33,22 @@ public class ScheduleVisitRoomClass {
         this.phone = phone;
         this.note = note;
         this.timeVisitRoom = timeVisitRoom;
+    }
+
+    public int getTypeRoom() {
+        return typeRoom;
+    }
+
+    public void setTypeRoom(int typeRoom) {
+        this.typeRoom = typeRoom;
+    }
+
+    public String getIdSchedule() {
+        return idSchedule;
+    }
+
+    public void setIdSchedule(String idSchedule) {
+        this.idSchedule = idSchedule;
     }
 
     public String getIdTo() {
@@ -89,5 +113,11 @@ public class ScheduleVisitRoomClass {
 
     public void setTimeVisitRoom(String timeVisitRoom) {
         this.timeVisitRoom = timeVisitRoom;
+    }
+
+    @Override
+    public String toString() {
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 }

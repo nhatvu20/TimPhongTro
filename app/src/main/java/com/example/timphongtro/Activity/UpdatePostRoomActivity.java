@@ -100,6 +100,7 @@ public class UpdatePostRoomActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> cameraLauncher, activityResultLauncher;
     BottomSheetDialog dialog;
     LinearLayout pickImgAlbum, pickImgCamera;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -173,7 +174,7 @@ public class UpdatePostRoomActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 if (isUploadImg1) {
-                                    if(!isCamera) {
+                                    if (!isCamera) {
                                         Uri uriTmp = uri;
                                         //nếu như là ảnh mặc định trên firebase về
                                         if (containsSubstring(uriTmp.toString(), "https")) {
@@ -185,7 +186,7 @@ public class UpdatePostRoomActivity extends AppCompatActivity {
 //                                        Toast.makeText(getApplicationContext(), "Vào2", Toast.LENGTH_LONG).show();
                                             saveImage();
                                         }
-                                    }else {
+                                    } else {
                                         saveImage();
                                     }
                                 } else
@@ -485,8 +486,9 @@ public class UpdatePostRoomActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(Void unused) {
                             Toast.makeText(UpdatePostRoomActivity.this, "Cập nhật thông tin phòng thành công", Toast.LENGTH_SHORT).show();
-                            Intent main = new Intent(UpdatePostRoomActivity.this, MainActivity.class);
-                            startActivity(main);
+//                            Intent main = new Intent(UpdatePostRoomActivity.this, MainActivity.class);
+//                            startActivity(main);
+                            finish();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -501,8 +503,9 @@ public class UpdatePostRoomActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void unused) {
                         Toast.makeText(UpdatePostRoomActivity.this, "Cập nhật thông tin phòng thành công", Toast.LENGTH_SHORT).show();
-                        Intent main = new Intent(UpdatePostRoomActivity.this, MainActivity.class);
-                        startActivity(main);
+//                        Intent main = new Intent(UpdatePostRoomActivity.this, MainActivity.class);
+//                        startActivity(main);
+                        finish();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -785,6 +788,7 @@ public class UpdatePostRoomActivity extends AppCompatActivity {
             });
         }
     }
+
     private void showBottomDialog() {
         dialog = new BottomSheetDialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
