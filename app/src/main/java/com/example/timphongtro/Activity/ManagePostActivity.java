@@ -177,6 +177,7 @@ public class ManagePostActivity extends AppCompatActivity {
                     // Không có dữ liệu tồn tại
                 }
                 manageRoomAdapter.notifyDataSetChanged();
+                updateRecyclerViewVisibility(roomlist, rcvMyPost, findViewById(R.id.noHasLovePost));
             }
 
             @Override
@@ -184,5 +185,15 @@ public class ManagePostActivity extends AppCompatActivity {
                 // Xử lý lỗi nếu có
             }
         });
+    }
+
+    private void updateRecyclerViewVisibility(ArrayList<Room> rooms, RecyclerView rcvLovePost, View noHasLovePostView) {
+        if (rooms.isEmpty()) {
+            rcvLovePost.setVisibility(View.GONE);
+            noHasLovePostView.setVisibility(View.VISIBLE);
+        } else {
+            rcvLovePost.setVisibility(View.VISIBLE);
+            noHasLovePostView.setVisibility(View.GONE);
+        }
     }
 }

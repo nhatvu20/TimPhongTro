@@ -235,10 +235,10 @@ public class LoginActivity extends AppCompatActivity {
                             // Thêm dữ liệu vào Realtime
 //                            if(isElementInArray(account.getEmail(),emails)){
 
-                                userRef.child(Objects.requireNonNull(mAuth.getUid())).updateChildren(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                userRef.child(Objects.requireNonNull(userData.getUid())).updateChildren(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {
-                                        Toast.makeText(LoginActivity.this, "update", Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(LoginActivity.this, "update", Toast.LENGTH_SHORT).show();
                                     }
                                 });
 //                            }else {

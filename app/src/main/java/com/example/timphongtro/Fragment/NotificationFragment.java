@@ -93,6 +93,7 @@ public class NotificationFragment extends Fragment {
                                     }
                                 }
                                 roomAdapter.notifyDataSetChanged();
+                                updateRecyclerViewVisibility(rooms, rcvLovePost, view.findViewById(R.id.noHasLovePost));
                             }
 
                             @Override
@@ -143,5 +144,15 @@ public class NotificationFragment extends Fragment {
 
         roomAdapter = new RoomAdapter(getContext(), rooms);
         rcvLovePost.setAdapter(roomAdapter);
+    }
+
+    private void updateRecyclerViewVisibility(ArrayList<Room> rooms, RecyclerView rcvLovePost, View noHasLovePostView) {
+        if (rooms.isEmpty()) {
+            rcvLovePost.setVisibility(View.GONE);
+            noHasLovePostView.setVisibility(View.VISIBLE);
+        } else {
+            rcvLovePost.setVisibility(View.VISIBLE);
+            noHasLovePostView.setVisibility(View.GONE);
+        }
     }
 }

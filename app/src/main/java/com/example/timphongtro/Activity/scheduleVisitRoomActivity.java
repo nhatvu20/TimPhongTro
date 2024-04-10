@@ -104,6 +104,7 @@ public class scheduleVisitRoomActivity extends AppCompatActivity {
                     }
                 }
                 scheduleVisitRoomSendAdapter.notifyDataSetChanged();
+                updateRecyclerViewVisibility(schedules,rcvScheduleVisit,findViewById(R.id.noHasLovePost));
             }
 
             @Override
@@ -137,6 +138,7 @@ public class scheduleVisitRoomActivity extends AppCompatActivity {
                                         }
                                     }
                                     scheduleVisitRoomSendAdapter.notifyDataSetChanged();
+                                    updateRecyclerViewVisibility(schedules,rcvScheduleVisit,findViewById(R.id.noHasLovePost));
                                 }
 
                                 @Override
@@ -162,6 +164,7 @@ public class scheduleVisitRoomActivity extends AppCompatActivity {
                                         }
                                     }
                                     scheduleVisitRoomSendAdapter.notifyDataSetChanged();
+                                    updateRecyclerViewVisibility(schedules,rcvScheduleVisit,findViewById(R.id.noHasLovePost));
                                 }
 
                                 @Override
@@ -187,6 +190,7 @@ public class scheduleVisitRoomActivity extends AppCompatActivity {
                                         }
                                     }
                                     scheduleVisitRoomSendAdapter.notifyDataSetChanged();
+                                    updateRecyclerViewVisibility(schedules,rcvScheduleVisit,findViewById(R.id.noHasLovePost));
                                 }
 
                                 @Override
@@ -212,6 +216,7 @@ public class scheduleVisitRoomActivity extends AppCompatActivity {
                                         }
                                     }
                                     scheduleVisitRoomSendAdapter.notifyDataSetChanged();
+                                    updateRecyclerViewVisibility(schedules,rcvScheduleVisit,findViewById(R.id.noHasLovePost));
                                 }
 
                                 @Override
@@ -235,6 +240,15 @@ public class scheduleVisitRoomActivity extends AppCompatActivity {
             });
             scheduleVisitRoomSendAdapter = new ScheduleVisitRoomSendAdapter(scheduleVisitRoomActivity.this, schedules);
             rcvScheduleVisit.setAdapter(scheduleVisitRoomSendAdapter);
+        }
+    }
+    private void updateRecyclerViewVisibility(ArrayList<ScheduleVisitRoomClass> rooms, RecyclerView rcvLovePost, View noHistoryView) {
+        if (rooms.isEmpty()) {
+            rcvLovePost.setVisibility(View.GONE);
+            noHistoryView.setVisibility(View.VISIBLE);
+        } else {
+            rcvLovePost.setVisibility(View.VISIBLE);
+            noHistoryView.setVisibility(View.GONE);
         }
     }
 }
