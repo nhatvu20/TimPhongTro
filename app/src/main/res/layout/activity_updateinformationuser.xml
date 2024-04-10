@@ -51,8 +51,9 @@
                 android:layout_margin="10dp"
                 android:drawableStart="@drawable/ic_sdt"
                 android:drawablePadding="5dp"
-                android:hint="Số Điện Thoại"
                 android:gravity="center_vertical"
+                android:hint="Số Điện Thoại"
+                android:inputType="phone"
                 android:text=""
                 android:textSize="20sp" />
         </LinearLayout>
@@ -67,30 +68,33 @@
                 android:id="@+id/txtname"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text=""
                 android:layout_margin="10dp"
                 android:drawableStart="@drawable/ic_profile"
                 android:drawablePadding="5dp"
                 android:gravity="center_vertical"
-                android:textSize="20sp"/>
+                android:hint="Nhập họ tên"
+                android:text=""
+                android:textSize="20sp" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/linearEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="30dp">
+            android:layout_margin="30dp"
+            android:orientation="vertical">
 
             <EditText
                 android:id="@+id/txtemail"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text=""
                 android:layout_margin="10dp"
                 android:drawableStart="@drawable/ic_email"
                 android:drawablePadding="5dp"
                 android:gravity="center_vertical"
-                android:textSize="20sp"/>
+                android:hint="Nhập email"
+                android:text=""
+                android:textSize="20sp" />
         </LinearLayout>
 
         <Button
@@ -102,8 +106,7 @@
             android:layout_marginBottom="20dp"
             android:background="@drawable/border"
             android:text="@string/capnhat"
-            android:textColor="@color/black"
-            />
+            android:textColor="@color/white" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

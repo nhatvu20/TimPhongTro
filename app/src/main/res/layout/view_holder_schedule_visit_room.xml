@@ -74,7 +74,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Thời gian hẹn: "
+                        android:text="Thời gian: "
 
                         android:textColor="@color/black" />
 

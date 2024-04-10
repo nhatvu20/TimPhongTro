@@ -233,7 +233,7 @@ public class LoginActivity extends AppCompatActivity {
                                 }
                             });
                             // Thêm dữ liệu vào Realtime
-                            userRef.child(Objects.requireNonNull(mAuth.getUid())).setValue(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            userRef.child(Objects.requireNonNull(mAuth.getUid())).updateChildren(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
 

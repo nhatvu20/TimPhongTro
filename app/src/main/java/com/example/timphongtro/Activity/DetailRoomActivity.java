@@ -336,7 +336,7 @@ public class DetailRoomActivity extends AppCompatActivity {
                         } else {
                             // Quyền gọi điện thoại đã được cấp
                             // Tiến hành thực hiện cuộc gọi điện thoại
-                            Toast.makeText(getApplicationContext(), roomData.getPhone(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(), roomData.getPhone(), Toast.LENGTH_SHORT).show();
                             makePhoneCall();
                         }
                     }
@@ -359,7 +359,7 @@ public class DetailRoomActivity extends AppCompatActivity {
             textViewPhone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getApplicationContext(), "Lưu vào Clip board", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Lưu vào số điện thoại Clip board", Toast.LENGTH_SHORT).show();
                     ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
 
                     // Tạo một đối tượng ClipData để chứa văn bản cần sao chép
@@ -413,6 +413,20 @@ public class DetailRoomActivity extends AppCompatActivity {
 //                    } else {
 //                        // Không có ứng dụng nào có thể xử lý Intent này
 //                    }
+                }
+            });
+
+            textViewCombine_address.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getApplicationContext(), "Lưu địa chỉ vào Clip board", Toast.LENGTH_SHORT).show();
+                    ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+
+                    // Tạo một đối tượng ClipData để chứa văn bản cần sao chép
+                    ClipData clip = ClipData.newPlainText("Label", textViewCombine_address.getText());
+
+                    // Sao chép ClipData vào clipboard
+                    clipboard.setPrimaryClip(clip);
                 }
             });
         }

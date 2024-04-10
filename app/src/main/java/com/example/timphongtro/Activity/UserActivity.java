@@ -1,9 +1,14 @@
 package com.example.timphongtro.Activity;
 
+import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,6 +51,7 @@ public class UserActivity extends AppCompatActivity {
     private DatabaseReference postRef, userRef;
     private ArrayList<Room> roomArrayList;
     LinearLayout phoneLinear,emailLinear;
+    private static final int CALL_PHONE_PERMISSION_REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,20 +140,55 @@ public class UserActivity extends AppCompatActivity {
             phoneLinear.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getApplicationContext(), "Lưu vào Clip board", Toast.LENGTH_SHORT).show();
-                    ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    if(phone.getText().length() != 0){
+                        Toast.makeText(getApplicationContext(), "Lưu số điện thoại vào Clip board", Toast.LENGTH_SHORT).show();
+                        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
 
-                    // Tạo một đối tượng ClipData để chứa văn bản cần sao chép
-                    ClipData clip = ClipData.newPlainText("Label", phone.getText());
+                        // Tạo một đối tượng ClipData để chứa văn bản cần sao chép
+                        ClipData clip = ClipData.newPlainText("Label", phone.getText());
 
-                    // Sao chép ClipData vào clipboard
-                    clipboard.setPrimaryClip(clip);
+                        // Sao chép ClipData vào clipboard
+                        clipboard.setPrimaryClip(clip);
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(UserActivity.this);
+                        builder.setTitle("Bạn có muốn thực hiện một cuộc gọi")
+                                .setMessage("Đây là nội dung của dialog.").setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                            if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.CALL_PHONE)
+                                                    != PackageManager.PERMISSION_GRANTED) {
+                                                // Quyền gọi điện thoại chưa được cấp
+                                                // Yêu cầu quyền gọi điện thoại
+                                                ActivityCompat.requestPermissions(UserActivity.this,
+                                                        new String[]{android.Manifest.permission.CALL_PHONE},
+                                                        CALL_PHONE_PERMISSION_REQUEST_CODE);
+                                            } else {
+                                                // Quyền gọi điện thoại đã được cấp
+                                                // Tiến hành thực hiện cuộc gọi điện thoại
+//                            Toast.makeText(getApplicationContext(), roomData.getPhone(), Toast.LENGTH_SHORT).show();
+                                                makePhoneCall();
+                                            }
+                                        }
+                                    }
+                                }).setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                    }
+                                });
+
+                        android.app.AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+                    }else {
+                        Toast.makeText(getApplicationContext(), "Người dùng này chưa cập nhật số điện thoại", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
-            emailLinear.setOnClickListener(new View.OnClickListener() {
+            email.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getApplicationContext(), "Lưu vào Clip board", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Lưu email vào Clip board", Toast.LENGTH_SHORT).show();
                     ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
 
                     // Tạo một đối tượng ClipData để chứa văn bản cần sao chép
@@ -173,5 +215,14 @@ public class UserActivity extends AppCompatActivity {
         }
 
         return result.toString().toUpperCase();
+    }
+
+    private void makePhoneCall() {
+        Intent intent = new Intent(Intent.ACTION_CALL);
+        intent.setData(Uri.parse("tel:" + phone.getText()));
+
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 }
