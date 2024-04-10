@@ -233,12 +233,23 @@ public class LoginActivity extends AppCompatActivity {
                                 }
                             });
                             // Thêm dữ liệu vào Realtime
-                            userRef.child(Objects.requireNonNull(mAuth.getUid())).updateChildren(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void unused) {
+//                            if(isElementInArray(account.getEmail(),emails)){
 
-                                }
-                            });
+                                userRef.child(Objects.requireNonNull(mAuth.getUid())).updateChildren(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Toast.makeText(LoginActivity.this, "update", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+//                            }else {
+//                                userRef.child(Objects.requireNonNull(mAuth.getUid())).setValue(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                    @Override
+//                                    public void onSuccess(Void unused) {
+//                                        Toast.makeText(LoginActivity.this, "setvalue", Toast.LENGTH_SHORT).show();
+//                                    }
+//                                });
+//                            }
+
                         }
 
                     }
@@ -249,12 +260,12 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public boolean isElementInArray(String element, ArrayList<String> array) {
-        for (String item : array) {
-            if (item.equals(element)) {
-                return true;
-            }
-        }
-        return false;
-    }
+//    public boolean isElementInArray(String element, ArrayList<String> array) {
+//        for (String item : array) {
+//            if (item.equals(element)) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 }
