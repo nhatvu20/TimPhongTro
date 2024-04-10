@@ -75,9 +75,11 @@ public class MyLovePostActivity extends AppCompatActivity {
                                                 if (childSnapshot.exists()) {
                                                     if (roomsLove.contains(childSnapshot.getKey())) {
                                                         Room room = childSnapshot.getValue(Room.class);
-//                                            if (room != null) {
-                                                        rooms.add(room);
-//                                            }
+                                                        if (room != null) {
+                                                            if (room.getStatus_room() != 1) {
+                                                                rooms.add(room);
+                                                            }
+                                                        }
                                                     }
                                                 }
                                             }
