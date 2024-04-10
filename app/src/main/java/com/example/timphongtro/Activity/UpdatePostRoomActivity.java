@@ -95,7 +95,7 @@ public class UpdatePostRoomActivity extends AppCompatActivity {
     Room roomData;
     DatabaseReference myRef, myRefUpdate;
     ArrayList<HashMap<String, Object>> userLovePost;
-    boolean isHasMyLovePost;
+//    boolean isHasMyLovePost;
 
     private ActivityResultLauncher<Intent> cameraLauncher, activityResultLauncher;
     BottomSheetDialog dialog;
@@ -105,7 +105,7 @@ public class UpdatePostRoomActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_post_room);
-        isHasMyLovePost = false;
+//        isHasMyLovePost = false;
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             String roomString = bundle.getString("DataRoom");
@@ -460,7 +460,7 @@ public class UpdatePostRoomActivity extends AppCompatActivity {
             updates.put("id_room", id_room);
             updates.put("title_room", title_room);
             updates.put("price_room", price_room);
-            updates.put("address", address);
+//            updates.put("address", address);
             updates.put("area_room", area_room);
             updates.put("deposit_room", deposit_room);
             updates.put("description_room", description_room);
@@ -472,32 +472,32 @@ public class UpdatePostRoomActivity extends AppCompatActivity {
             updates.put("phone", phone);
             updates.put("floor", floor);
             updates.put("images", images);
-            updates.put("furnitures", furnitures);
-            updates.put("extensions_room", extensions_room);
-            updates.put("price_electric", Long.parseLong(edtInternet.getText().toString()));
+            updates.put("furniture", furnitures);
+            updates.put("extension_room", extensions_room);
+            updates.put("price_electric", Long.parseLong(edtElectric.getText().toString()));
             updates.put("price_water", Long.parseLong(edtWater.getText().toString()));
             updates.put("price_internet", Long.parseLong(edtInternet.getText().toString()));
             //update khi bai co tim
-            if (isHasMyLovePost) {
-                for (HashMap<String, Object> hashMap : userLovePost) {
-                    // Xử lý từng phần tử trong mảng HashMap
-                    updates.put("userLovePost", hashMap);
-                    myRefUpdate.child(id_room).updateChildren(updates).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            Toast.makeText(UpdatePostRoomActivity.this, "Cập nhật thông tin phòng thành công", Toast.LENGTH_SHORT).show();
-//                            Intent main = new Intent(UpdatePostRoomActivity.this, MainActivity.class);
-//                            startActivity(main);
-                            finish();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(UpdatePostRoomActivity.this, "Cập nhật thông tin phòng thất bại", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-            } else {
+//            if (isHasMyLovePost) {
+//                for (HashMap<String, Object> hashMap : userLovePost) {
+//                    // Xử lý từng phần tử trong mảng HashMap
+////                    updates.put("userLovePost", hashMap);
+//                    myRefUpdate.child(id_room).updateChildren(updates).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                        @Override
+//                        public void onSuccess(Void unused) {
+//                            Toast.makeText(UpdatePostRoomActivity.this, "Cập nhật thông tin phòng thành công", Toast.LENGTH_SHORT).show();
+////                            Intent main = new Intent(UpdatePostRoomActivity.this, MainActivity.class);
+////                            startActivity(main);
+//                            finish();
+//                        }
+//                    }).addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//                            Toast.makeText(UpdatePostRoomActivity.this, "Cập nhật thông tin phòng thất bại", Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
+//                }
+//            } else {
                 //update khi bai khong co tim
                 myRefUpdate.child(id_room).updateChildren(updates).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -513,7 +513,7 @@ public class UpdatePostRoomActivity extends AppCompatActivity {
                         Toast.makeText(UpdatePostRoomActivity.this, "Cập nhật thông tin phòng thất bại", Toast.LENGTH_SHORT).show();
                     }
                 });
-            }
+//            }
 
             //Xu ly cho firebase
 //            myRefUpdate.child(id_room).setValue(room);
@@ -775,7 +775,7 @@ public class UpdatePostRoomActivity extends AppCompatActivity {
 
 //                        for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
                         HashMap<String, Object> hashMap = (HashMap<String, Object>) dataSnapshot.getValue();
-                        isHasMyLovePost = true;
+//                        isHasMyLovePost = true;
                         userLovePost.add(hashMap);
 //                        }
                     }

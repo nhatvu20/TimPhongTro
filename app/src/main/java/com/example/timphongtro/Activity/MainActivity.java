@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             } else if (item.getItemId() == R.id.service) {
                 replaceFragment(new ServiceFragment());
             } else if (item.getItemId() == R.id.notification) {
-                if (user != null) {
+                if (user != null || account != null) {
                     replaceFragment(new NotificationFragment());
                 } else {
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 //                    Toast.makeText(MainActivity.this, "Vui lòng đăng nhập để sử dụng chức năng này", Toast.LENGTH_SHORT).show();
                 }
             } else if (item.getItemId() == R.id.profile) {
-                if (user != null) {
+                if (user != null || account != null) {
                     replaceFragment(new ProfileFragment());
                 } else {
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
         contract.setOnClickListener(v -> {
             dialog.dismiss();
-            if (user != null) {
+            if (user != null || account != null) {
                 Intent post = new Intent(this, PostRoomActivity.class);
                 startActivity(post);
             } else {

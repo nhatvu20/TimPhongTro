@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -39,27 +40,30 @@ public class UpdateInformationUserActivity extends AppCompatActivity {
     private String name, email, phone;
     private EditText txtname, txtemail, txtphone;
     private ImageView imageViewBack;
-    User user;
-    String imageURL;
-    Uri uri;
+
+    private LinearLayout linearEmail;
+    private User user;
+//    String imageURL;
+//    Uri uri;
     private Button btnCapnhat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
+//        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_updateinformationuser);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+//            return insets;
+//        });
         txtname = (EditText) findViewById(R.id.txtname);
         txtemail = (EditText) findViewById(R.id.txtemail);
         imageViewBack = (ImageView) findViewById(R.id.imageViewBack);
         btnCapnhat = (Button) findViewById(R.id.btnCapnhat);
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         txtphone = (EditText) findViewById(R.id.txtphone);
+        linearEmail = findViewById(R.id.linearEmail);
         imageViewBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,6 +111,13 @@ public class UpdateInformationUserActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"Vui lòng nhập đầy đủ các trường thông tin",Toast.LENGTH_SHORT).show();
 
                 }
+            }
+        });
+
+        linearEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"Không được chỉnh sửa trường email",Toast.LENGTH_SHORT).show();
             }
         });
     }
